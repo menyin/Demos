@@ -484,12 +484,13 @@ define(function (require, exports, module) {
     /*第四部分整合 end*/
 
     /*第五部分整合 begin*/
-    var job = new require('product.jobMenu')({
+    var jobMenu = require('product.jobMenu');
+    var job = new jobMenu({
         menuGroup: {
             url: {
                 host: 'http://xm.597.com',
                 path: '/zhaopin/',
-                param: "q=????",
+                param: "q=销售",
                 alias: 'alias',
                 selectId: []
             }
