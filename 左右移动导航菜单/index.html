@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../jquery-1.8.3.min.js"></script>
+    <script src="fader.js"></script>
+    <script src="tab.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+            var tabpanel = new TabPanel({
+                renderTo: 'company-job-tab',
+                width: 708,
+                height: '100%',
+                active: 0,
+                items: [
+                    {
+                    id: 'toolbarPlugin1',
+                    name: 1,
+                    title: '全部',
+                    html: JobView(0),
+                    closable: false
+                },
+                    {
+                        id: 'toolbarPlugin2',
+                        name: 2,
+                        title: '部门不限',
+                        html: JobView(9094),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin3',
+                        name: 3,
+                        title: '营销中心',
+                        html: JobView(29133),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin4',
+                        name: 4,
+                        title: '研发中心',
+                        html: JobView(29138),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin5',
+                        name: 5,
+                        title: '人力资源中心',
+                        html: JobView(29141),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin6',
+                        name: 6,
+                        title: '众邦机电（临海）',
+                        html: JobView(29152),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin7',
+                        name: 7,
+                        title: '拓卡奔马（临海）',
+                        html: JobView(29153),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin8',
+                        name: 8,
+                        title: '制造中心',
+                        html: JobView(35485),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin9',
+                        name: 9,
+                        title: '机床',
+                        html: JobView(56038),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin10',
+                        name: 10,
+                        title: '临海厂区管理中心',
+                        html: JobView(101827),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin11',
+                        name: 11,
+                        title: '人力资源',
+                        html: JobView(108259),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin12',
+                        name: 12,
+                        title: '质量运营管理部',
+                        html: JobView(109157),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin13',
+                        name: 13,
+                        title: '后勤服务中心',
+                        html: JobView(117302),
+                        closable: false
+                    }, {
+                        id: 'toolbarPlugin14',
+                        name: 14,
+                        title: '国际运营中心',
+                        html: JobView(117334),
+                        closable: false
+                    }
+                ]
+            });
+        });
+        function JobView(type) {
+            jobhtml = "";
+            if (type == 0) {
+                jobhtml = $('.alljob').html();
+            }
+            else {
+                $('.alljob ul li[rel=' + type + ']').each(function () {
+                    jobhtml += '<li>' + $(this).html() + '</li>';
+                })
+                jobhtml = '<ul>' + jobhtml + '</ul>';
+            }
+            return jobhtml;
+        }
+    </script>
+    <script>
+
+        $(function () {
+
+            $('.jobcount').text($('.alljob ul li').size());
+            if ($('#tongji').val() == 1) {
+                $('.tongji').show();
+            }
+        })
+
+    </script>
+    <style>
+        li {
+            list-style: none;
+        }
+
+        .tabpanel {
+            width: 100% !important;
+            height: 100% !important;
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+        }
+
+        .tabpanel_tab_content {
+            position: relative;
+            width: 100%;
+            height: 37px;
+            line-height: 37px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .tabpanel_tab_content .tabpanel_left_scroll_disabled {
+            opacity: 0;
+            -moz-opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        .tabpanel_tab_content .tabpanel_left_scroll {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            width: 15px;
+            height: 36px;
+            cursor: pointer;
+            background: transparent url(http://public.tzrl.com/images/new/scroll.gif) no-repeat -15px 0;
+        }
+
+        .tabpanel_tab_content .tabpanel_right_scroll {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 10;
+            width: 15px;
+            height: 36px;
+            cursor: pointer;
+            background: transparent url(http://public.tzrl.com/images/new/scroll.gif) no-repeat -30px 0;
+        }
+
+        .tabpanel_tab_content .tabpanel_move_content {
+            width: 0;
+            overflow: hidden;
+        }
+
+        .tabpanel_move_content_scroll {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .company-job ul {
+            position: relative;
+            margin-right: -16px;
+            overflow: hidden;
+            *zoom: 1;
+        }
+
+        .tabpanel_mover {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            width: 5000px;
+        }
+
+        .tabpanel_mover li.active {
+            color: #333;
+            border: solid 1px #eee;
+            border-bottom-color: #fff;
+        }
+
+        .tabpanel_mover li {
+            position: relative;
+            float: left;
+            width: 130px !important;
+            height: 35px;
+            line-height: 35px;
+            color: #999;
+            text-align: center;
+            cursor: pointer;
+            list-style-type: none;
+        }
+
+        .tabpanel_mover li.active .title {
+            margin-top: -1px;
+            color: #333;
+        }
+
+        .tabpanel_mover li .title {
+            display: inline-block;
+            font-size: 14px;
+            color: #999;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .display_none {
+            display: none;
+        }
+
+        .tabpanel_tab_content .tabpanel_tab_spacer {
+            margin-top: -1px;
+            height: 1px;
+            line-height: 1px;
+            font-size: 0;
+            background: #eee;
+            zoom: 1;
+        }
+
+        /*-----------*/
+        .tabpanel_content {
+            margin-top: 10px;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: #FFF;
+            border: none;
+            overflow: hidden;
+            zoom: 1;
+        }
+
+        .tabpanel_content .html_content {
+            width: 100% !important;
+            height: 100% !important;
+            background-color: #FFF;
+            zoom: 1;
+        }
+
+        .company-job ul {
+            position: relative;
+            margin-right: -16px;
+            overflow: hidden;
+            *zoom: 1;
+        }
+
+        .company-job li {
+            float: left;
+            width: 33.33333%;
+            zoom: 1;
+        }
+
+        .company-job li a {
+            display: block;
+            margin-bottom: 10px;
+            margin-right: 16px;
+            padding: 20px;
+            _padding: 15px;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .company-job li a h6 {
+            margin-top: 0;
+        }
+
+        .h6 {
+            font-size: 14px;
+        }
+
+        .grey {
+            color: #999 !important;
+        }
+
+        .ml10 {
+            margin-left: 10px !important;
+        }
+
+        .company-job li a p {
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .ellipsis {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .red {
+            color: #ff3030 !important;
+        }
+
+    </style>
+</head>
+<body>
+<div class="company-job box mt20">
+
+    <div style="width: 708px; height: 100%;" id="company-job-tab">
+       <!-- <div style="width: 706px; height: 0px;" class="tabpanel">
+           &lt;!&ndash; <div style="width: 708px;" class="tabpanel_tab_content">
+                <div disabled="disabled" class="tabpanel_left_scroll tabpanel_left_scroll_disabled"></div>
+                <div class="tabpanel_right_scroll"></div>
+                <div style="width: 678px;" class="tabpanel_move_content tabpanel_move_content_scroll">
+                    <ul style="margin-left: -130px;" class="tabpanel_mover">
+                        <li class="active" name="1" id="toolbarPlugin1"><span class="title">全部</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="2" id="toolbarPlugin2"><span class="title">部门不限</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="3" id="toolbarPlugin3"><span class="title">营销中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="4" id="toolbarPlugin4"><span class="title">研发中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="5" id="toolbarPlugin5"><span class="title">人力资源中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="6" id="toolbarPlugin6"><span title="众邦机电（临海）" style="width: 100px;"
+                                                                        class="title">众邦机电（临海）</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="7" id="toolbarPlugin7"><span title="拓卡奔马（临海）" style="width: 100px;"
+                                                                        class="title">拓卡奔马（临海）</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="8" id="toolbarPlugin8"><span class="title">制造中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="9" id="toolbarPlugin9"><span class="title">机床</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="10" id="toolbarPlugin10"><span title="临海厂区管理中心" style="width: 100px;"
+                                                                          class="title">临海厂区管理中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="11" id="toolbarPlugin11"><span class="title">人力资源</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="12" id="toolbarPlugin12"><span class="title">质量运营管理部</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="13" id="toolbarPlugin13"><span class="title">后勤服务中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                        <li class="" name="14" id="toolbarPlugin14"><span class="title">国际运营中心</span>
+
+                            <div title="Close tab" class="closer display_none"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabpanel_tab_spacer"></div>
+            </div>&ndash;&gt;
+            <div style="width: 708px; height: 10px;" class="tabpanel_content">
+                <div style="display: block;" class="html_content">
+                    <ul>
+                        <li rel="29153"><a href="/job/1760-350138.htm" target="_blank" title="企业文化专员">
+                            <h6 style="white-space: nowrap;">企业文化专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-334904.htm" target="_blank" title="钳工（临海）">
+                            <h6 style="white-space: nowrap;">钳工（临海）
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="56038"><a href="/job/1760-246337.htm" target="_blank" title="技术员（机床）">
+                            <h6 style="white-space: nowrap;">技术员（机床）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29133"><a href="/job/1760-337062.htm" target="_blank" title="国内业务员.">
+                            <h6 style="white-space: nowrap;">国内业务员.
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="29133"><a href="/job/1760-293161.htm" target="_blank" title="仓管员">
+                            <h6 style="white-space: nowrap;">仓管员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li rel="29152"><a href="/job/1760-307854.htm" target="_blank" title="软件工程师">
+                            <h6 style="white-space: nowrap;">软件工程师
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-319261.htm" target="_blank" title="模版机服务工程师（临海）">
+                            <h6 style="white-space: nowrap;">模版机服务工...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-332591.htm" target="_blank" title="软件开发实习生">
+                            <h6 style="white-space: nowrap;">软件开发实习...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">1000～2000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29141"><a href="/job/1760-337043.htm" target="_blank" title="人才获取专员">
+                            <h6 style="white-space: nowrap;">人才获取专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337039.htm" target="_blank" title="SERVER后端开发工程师">
+                            <h6 style="white-space: nowrap;">SERVER后端开...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-321050.htm" target="_blank" title="生产岗位（临海厂区）">
+                            <h6 style="white-space: nowrap;">生产岗位（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-319510.htm" target="_blank" title="机修电工（临海)">
+                            <h6 style="white-space: nowrap;">机修电工（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-336994.htm" target="_blank" title="系统架构工程师（JAVA）">
+                            <h6 style="white-space: nowrap;">系统架构工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li rel="29138"><a href="/job/1760-336992.htm" target="_blank" title="IPMS运营总监">
+                            <h6 style="white-space: nowrap;">IPMS运营总监
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">15000～20000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li rel="56038"><a href="/job/1760-306469.htm" target="_blank" title="绘图员（机床）">
+                            <h6 style="white-space: nowrap;">绘图员（机床）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337028.htm" target="_blank" title="众邦电机杭州研发中心总监">
+                            <h6 style="white-space: nowrap;">众邦电机杭州...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">8000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li rel="29153"><a href="/job/1760-315743.htm" target="_blank" title="机械研发工程师（临海）">
+                            <h6 style="white-space: nowrap;">机械研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337027.htm" target="_blank" title="机电控制软件工程师">
+                            <h6 style="white-space: nowrap;">机电控制软件...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                        <li rel="29138"><a href="/job/1760-302720.htm" target="_blank" title="机械工程师（椒江、临海）">
+                            <h6 style="white-space: nowrap;">机械工程师（椒...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="9094"><a href="/job/1760-261490.htm" target="_blank" title="国贸业务员（临海、椒江）">
+                            <h6 style="white-space: nowrap;">国贸业务员（临...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337029.htm" target="_blank" title="软件开发工程师（图像处理/机器视觉）">
+                            <h6 style="white-space: nowrap;">软件开发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～20000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                        <li rel="29153"><a href="/job/1760-303548.htm" target="_blank" title="保安（临海）">
+                            <h6 style="white-space: nowrap;">保安（临海）
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">2500～5000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29141"><a href="/job/1760-235042.htm" target="_blank" title="保安（椒江）保安（临海）">
+                            <h6 style="white-space: nowrap;">保安（椒江）保...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～4500元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-319055.htm" target="_blank" title="生产技术/生产管理(临海)">
+                            <h6 style="white-space: nowrap;">生产技术/生产...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p>
+                        </a></li>
+                        <li rel="29152"><a href="/job/1760-303504.htm" target="_blank" title="硬件研发工程师（临海）">
+                            <h6 style="white-space: nowrap;">硬件研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29152"><a href="/job/1760-309247.htm" target="_blank" title="技术应用工程师（电控）">
+                            <h6 style="white-space: nowrap;">技术应用工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="117334"><a href="/job/1760-337553.htm" target="_blank" title="国贸销售业务员（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">国贸销售业务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="117334"><a href="/job/1760-337548.htm" target="_blank" title="装配技师（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">装配技师（意大...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="117334"><a href="/job/1760-337552.htm" target="_blank" title="国内营销业务员（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">国内营销业务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="35485"><a href="/job/1760-339769.htm" target="_blank" title="数控车床（临海）">
+                            <h6 style="white-space: nowrap;">数控车床（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29152"><a href="/job/1760-287891.htm" target="_blank" title="质检员（临海）">
+                            <h6 style="white-space: nowrap;">质检员（临海）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-274381.htm" target="_blank" title="海外技术服务工程师（临海）">
+                            <h6 style="white-space: nowrap;">海外技术服务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-328514.htm" target="_blank" title="金工检验员">
+                            <h6 style="white-space: nowrap;">金工检验员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337025.htm" target="_blank" title="高级算法工程师（轨迹规划）">
+                            <h6 style="white-space: nowrap;">高级算法工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="29141"><a href="/job/1760-337046.htm" target="_blank" title="组织与人才发展专员">
+                            <h6 style="white-space: nowrap;">组织与人才发...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li rel="29138"><a href="/job/1760-337058.htm" target="_blank" title="专利工程师">
+                            <h6 style="white-space: nowrap;">专利工程师
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-302110.htm" target="_blank" title="研发电气工程师（椒江）">
+                            <h6 style="white-space: nowrap;">研发电气工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-142416.htm" target="_blank" title="研发软件工程师（临海）">
+                            <h6 style="white-space: nowrap;">研发软件工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-303546.htm" target="_blank" title="机械研发工程师（产品设计）-&#45;&#45;椒江">
+                            <h6 style="white-space: nowrap;">机械研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li rel="108259"><a href="/job/1760-333281.htm" target="_blank" title="人事专员/人事助理">
+                            <h6 style="white-space: nowrap;">人事专员/人事...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="35485"><a href="/job/1760-310023.htm" target="_blank" title="加工中心(临海）">
+                            <h6 style="white-space: nowrap;">加工中心(临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337026.htm" target="_blank" title="自动化（运动控制）工程师">
+                            <h6 style="white-space: nowrap;">自动化（运动控...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li rel="29153"><a href="/job/1760-319511.htm" target="_blank" title="水电工(临海)">
+                            <h6 style="white-space: nowrap;">水电工(临海)
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-345083.htm" target="_blank" title="研发总监助理（临海）">
+                            <h6 style="white-space: nowrap;">研发总监助理...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="109157"><a href="/job/1760-307803.htm" target="_blank" title="PQA&#45;&#45;产品开发过程质量保证">
+                            <h6 style="white-space: nowrap;">PQA&#45;&#45;产品开发...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="35485"><a href="/job/1760-192453.htm" target="_blank" title="生产技术/生产管理(椒江)">
+                            <h6 style="white-space: nowrap;">生产技术/生产...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-324039.htm" target="_blank" title="营销内务专员">
+                            <h6 style="white-space: nowrap;">营销内务专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-286836.htm" target="_blank" title="仓管员（临海）">
+                            <h6 style="white-space: nowrap;">仓管员（临海）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29152"><a href="/job/1760-281986.htm" target="_blank" title="技术应用工程师（电机）">
+                            <h6 style="white-space: nowrap;">技术应用工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="101827"><a href="/job/1760-279378.htm" target="_blank" title="项目管理专员">
+                            <h6 style="white-space: nowrap;">项目管理专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li rel="35485"><a href="/job/1760-159093.htm" target="_blank" title="仓管员（椒江）">
+                            <h6 style="white-space: nowrap;">仓管员（椒江）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～4000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337040.htm" target="_blank" title="嵌入式软件工程师">
+                            <h6 style="white-space: nowrap;">嵌入式软件工...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li rel="29133"><a href="/job/1760-337060.htm" target="_blank" title="国贸业务员">
+                            <h6 style="white-space: nowrap;">国贸业务员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li rel="29138"><a href="/job/1760-337055.htm" target="_blank" title="CAE研发工程师">
+                            <h6 style="white-space: nowrap;">CAE研发工程师...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                        <li rel="117302"><a href="/job/1760-337424.htm" target="_blank" title="总务后勤内勤专员">
+                            <h6 style="white-space: nowrap;">总务后勤内勤...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">2500～4000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li rel="29153"><a href="/job/1760-314539.htm" target="_blank" title="国内销售工程师（临海）">
+                            <h6 style="white-space: nowrap;">国内销售工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-261490.htm" target="_blank" title="国贸业务员（临海、椒江）">
+                            <h6 style="white-space: nowrap;">国贸业务员（临...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-337062.htm" target="_blank" title="国内业务员.">
+                            <h6 style="white-space: nowrap;">国内业务员.
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li><a href="/job/1760-293161.htm" target="_blank" title="仓管员">
+                            <h6 style="white-space: nowrap;">仓管员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li><a href="/job/1760-337060.htm" target="_blank" title="国贸业务员">
+                            <h6 style="white-space: nowrap;">国贸业务员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-337039.htm" target="_blank" title="SERVER后端开发工程师">
+                            <h6 style="white-space: nowrap;">SERVER后端开...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li><a href="/job/1760-336994.htm" target="_blank" title="系统架构工程师（JAVA）">
+                            <h6 style="white-space: nowrap;">系统架构工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li><a href="/job/1760-336992.htm" target="_blank" title="IPMS运营总监">
+                            <h6 style="white-space: nowrap;">IPMS运营总监
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">15000～20000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li><a href="/job/1760-337028.htm" target="_blank" title="众邦电机杭州研发中心总监">
+                            <h6 style="white-space: nowrap;">众邦电机杭州...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">8000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年
+                            </p></a></li>
+                        <li><a href="/job/1760-337027.htm" target="_blank" title="机电控制软件工程师">
+                            <h6 style="white-space: nowrap;">机电控制软件...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                        <li><a href="/job/1760-302720.htm" target="_blank" title="机械工程师（椒江、临海）">
+                            <h6 style="white-space: nowrap;">机械工程师（椒...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-337029.htm" target="_blank" title="软件开发工程师（图像处理/机器视觉）">
+                            <h6 style="white-space: nowrap;">软件开发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～20000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                        <li><a href="/job/1760-337025.htm" target="_blank" title="高级算法工程师（轨迹规划）">
+                            <h6 style="white-space: nowrap;">高级算法工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li><a href="/job/1760-337058.htm" target="_blank" title="专利工程师">
+                            <h6 style="white-space: nowrap;">专利工程师
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-302110.htm" target="_blank" title="研发电气工程师（椒江）">
+                            <h6 style="white-space: nowrap;">研发电气工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-303546.htm" target="_blank" title="机械研发工程师（产品设计）-&#45;&#45;椒江">
+                            <h6 style="white-space: nowrap;">机械研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li><a href="/job/1760-337026.htm" target="_blank" title="自动化（运动控制）工程师">
+                            <h6 style="white-space: nowrap;">自动化（运动控...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                        <li><a href="/job/1760-337040.htm" target="_blank" title="嵌入式软件工程师">
+                            <h6 style="white-space: nowrap;">嵌入式软件工...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-337055.htm" target="_blank" title="CAE研发工程师">
+                            <h6 style="white-space: nowrap;">CAE研发工程师...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年
+                            </p></a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-337043.htm" target="_blank" title="人才获取专员">
+                            <h6 style="white-space: nowrap;">人才获取专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-235042.htm" target="_blank" title="保安（椒江）保安（临海）">
+                            <h6 style="white-space: nowrap;">保安（椒江）保...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～4500元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-337046.htm" target="_blank" title="组织与人才发展专员">
+                            <h6 style="white-space: nowrap;">组织与人才发...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限
+                            </p></a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-307854.htm" target="_blank" title="软件工程师">
+                            <h6 style="white-space: nowrap;">软件工程师
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li><a href="/job/1760-303504.htm" target="_blank" title="硬件研发工程师（临海）">
+                            <h6 style="white-space: nowrap;">硬件研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-309247.htm" target="_blank" title="技术应用工程师（电控）">
+                            <h6 style="white-space: nowrap;">技术应用工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-287891.htm" target="_blank" title="质检员（临海）">
+                            <h6 style="white-space: nowrap;">质检员（临海）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                        <li><a href="/job/1760-281986.htm" target="_blank" title="技术应用工程师（电机）">
+                            <h6 style="white-space: nowrap;">技术应用工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-350138.htm" target="_blank" title="企业文化专员">
+                            <h6 style="white-space: nowrap;">企业文化专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-334904.htm" target="_blank" title="钳工（临海）">
+                            <h6 style="white-space: nowrap;">钳工（临海）
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-319261.htm" target="_blank" title="模版机服务工程师（临海）">
+                            <h6 style="white-space: nowrap;">模版机服务工...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-332591.htm" target="_blank" title="软件开发实习生">
+                            <h6 style="white-space: nowrap;">软件开发实习...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">1000～2000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-321050.htm" target="_blank" title="生产岗位（临海厂区）">
+                            <h6 style="white-space: nowrap;">生产岗位（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-319510.htm" target="_blank" title="机修电工（临海)">
+                            <h6 style="white-space: nowrap;">机修电工（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-315743.htm" target="_blank" title="机械研发工程师（临海）">
+                            <h6 style="white-space: nowrap;">机械研发工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-303548.htm" target="_blank" title="保安（临海）">
+                            <h6 style="white-space: nowrap;">保安（临海）
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">2500～5000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-319055.htm" target="_blank" title="生产技术/生产管理(临海)">
+                            <h6 style="white-space: nowrap;">生产技术/生产...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p>
+                        </a></li>
+                        <li><a href="/job/1760-274381.htm" target="_blank" title="海外技术服务工程师（临海）">
+                            <h6 style="white-space: nowrap;">海外技术服务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-328514.htm" target="_blank" title="金工检验员">
+                            <h6 style="white-space: nowrap;">金工检验员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                        <li><a href="/job/1760-142416.htm" target="_blank" title="研发软件工程师（临海）">
+                            <h6 style="white-space: nowrap;">研发软件工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-319511.htm" target="_blank" title="水电工(临海)">
+                            <h6 style="white-space: nowrap;">水电工(临海)
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-345083.htm" target="_blank" title="研发总监助理（临海）">
+                            <h6 style="white-space: nowrap;">研发总监助理...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-324039.htm" target="_blank" title="营销内务专员">
+                            <h6 style="white-space: nowrap;">营销内务专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-286836.htm" target="_blank" title="仓管员（临海）">
+                            <h6 style="white-space: nowrap;">仓管员（临海）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-314539.htm" target="_blank" title="国内销售工程师（临海）">
+                            <h6 style="white-space: nowrap;">国内销售工程...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-339769.htm" target="_blank" title="数控车床（临海）">
+                            <h6 style="white-space: nowrap;">数控车床（临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-310023.htm" target="_blank" title="加工中心(临海）">
+                            <h6 style="white-space: nowrap;">加工中心(临海...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-192453.htm" target="_blank" title="生产技术/生产管理(椒江)">
+                            <h6 style="white-space: nowrap;">生产技术/生产...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p>
+                        </a></li>
+                        <li><a href="/job/1760-159093.htm" target="_blank" title="仓管员（椒江）">
+                            <h6 style="white-space: nowrap;">仓管员（椒江）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～4000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-246337.htm" target="_blank" title="技术员（机床）">
+                            <h6 style="white-space: nowrap;">技术员（机床）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                        <li><a href="/job/1760-306469.htm" target="_blank" title="绘图员（机床）">
+                            <h6 style="white-space: nowrap;">绘图员（机床）...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-279378.htm" target="_blank" title="项目管理专员">
+                            <h6 style="white-space: nowrap;">项目管理专员
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-333281.htm" target="_blank" title="人事专员/人事助理">
+                            <h6 style="white-space: nowrap;">人事专员/人事...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-307803.htm" target="_blank" title="PQA&#45;&#45;产品开发过程质量保证">
+                            <h6 style="white-space: nowrap;">PQA&#45;&#45;产品开发...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-337424.htm" target="_blank" title="总务后勤内勤专员">
+                            <h6 style="white-space: nowrap;">总务后勤内勤...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">2500～4000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p>
+                        </a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="html_content">
+                    <ul>
+                        <li><a href="/job/1760-337553.htm" target="_blank" title="国贸销售业务员（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">国贸销售业务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-337548.htm" target="_blank" title="装配技师（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">装配技师（意大...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p>
+                        </a></li>
+                        <li><a href="/job/1760-337552.htm" target="_blank" title="国内营销业务员（意大利MAICA项目）">
+                            <h6 style="white-space: nowrap;">国内营销业务...
+                                <small class="ml10 grey">46分钟前</small>
+                            </h6>
+                            <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div style="display: none;" class="alljob">
+        <ul>
+            <li rel="29153"><a href="/job/1760-350138.htm" target="_blank" title="企业文化专员">
+                <h6 style="white-space: nowrap;">企业文化专员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29153"><a href="/job/1760-334904.htm" target="_blank" title="钳工（临海）">
+                <h6 style="white-space: nowrap;">钳工（临海）
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="56038"><a href="/job/1760-246337.htm" target="_blank" title="技术员（机床）">
+                <h6 style="white-space: nowrap;">技术员（机床）...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29133"><a href="/job/1760-337062.htm" target="_blank" title="国内业务员.">
+                <h6 style="white-space: nowrap;">国内业务员.
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="29133"><a href="/job/1760-293161.htm" target="_blank" title="仓管员">
+                <h6 style="white-space: nowrap;">仓管员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29152"><a href="/job/1760-307854.htm" target="_blank" title="软件工程师">
+                <h6 style="white-space: nowrap;">软件工程师
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="29153"><a href="/job/1760-319261.htm" target="_blank" title="模版机服务工程师（临海）">
+                <h6 style="white-space: nowrap;">模版机服务工...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-332591.htm" target="_blank" title="软件开发实习生">
+                <h6 style="white-space: nowrap;">软件开发实习...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">1000～2000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29141"><a href="/job/1760-337043.htm" target="_blank" title="人才获取专员">
+                <h6 style="white-space: nowrap;">人才获取专员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29138"><a href="/job/1760-337039.htm" target="_blank" title="SERVER后端开发工程师">
+                <h6 style="white-space: nowrap;">SERVER后端开...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="29153"><a href="/job/1760-321050.htm" target="_blank" title="生产岗位（临海厂区）">
+                <h6 style="white-space: nowrap;">生产岗位（临海...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-319510.htm" target="_blank" title="机修电工（临海)">
+                <h6 style="white-space: nowrap;">机修电工（临海...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">6000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29138"><a href="/job/1760-336994.htm" target="_blank" title="系统架构工程师（JAVA）">
+                <h6 style="white-space: nowrap;">系统架构工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年</p></a></li>
+            <li rel="29138"><a href="/job/1760-336992.htm" target="_blank" title="IPMS运营总监">
+                <h6 style="white-space: nowrap;">IPMS运营总监
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">15000～20000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年</p></a></li>
+            <li rel="56038"><a href="/job/1760-306469.htm" target="_blank" title="绘图员（机床）">
+                <h6 style="white-space: nowrap;">绘图员（机床）...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29138"><a href="/job/1760-337028.htm" target="_blank" title="众邦电机杭州研发中心总监">
+                <h6 style="white-space: nowrap;">众邦电机杭州...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">8000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;五年-十年</p></a></li>
+            <li rel="29153"><a href="/job/1760-315743.htm" target="_blank" title="机械研发工程师（临海）">
+                <h6 style="white-space: nowrap;">机械研发工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29138"><a href="/job/1760-337027.htm" target="_blank" title="机电控制软件工程师">
+                <h6 style="white-space: nowrap;">机电控制软件...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年-五年</p></a></li>
+            <li rel="29138"><a href="/job/1760-302720.htm" target="_blank" title="机械工程师（椒江、临海）">
+                <h6 style="white-space: nowrap;">机械工程师（椒...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="9094"><a href="/job/1760-261490.htm" target="_blank" title="国贸业务员（临海、椒江）">
+                <h6 style="white-space: nowrap;">国贸业务员（临...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29138"><a href="/job/1760-337029.htm" target="_blank" title="软件开发工程师（图像处理/机器视觉）">
+                <h6 style="white-space: nowrap;">软件开发工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">10000～20000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年</p></a></li>
+            <li rel="29153"><a href="/job/1760-303548.htm" target="_blank" title="保安（临海）">
+                <h6 style="white-space: nowrap;">保安（临海）
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">2500～5000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29141"><a href="/job/1760-235042.htm" target="_blank" title="保安（椒江）保安（临海）">
+                <h6 style="white-space: nowrap;">保安（椒江）保...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～4500元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-319055.htm" target="_blank" title="生产技术/生产管理(临海)">
+                <h6 style="white-space: nowrap;">生产技术/生产...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p></a></li>
+            <li rel="29152"><a href="/job/1760-303504.htm" target="_blank" title="硬件研发工程师（临海）">
+                <h6 style="white-space: nowrap;">硬件研发工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29152"><a href="/job/1760-309247.htm" target="_blank" title="技术应用工程师（电控）">
+                <h6 style="white-space: nowrap;">技术应用工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="117334"><a href="/job/1760-337553.htm" target="_blank" title="国贸销售业务员（意大利MAICA项目）">
+                <h6 style="white-space: nowrap;">国贸销售业务...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="117334"><a href="/job/1760-337548.htm" target="_blank" title="装配技师（意大利MAICA项目）">
+                <h6 style="white-space: nowrap;">装配技师（意大...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="117334"><a href="/job/1760-337552.htm" target="_blank" title="国内营销业务员（意大利MAICA项目）">
+                <h6 style="white-space: nowrap;">国内营销业务...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="35485"><a href="/job/1760-339769.htm" target="_blank" title="数控车床（临海）">
+                <h6 style="white-space: nowrap;">数控车床（临海...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～8000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29152"><a href="/job/1760-287891.htm" target="_blank" title="质检员（临海）">
+                <h6 style="white-space: nowrap;">质检员（临海）...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="29153"><a href="/job/1760-274381.htm" target="_blank" title="海外技术服务工程师（临海）">
+                <h6 style="white-space: nowrap;">海外技术服务...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-328514.htm" target="_blank" title="金工检验员">
+                <h6 style="white-space: nowrap;">金工检验员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29138"><a href="/job/1760-337025.htm" target="_blank" title="高级算法工程师（轨迹规划）">
+                <h6 style="white-space: nowrap;">高级算法工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="29141"><a href="/job/1760-337046.htm" target="_blank" title="组织与人才发展专员">
+                <h6 style="white-space: nowrap;">组织与人才发...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29138"><a href="/job/1760-337058.htm" target="_blank" title="专利工程师">
+                <h6 style="white-space: nowrap;">专利工程师
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29138"><a href="/job/1760-302110.htm" target="_blank" title="研发电气工程师（椒江）">
+                <h6 style="white-space: nowrap;">研发电气工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29153"><a href="/job/1760-142416.htm" target="_blank" title="研发软件工程师（临海）">
+                <h6 style="white-space: nowrap;">研发软件工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29138"><a href="/job/1760-303546.htm" target="_blank" title="机械研发工程师（产品设计）---椒江">
+                <h6 style="white-space: nowrap;">机械研发工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;学历不限&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="108259"><a href="/job/1760-333281.htm" target="_blank" title="人事专员/人事助理">
+                <h6 style="white-space: nowrap;">人事专员/人事...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="35485"><a href="/job/1760-310023.htm" target="_blank" title="加工中心(临海）">
+                <h6 style="white-space: nowrap;">加工中心(临海...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～7000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29138"><a href="/job/1760-337026.htm" target="_blank" title="自动化（运动控制）工程师">
+                <h6 style="white-space: nowrap;">自动化（运动控...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">10000～15000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-319511.htm" target="_blank" title="水电工(临海)">
+                <h6 style="white-space: nowrap;">水电工(临海)
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～5500元</span>&nbsp;/&nbsp;高中&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29153"><a href="/job/1760-345083.htm" target="_blank" title="研发总监助理（临海）">
+                <h6 style="white-space: nowrap;">研发总监助理...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="109157"><a href="/job/1760-307803.htm" target="_blank" title="PQA--产品开发过程质量保证">
+                <h6 style="white-space: nowrap;">PQA--产品开发...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～7000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="35485"><a href="/job/1760-192453.htm" target="_blank" title="生产技术/生产管理(椒江)">
+                <h6 style="white-space: nowrap;">生产技术/生产...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;应届毕业生</p></a></li>
+            <li rel="29153"><a href="/job/1760-324039.htm" target="_blank" title="营销内务专员">
+                <h6 style="white-space: nowrap;">营销内务专员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29153"><a href="/job/1760-286836.htm" target="_blank" title="仓管员（临海）">
+                <h6 style="white-space: nowrap;">仓管员（临海）...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～5000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29152"><a href="/job/1760-281986.htm" target="_blank" title="技术应用工程师（电机）">
+                <h6 style="white-space: nowrap;">技术应用工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="101827"><a href="/job/1760-279378.htm" target="_blank" title="项目管理专员">
+                <h6 style="white-space: nowrap;">项目管理专员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">4000～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;三年</p></a></li>
+            <li rel="35485"><a href="/job/1760-159093.htm" target="_blank" title="仓管员（椒江）">
+                <h6 style="white-space: nowrap;">仓管员（椒江）...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3000～4000元</span>&nbsp;/&nbsp;初中&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29138"><a href="/job/1760-337040.htm" target="_blank" title="嵌入式软件工程师">
+                <h6 style="white-space: nowrap;">嵌入式软件工...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">6000～10000元</span>&nbsp;/&nbsp;本科&nbsp;/&nbsp;二年</p></a></li>
+            <li rel="29133"><a href="/job/1760-337060.htm" target="_blank" title="国贸业务员">
+                <h6 style="white-space: nowrap;">国贸业务员
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;一年</p></a></li>
+            <li rel="29138"><a href="/job/1760-337055.htm" target="_blank" title="CAE研发工程师">
+                <h6 style="white-space: nowrap;">CAE研发工程师...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">5000～10000元</span>&nbsp;/&nbsp;硕士&nbsp;/&nbsp;三年-五年</p></a></li>
+            <li rel="117302"><a href="/job/1760-337424.htm" target="_blank" title="总务后勤内勤专员">
+                <h6 style="white-space: nowrap;">总务后勤内勤...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">2500～4000元</span>&nbsp;/&nbsp;中专&nbsp;/&nbsp;经验不限</p></a></li>
+            <li rel="29153"><a href="/job/1760-314539.htm" target="_blank" title="国内销售工程师（临海）">
+                <h6 style="white-space: nowrap;">国内销售工程...
+                    <small class="ml10 grey">46分钟前</small>
+                </h6>
+                <p class="ellipsis"><span class="red">3500～6000元</span>&nbsp;/&nbsp;大专&nbsp;/&nbsp;经验不限</p></a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
