@@ -7,8 +7,6 @@
     <script src="fader.js"></script>
     <script src="tab.js"></script>
     <script>
-
-
         $(document).ready(function () {
             var tabpanel = new TabPanel({
                 renderTo: 'company-job-tab',
@@ -22,14 +20,16 @@
                     title: '全部',
                     html: JobView(0),
                     closable: false
-                },
-                    {
+                }
+                        /*dep_set*/
+                    ,{
                         id: 'toolbarPlugin2',
                         name: 2,
                         title: '部门不限',
                         html: JobView(9094),
                         closable: false
-                    }, {
+                    }
+                    , {
                         id: 'toolbarPlugin3',
                         name: 3,
                         title: '营销中心',
@@ -104,6 +104,11 @@
                     }
                 ]
             });
+
+            $('.jobcount').text($('.alljob ul li').size());
+            if ($('#tongji').val() == 1) {
+                $('.tongji').show();
+            }
         });
         function JobView(type) {
             jobhtml = "";
@@ -118,16 +123,6 @@
             }
             return jobhtml;
         }
-    </script>
-    <script>
-
-        $(function () {
-
-            $('.jobcount').text($('.alljob ul li').size());
-            if ($('#tongji').val() == 1) {
-                $('.tongji').show();
-            }
-        })
 
     </script>
     <style>

@@ -1,0 +1,1 @@
+此demo中的jquery-1.8.3.min.js 是合并了汇博面向对象工厂各个js的js
