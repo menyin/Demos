@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+        function sendMsg(msg){//沟通
+            window.android.sendMsg(msg);//android
+        }
+        function switchHttps2Http(msg){//沟通
+            window.android.switchHttps2Http(msg);//android
+        }
+    </script>
+    <script type="text/javascript">
+        window.onload= function () {
+            sendMsg(JSON.stringify({activity:'',version:null,msg:''}));
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>
