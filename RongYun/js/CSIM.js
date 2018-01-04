@@ -31,19 +31,42 @@ CSIM.controller("main", ["$scope", "WebIMWidget", "$http","setting", function($s
         }
     };
     config = angular.extend(config, setting);
-    RongDemo.common(WebIMWidget, config, $scope);
+    // RongDemo.common(WebIMWidget, config, $scope);
+    RongDemo.common(WebIMWidget, config, $scope,$http);
 
 }]);
 (function () {
     /*将相同代码拆出来方便维护*/
     window.RongDemo = {
-        common: function (WebIMWidget, config, $scope) {
+        // common: function (WebIMWidget, config, $scope) {
+        common: function (WebIMWidget, config, $scope,$http) {
             WebIMWidget.init(config);
 
-            WebIMWidget.setUserInfoProvider(function (targetId, obj) {
+           /*
+           //采用设置供应商方式进行获取用户信息
+           WebIMWidget.setUserInfoProvider(function (targetId, obj) {
                 obj.onSuccess({
-                    name: "用户：" + targetId
+                    userId:targetId,//用户的id
+                    portraitUri:"http://pic.597.cs/logo/2017/12/25/17122503172149907.jpeg",//头像url
+                    name: "用户：" + targetId //用户显示的名称
                 });
+            });*/
+            WebIMWidget.setUserInfoProvider(function(targetId,obj){
+                $http({
+                  url:"/userinfo.json"
+                }).success(function(rep){
+                  var user;
+                  rep.userlist.forEach(function(item){
+                    if(item.id==targetId){
+                      user=item;
+                    }
+                  })
+                  if(user){
+                    obj.onSuccess({id:user.id,name:user.name,portraitUri:user.portraitUri});
+                  }else{
+                    obj.onSuccess({id:targetId,name:"用户："+targetId});
+                  }
+                })
             });
 
             WebIMWidget.setGroupInfoProvider(function (targetId, obj) {

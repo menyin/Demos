@@ -10,11 +10,15 @@
         function switchHttps2Http(msg){//沟通
             window.android.switchHttps2Http(msg);//android
         }
+        /**
+         *此方法由app在页面加载完后调用
+         */
+        function pageLoadEvent() {
+            sendMsg(JSON.stringify({activity:'',version:null,msg:''}));
+        }
     </script>
     <script type="text/javascript">
-        window.onload= function () {
-            sendMsg(JSON.stringify({activity:'',version:null,msg:''}));
-        };
+//        window.onload=pageLoadEvent;
     </script>
 </head>
 <body>

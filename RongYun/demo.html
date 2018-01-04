@@ -21,31 +21,32 @@
 
 </body>
 
-<!--<script src="libs/vendor/jquery-2.2.2.js"></script>
+<script src="libs/vendor/jquery-2.2.2.js"></script>
 <script src="libs/vendor/angular-1.4.8.js"></script>
-&lt;!&ndash; 融云IMLib &ndash;&gt;
+<!-- 融云IMLib -->
 <script src="//cdn.ronghub.com/RongIMLib-2.2.5.min.js"></script>
 <script src="//cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
 <script src="//cdn.ronghub.com/Libamr-2.2.5.min.js"></script>
 <script src="//cdn.ronghub.com/RongIMVoice-2.2.5.min.js"></script>
 
-&lt;!&ndash; 上传插件 &ndash;&gt;
+<!-- 上传插件 -->
 <script src="libs/vendor/plupload.full.min-2.1.1.js"></script>
 
 <script src="libs/vendor/qiniu-1.0.17.js"></script>
-&lt;!&ndash; 增强体验插件 &ndash;&gt;
+<!-- 增强体验插件 -->
 <script src="libs/vendor/jqueryrebox/jquery-rebox-0.1.0.js"></script>
-&lt;!&ndash; IM插件 &ndash;&gt;
+<!-- IM插件 -->
 <script src="libs/rongim/RongIMWidget.js"></script>
 <script src="js/CSIM.js"></script>
-<script src="js/CSIM_Config.js"></script>-->
+<script src="js/CSIM_Config.js"></script>
 
-<script src="libs/vendor/jquery-2.2.2.js"></script>
-<!--<script src="js/CSIM_All.js"></script>-->
-<script src="js/CSIM_All.js"></script>
+<!--<script src="libs/vendor/jquery-2.2.2.js"></script>
+&lt;!&ndash;<script src="js/CSIM_All.js"></script>&ndash;&gt;
+<script src="js/CSIM_All.js"></script>-->
 <script>
     angular.module('CSIM_Config', ['RongWebIMWidget'])
-            .factory('setting', ['WebIMWidget',function () {
+            .factory('setting', ['WebIMWidget',function (WebIMWidget) {
+                WebIMWidget.display=false;
                 return {
                     appkey: '3argexb6r934e',//后端写入appkey
                     token: "b/jvjEFD41TIVT0nsf9+L3ryPPkHsvRwWZV8SVI5ICcZ2I5Nl4OdNO01OjZxjjmVlD2dmk4RZ90="//后端写入token

@@ -12,7 +12,7 @@
         }
     </script>
     <script type="text/javascript">
-        window.onload= function () {
+        function pageLoadEvent() {
             var txt = document.getElementById('txt');
             document.getElementById('btn1').onclick=function(){
                 sendMsg(JSON.stringify({activity:'clog2jump',version:{iosPer:'1.3.8',iosCom:'1.0.12',androidPer:'13',androidCom:'9'},msg:'跳转到应用下载h5页面'}));
@@ -23,7 +23,8 @@
             document.getElementById('btn3').onclick=function(){
                 switchHttps2Http(JSON.stringify({activity:'switchHttps2Http',version:{iosPer:'1.3.8',iosCom:'1.0.12',androidPer:'13',androidCom:'9'},msg:'api请求协议切换'}));
             };
-        };
+        }
+//        window.onload = pageLoadEvent;
     </script>
 </head>
 <body>

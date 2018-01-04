@@ -1771,7 +1771,7 @@ var RongWebIMWidget;
                     _this.widgetConfig.onSuccess(userId);
                 }
                 if (RongWebIMWidget.Helper.checkType(_this.providerdata.getUserInfo) == "function") {
-                    _this.providerdata.getUserInfo(userId, {
+                    _this.providerdata.getUserInfo(userId, {//在此处出问题，此userId其实是目标对话人的userId而不是当前用户
                         onSuccess: function (data) {
                             _this.providerdata.currentUserInfo =
                                 new RongWebIMWidget.UserInfo(data.userId, data.name, data.portraitUri);
