@@ -5,54 +5,52 @@
     <title>Title</title>
     <script>
         /**
-        * 求两个数组交集
-        * @param arr 被交集的数组
-        * @param cmdFun 返回两个数组项对比的属性的函数，详见示例2
-        * @param flag 交集获取是哪个数组的元素项，默认是被交集数组
-        * @returns {any[]} 交集后的数组项
-        * @remark
-        * 如果操作的数组里有重复的元素则会出错，此扩展则无用
-        * @example
-        * var a1 = [1, 2, 3, 4];
-        var a2 = [3, 5, 6, 4];
-        var a3 = a1.intersect(a2);
-        console.log('示例1'+a3);
-        a1 = [{name:1},{name:2},{name:3},{name:4}];
-        var a2 = [{age:1},{age:4},{age:5},{age:6}];
-        var a3 = a1.intersect(a2,function (a1,a2) {
+         * 求两个数组交集
+         * @param arr 被交集的数组
+         * @param cmdFun 返回两个数组项对比的属性的函数，详见示例2
+         * @param flag 交集获取是哪个数组的元素项，默认是被交集数组
+         * @returns {any[]} 交集后的数组项，默认以第一个数组为准
+         * @remark
+         * 如果操作的数组里有重复的元素则会出错，此扩展则无用
+         * @example
+         * var a1 = [1, 2, 3, 4];
+         var a2 = [3, 5, 6, 4];
+         var a3 = a1.intersect(a2);
+         console.log('示例1'+a3);
+         a1 = [{name:1},{name:2},{name:3},{name:4}];
+         var a2 = [{age:1},{age:4},{age:5},{age:6}];
+         var a3 = a1.intersect(a2,function (a1,a2) {
             return [a1.name,a2.age];
         },false);
-        console.log('示例2'+a3);
-        */
-        Array.prototype.intersect=function (arr,cmdFun,flag) {
+         console.log('示例2'+a3);
+         */
+        Array.prototype.intersect = function (arr, cmdFun, flag) {
             var result = new Array();
             var obj = {};
-            for (var i = 0; i < this.length; i++) {
-                var atr1=this[i];
-                if(cmdFun){
-                    atr1 = cmdFun(this[i],{})[0];
+            for (var i = 0; i < arr.length; i++) {
+                var atr2 = arr[i];
+                if (cmdFun) {
+                    atr2 = cmdFun({}, arr[i])[1] || arr[i];
                 }
-                obj[atr1] = {};
-                obj[atr1].art1=this[i];
+                obj[atr2] = {};
+                obj[atr2].art2 = arr[i];
             }
-            for (var j = 0; j < arr.length; j++) {
-                var atr2 = arr[j];
-                if(cmdFun){
-                    atr2 = cmdFun({},arr[j])[1];
+            for (var j = 0; j < this.length; j++) {
+                var atr1 = this[j];
+                if (cmdFun) {
+                    atr1 = cmdFun(this[j], {})[0] || this[j];
                 }
-                if (obj[atr2]) {
-                    debugger;
-                    if(flag) {//结果数组默认填充第二个数组的元素
-                        result.push(obj[atr2].art1)
-                    }else{
-                        result.push(arr[j]);
+                if (obj[atr1]) {
+                    if (flag) {
+                        result.push(obj[atr1].art2)
+                    } else {
+                        result.push(this[j]);//结果数组默认填充第一个数组的元素
                     }
                 }
             }
             return result;
         }
-    </script>
-    <script>
+
         /**
          * 求两个数组差集,即属于当前数组A但不属于目标数组B的集合 即A-B
          * @param arr 减数的数组
@@ -78,21 +76,21 @@
         // },false);
          console.log(a3);
          */
-        Array.prototype.minus=function (arr,cmdFun) {
+        Array.prototype.minus = function (arr, cmdFun) {
             var result = new Array();
             var obj = {};
             for (var i = 0; i < arr.length; i++) {
-                var atr1=arr[i];
-                if(cmdFun){
-                    atr1 = cmdFun({},arr[i])[1];
+                var atr1 = arr[i];
+                if (cmdFun) {
+                    atr1 = cmdFun({}, arr[i])[1] || arr[i];
                 }
                 obj[atr1] = {};
-                obj[atr1].art1=arr[i];
+                obj[atr1].art1 = arr[i];
             }
             for (var j = 0; j < this.length; j++) {
                 var atr2 = this[j];
-                if(cmdFun){
-                    atr2 = cmdFun(this[j],{})[0];
+                if (cmdFun) {
+                    atr2 = cmdFun(this[j], {})[0] || this[j];
                 }
                 if (!obj[atr2]) {
                     result.push(this[j]);
@@ -100,9 +98,6 @@
             }
             return result;
         }
-
-
-
     </script>
 </head>
 <body>
