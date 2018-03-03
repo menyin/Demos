@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" id="btn" value="裁切图片">
+</body>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jqueryfileupload/js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jqueryfileupload/js/jquery.iframe-transport.js"></script>
+<script src="js/jqueryfileupload/js/jquery.fileupload.js"></script>
+<script src="js/layer-v3.0.2/layer.js"></script>
+<script src="js/imgcutor1.0.0/jquery.Jcrop.js"></script>
+<link rel="stylesheet" href="js/imgcutor1.0.0/css/jquery.Jcrop.css"/>
+<script src="js/imgcutor1.0.0/imgcutor-1.0.0.js"></script>
+<script type="text/javascript">
+    var locale='${LOCALE_LANG}';
+    var yesbt='确定';
+    var nobt='取消';
+    var filebt='浏览';
+    var noimgmsg='请先选择裁切的图片';
+    $('#btn').click(function(){
+        imgCutor.open({
+            title:'&nbsp;',
+            yesbt:yesbt,
+            nobt:nobt,
+            filebt:filebt,
+            noimgmsg:noimgmsg,
+            uploadurl:'${ctx}/sgmtw/UploadImg/Img?zoomScale=200&saveDir=album/photo&oriImg=1&fl=at1',//上传服务地址
+            imgcuturl:'${ctx}/sgmtw/UploadImg/ImgCut',//裁切服务地址
+            yescall:function(data){
+                if(!data){return;}
+                if(!data.flag||data.flag=="false"){
+                    if('session.getAttribute("LOCALE_LANG")'=='en_US'){
+                        mtwAlert('the operation of image is error!');
+                    }else{
+                        mtwAlert('图片裁剪出错！');
+                    }
+                    return false;
+                }else{
+                    debugger;
+                    $("#user_avatar").val(data.thumnbnail);
+                    $("#user_avatar_update_flag").attr("src",data.thumnbnail);
+                    $("#user_avatar_view").attr("src",data.thumnbnail);
+                    $(".header_left a img").attr("src",data.thumnbnail);
+                }
+            }
+        });
+    });
+
+
+</script>
+</html>
