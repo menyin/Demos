@@ -1,0 +1,1 @@
+h5有一款教好的截图插件，源码和demo详见 https://github.com/fengyuanchen/cropper
