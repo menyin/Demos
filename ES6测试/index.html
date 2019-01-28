@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script >
+        const  c1=()=>{
+            let i=1/0;
+            return 11;
+        }
+        const  c2=()=>{
+            return '12';
+        }
+        Promise.all([c1(),c2()]).then(datas=>{
+            console.log(datas);
+        }).catch(err=>{
+            console.log(err);
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

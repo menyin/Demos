@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传</title>
+    <link type="text/css" rel="stylesheet" href="http://192.168.1.21:8080/assets/css/style.css"/>
+    <script src="https://cdn.597.com/www/js/jquery.js?v=20130808"></script>
+    <script src="http://192.168.1.21:8080/assets/js/spark-md5.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="message"></div>
+    <form class="form-signin" method="post" target="_blank" action="/upload/" enctype="multipart/form-data">
+        <fieldset>
+            <input type="file" name="myfiles" id="myfiles"  multiple="multiple" onchange="selectFile(this)">
+            <input type="submit" name="submit" value="Submit">
+        </fieldset>
+        <pre id=log></pre>
+    </form>
+</div>
+<div class="img-box" id="imgboxid"></div>
+<div id="xmTanDiv"></div>
+<br/>
+</body>
+<script>
+    function calculate(file, callBack) {
+        var fileReader = new FileReader(),
+            blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice,
+            chunkSize = 20971520,
+
+            chunks = Math.ceil(file.size / chunkSize),
+            currentChunk = 0,
+            spark = new SparkMD5();
+        fileReader.onload = function (e) {
+            spark.appendBinary(e.target.result);
+            currentChunk++;
+            if (currentChunk < chunks) {
+                loadNext();
+            }
+            else {
+                /*var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(ee){
+                    file.strBase64=ee.target.result
+                    callBack(file, spark.end());
+                }*/
+                callBack(file, spark.end());
+            }
+        };
+
+        function loadNext() {
+            var start = currentChunk * chunkSize,
+                end = start + chunkSize >= file.size ? file.size : start + chunkSize;
+            fileReader.readAsBinaryString(blobSlice.call(file, start, end));
+        };
+        loadNext();
+    }
+
+
+    function selectFile(obj) {
+        if (obj.files) {//IE11+及其它
+            var log = document.getElementById("log");
+
+            window.md5 = "/upload/api/?act=get";
+            /*for(var i=0;i<fl;i++){
+                var file=obj.files[i];
+                calculate(file,function(e,md5){
+                    md5 = md5+e.name.substr(e.name.lastIndexOf("."))
+                    log.innerHTML+="<div id='"+md5+"'>文件名: "+e.name+"  MD5: "+md5+" ("+e.size.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')+" bytes)</div>\n";
+                    window.md5=window.md5+"&md5="+md5;
+                });
+            }*/
+            var avalabeFiles = {};
+            var recursionSign = 0;
+            recursionCreateMd5();
+
+            /**
+             * 生成文件md5
+             */
+            function recursionCreateMd5() {
+                if (recursionSign < obj.files.length) {
+                    calculate(obj.files[recursionSign], function (e, md5) {
+                        recursionSign++;
+                        avalabeFiles[md5+e.name.substr(e.name.lastIndexOf("."))]=e;
+                        recursionCreateMd5();
+                    });
+                } else {
+                    filterMd5();
+                }
+            }
+
+            /**
+             * 过滤文件列表
+             */
+            function filterMd5() {
+                var url = 'http://192.168.1.21:8080/upload/api/?act=get';
+                for (md5 in avalabeFiles) {
+                    url += '&md5=' + md5;
+                }
+                //请求过滤
+                $.ajax({
+                    url: url,
+                    success: function (result) {
+                        uploadFiles(result);
+                    }
+                });
+            }
+
+            /**
+             * 上传文件
+             * @param result 可上传文件列表
+             */
+            function uploadFiles(result) {
+                var uploadForm=new FormData();
+                var j=0;
+                for(key in result){
+                    // uploadForm.append('file['+j+']', avalabeFiles[key]);
+                    debugger;
+                    uploadForm.append('file123', avalabeFiles[key]);
+                    // uploadForm.append('file', avalabeFiles[key].strBase64);
+
+                    j++;
+                }
+
+                debugger;
+                $.ajax({
+                    url: "http://192.168.1.21:8080/upload/",
+                    data: uploadForm,
+                    type: 'POST',
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        console.log(result);
+                        console.log('渲染界面');
+                    }
+                });
+            }
+
+            // $.get(window.md5);
+        } else {//IE11-
+            //正常表单上传
+        }
+
+    }
+var strBase64='data:image/png;base64,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';
+
+</script>
+
+</html>

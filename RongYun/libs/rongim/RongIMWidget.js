@@ -810,6 +810,7 @@ var RongWebIMWidget;
                     _this.conversationServer.current = null;
                     setTimeout(function () {
                         _this.$scope.$apply();
+                        console.log('来过~~1');
                     });
                     return;
                 }
@@ -842,6 +843,8 @@ var RongWebIMWidget;
                             }
                             setTimeout(function () {
                                 _this.$scope.$apply();
+                                console.log('来过~~2');
+
                             });
                             _this.$scope.scrollBar();
                         }
@@ -853,6 +856,8 @@ var RongWebIMWidget;
                 else {
                     setTimeout(function () {
                         _this.$scope.$apply();
+                        console.log('来过~~3');
+
                     });
                     _this.$scope.scrollBar();
                 }
@@ -1567,6 +1572,8 @@ var RongWebIMWidget;
                                 }
                             });
                         }
+                        console.log("调试空白bug：");
+                        console.log(_this._conversationList);
                     },
                     onError: function (error) {
                         defer.reject(error);

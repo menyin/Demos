@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../597搜索页测试/jquery-1.8.3.min.js"></script>
+    <script src="processData.js"></script>
+    <script>
+        console.log('初始化代码');
+        alert('初始化代码');
+    </script>
+</head>
+<body>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="12">计算机硬件</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1210">计算机硬件</a><a href="javascript:" data-id="1211">高级硬件工程师</a><a
+                    href="javascript:" data-id="1212">硬件工程师</a><a href="javascript:" data-id="1213">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="13">计算机软件</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1310">计算机软件</a><a href="javascript:" data-id="1311">高级软件工程师</a><a
+                    href="javascript:" data-id="1312">软件工程师</a><a href="javascript:" data-id="1313">软件UI设计师/工程师</a><a
+                    href="javascript:" data-id="1314">仿真应用工程师</a><a href="javascript:" data-id="1315">ERP实施顾问</a><a
+                    href="javascript:" data-id="1316">ERP技术开发</a><a href="javascript:" data-id="1317">需求工程师</a><a
+                    href="javascript:" data-id="1318">系统集成工程师</a><a href="javascript:" data-id="1319">系统分析员</a><a
+                    href="javascript:" data-id="1320">系统工程师</a><a href="javascript:" data-id="1321">系统架构设计师</a><a
+                    href="javascript:" data-id="1322">数据库工程师/管理员</a><a href="javascript:"
+                                                                       data-id="1323">计算机辅助设计工程师</a><a
+                    href="javascript:" data-id="1324">其他</a><a href="javascript:" data-id="1325">设计总监</a><a
+                    href="javascript:" data-id="1326">设计经理</a><a href="javascript:" data-id="1327">设计主管</a><a
+                    href="javascript:" data-id="1328">WEB前端开发</a><a href="javascript:" data-id="1329">IOS开发工程师</a><a
+                    href="javascript:" data-id="1330">Android开发工程师</a><a href="javascript:" data-id="1331">Java开发工程师</a><a
+                    href="javascript:" data-id="1332">PHP开发工程师</a><a href="javascript:" data-id="1333">C语言开发工程师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="14">互联网/网游</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1410">互联网/网游</a><a href="javascript:" data-id="1411">互联网软件开发工程师</a><a
+                    href="javascript:" data-id="1412">语音/视频开发工程师</a><a href="javascript:" data-id="1413">多媒体/游戏开发工程师</a><a
+                    href="javascript:" data-id="1414">网站营运经理/主管</a><a href="javascript:" data-id="1415">网站营运专员</a><a
+                    href="javascript:" data-id="1416">网络工程师</a><a href="javascript:" data-id="1417">UI设计师/顾问</a><a
+                    href="javascript:" data-id="1418">网站架构设计师</a><a href="javascript:" data-id="1419">网站维护工程师</a><a
+                    href="javascript:" data-id="1420">系统管理员/网络管理员</a><a href="javascript:" data-id="1421">网站策划</a><a
+                    href="javascript:" data-id="1422">网站编辑</a><a href="javascript:" data-id="1423">网页设计/制作/美工</a><a
+                    href="javascript:" data-id="1424">脚本开发工程师</a><a href="javascript:" data-id="1425">游戏策划师</a><a
+                    href="javascript:" data-id="1426">游戏界面设计师</a><a href="javascript:" data-id="1427">Flash设计/开发</a><a
+                    href="javascript:" data-id="1428">特效设计师</a><a href="javascript:" data-id="1429">视觉设计师</a><a
+                    href="javascript:" data-id="1430">音效设计师</a><a href="javascript:" data-id="1431">SEO搜索引擎优化</a><a
+                    href="javascript:" data-id="1432">网络信息安全工程师</a><a href="javascript:" data-id="1433">智能大厦/综合布线</a><a
+                    href="javascript:" data-id="1434">其他</a><a href="javascript:" data-id="1435">互联网产品经理/主管</a><a
+                    href="javascript:" data-id="1436">互联网产品专员/助理</a><a href="javascript:" data-id="1437">网店店长</a><a
+                    href="javascript:" data-id="1438">网店推广</a><a href="javascript:" data-id="1439">网店客服</a><a
+                    href="javascript:" data-id="1440">网店运营</a><a href="javascript:" data-id="1441">网店管理员</a><a
+                    href="javascript:" data-id="1442">运营主管/专员</a><a href="javascript:" data-id="1443">微信推广</a><a
+                    href="javascript:" data-id="1444">淘宝/微信运营专员/主管</a><a href="javascript:" data-id="1445">产品运营</a><a
+                    href="javascript:" data-id="1446">数据运营</a><a href="javascript:" data-id="1447">市场运营</a><a
+                    href="javascript:" data-id="1448">内容运营</a><a href="javascript:" data-id="1449">网店运营</a><a
+                    href="javascript:" data-id="1450">新媒体运营</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="15">IT-管理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1510">IT-管理</a><a href="javascript:"
+                                                                  data-id="1511">首席技术执行官CTO/首席信息官CIO</a><a
+                    href="javascript:" data-id="1512">技术总监/经理</a><a href="javascript:" data-id="1513">信息技术经理/主管</a><a
+                    href="javascript:" data-id="1514">信息技术专员</a><a href="javascript:" data-id="1515">项目总监</a><a
+                    href="javascript:" data-id="1516">项目经理</a><a href="javascript:" data-id="1517">项目主管</a><a
+                    href="javascript:" data-id="1518">项目执行/协调人员</a><a href="javascript:" data-id="1519">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="16">IT-品管、技术支持及其它</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1610">IT-品管、技术支持及其它</a><a href="javascript:"
+                                                                          data-id="1611">技术支持/维护经理</a><a
+                    href="javascript:" data-id="1612">技术支持/维护工程师</a><a href="javascript:" data-id="1613">Helpdesk
+                技术支持</a><a href="javascript:" data-id="1614">计量工程师</a><a href="javascript:" data-id="1615">标准化工程师</a><a
+                    href="javascript:" data-id="1616">品质经理</a><a href="javascript:" data-id="1617">系统测试</a><a
+                    href="javascript:" data-id="1618">软件测试</a><a href="javascript:" data-id="1619">硬件测试</a><a
+                    href="javascript:" data-id="1620">测试员</a><a href="javascript:" data-id="1621">文档工程师</a><a
+                    href="javascript:" data-id="1622">技术文员/助理</a><a href="javascript:" data-id="1623">其他</a><a
+                    href="javascript:" data-id="1624">研发总监</a><a href="javascript:" data-id="1625">研发经理</a><a
+                    href="javascript:" data-id="1626">研发主管</a><a href="javascript:" data-id="1627">研发工程师</a><a
+                    href="javascript:" data-id="1628">助理研发工程师</a><a href="javascript:" data-id="1629">移动端测试</a><a
+                    href="javascript:" data-id="1630">游戏测试</a><a href="javascript:" data-id="1631">运维工程师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="17">通信技术开发及应用</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1710">通信技术开发及应用</a><a href="javascript:" data-id="1711">通信技术工程师</a><a
+                    href="javascript:" data-id="1712">有线传输工程师</a><a href="javascript:" data-id="1713">无线通信工程师</a><a
+                    href="javascript:" data-id="1714">电信交换工程师</a><a href="javascript:" data-id="1715">数据通信工程师</a><a
+                    href="javascript:" data-id="1716">移动通信工程师</a><a href="javascript:" data-id="1717">电信网络工程师</a><a
+                    href="javascript:" data-id="1718">通信电源工程师</a><a href="javascript:" data-id="1719">增值产品开发工程师</a><a
+                    href="javascript:" data-id="1720">手机软件开发工程师</a><a href="javascript:" data-id="1721">手机应用开发工程师</a><a
+                    href="javascript:" data-id="1722">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="18">电子/电器/半导体/仪器仪表</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1810">电子/电器/半导体/仪器仪表</a><a href="javascript:" data-id="1811">集成电路IC设计/应用工程师</a><a
+                    href="javascript:" data-id="1812">IC验证工程师</a><a href="javascript:" data-id="1813">电子工程师/技术员</a><a
+                    href="javascript:" data-id="1814">电子技术研发工程师</a><a href="javascript:" data-id="1815">射频工程师</a><a
+                    href="javascript:" data-id="1816">电子/电器维修工程师/技师</a><a href="javascript:"
+                                                                          data-id="1817">变压器与磁电工程师</a><a
+                    href="javascript:" data-id="1818">版图设计工程师</a><a href="javascript:" data-id="1819">电气工程师/技术员</a><a
+                    href="javascript:" data-id="1820">电路工程师/技术员(模拟/数字)</a><a href="javascript:" data-id="1821">电声/音响工程师/技术员</a><a
+                    href="javascript:" data-id="1822">激光/光电子技术</a><a href="javascript:" data-id="1823">半导体技术</a><a
+                    href="javascript:" data-id="1824">自动控制工程师/技术员</a><a href="javascript:" data-id="1825">电子软件开发(ARM/MCU...)</a><a
+                    href="javascript:" data-id="1826">嵌入式软件开发(Linux/单片机/DLC/DSP…)</a><a href="javascript:"
+                                                                                        data-id="1827">嵌入式硬件开发(主板机…)</a><a
+                    href="javascript:" data-id="1828">电池/电源开发</a><a href="javascript:" data-id="1829">FAE 现场应用工程师</a><a
+                    href="javascript:" data-id="1830">工艺工程师</a><a href="javascript:" data-id="1831">家用电器/数码产品研发</a><a
+                    href="javascript:" data-id="1832">仪器/仪表/计量分析师</a><a href="javascript:" data-id="1833">测试工程师</a><a
+                    href="javascript:" data-id="1834">其他</a><a href="javascript:" data-id="1835">SMT工程师</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="19">销售管理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="1910">销售管理</a><a href="javascript:" data-id="1911">销售总监</a><a
+                    href="javascript:" data-id="1912">销售经理</a><a href="javascript:" data-id="1913">销售主管</a><a
+                    href="javascript:" data-id="1914">业务拓展主管/经理</a><a href="javascript:" data-id="1915">渠道/分销总监</a><a
+                    href="javascript:" data-id="1916">渠道/分销经理</a><a href="javascript:" data-id="1917">分销主管</a><a
+                    href="javascript:" data-id="1918">大客户经理</a><a href="javascript:" data-id="1919">客户经理/主管</a><a
+                    href="javascript:" data-id="1920">区域销售总监</a><a href="javascript:" data-id="1921">区域销售经理</a><a
+                    href="javascript:" data-id="1922">团购经理/主管</a><a href="javascript:" data-id="1923">其他</a><a
+                    href="javascript:" data-id="1924">招商经理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="20">销售人员</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2010">销售人员</a><a href="javascript:" data-id="2011">销售代表</a><a
+                    href="javascript:" data-id="2012">渠道/分销专员</a><a href="javascript:" data-id="2013">客户代表</a><a
+                    href="javascript:" data-id="2014">销售工程师</a><a href="javascript:" data-id="2015">电话销售</a><a
+                    href="javascript:" data-id="2016">团购业务员</a><a href="javascript:" data-id="2017">经销商</a><a
+                    href="javascript:" data-id="2018">其他</a><a href="javascript:" data-id="2019">营业员</a><a
+                    href="javascript:" data-id="2020">销售内勤/助理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="21">销售行政及商务</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2110">销售行政及商务</a><a href="javascript:" data-id="2111">销售行政经理/主管</a><a
+                    href="javascript:" data-id="2112">销售行政专员/助理</a><a href="javascript:" data-id="2113">业务分析经理/主管</a><a
+                    href="javascript:" data-id="2114">业务分析专员/助理</a><a href="javascript:" data-id="2115">商务经理</a><a
+                    href="javascript:" data-id="2116">商务主管/专员</a><a href="javascript:" data-id="2117">商务助理</a><a
+                    href="javascript:" data-id="2118">销售助理</a><a href="javascript:" data-id="2119">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="22">客服及技术支持</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2210">客服及技术支持</a><a href="javascript:" data-id="2211">客服总监(非技术)</a><a
+                    href="javascript:" data-id="2212">客服经理(非技术)</a><a href="javascript:" data-id="2213">客服主管(非技术)</a><a
+                    href="javascript:" data-id="2214">客服专员/助理(非技术)</a><a href="javascript:" data-id="2215">客户关系经理/主管</a><a
+                    href="javascript:" data-id="2216">投诉专员</a><a href="javascript:" data-id="2217">售前/售后技术支持经理</a><a
+                    href="javascript:" data-id="2218">售前/售后技术支持主管</a><a href="javascript:"
+                                                                        data-id="2219">售前/售后技术支持工程师</a><a
+                    href="javascript:" data-id="2220">咨询热线/呼叫中心服务人员</a><a href="javascript:" data-id="2221">VIP专员</a><a
+                    href="javascript:" data-id="2222">其他</a><a href="javascript:" data-id="2223">网店客服</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="23">财务/审计/税务</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2310">财务/审计/税务</a><a href="javascript:" data-id="2311">首席财务官 CFO</a><a
+                    href="javascript:" data-id="2312">财务总监</a><a href="javascript:" data-id="2313">财务经理</a><a
+                    href="javascript:" data-id="2314">财务顾问</a><a href="javascript:" data-id="2315">财务主管/总帐主管</a><a
+                    href="javascript:" data-id="2316">会计经理/会计主管</a><a href="javascript:" data-id="2317">会计</a><a
+                    href="javascript:" data-id="2318">出纳员</a><a href="javascript:" data-id="2319">财务/会计助理</a><a
+                    href="javascript:" data-id="2320">会计文员</a><a href="javascript:" data-id="2321">固定资产会计</a><a
+                    href="javascript:" data-id="2322">财务分析经理/主管</a><a href="javascript:" data-id="2323">财务分析员</a><a
+                    href="javascript:" data-id="2324">成本经理/成本主管</a><a href="javascript:" data-id="2325">成本管理员</a><a
+                    href="javascript:" data-id="2326">资金经理/主管</a><a href="javascript:" data-id="2327">资金专员</a><a
+                    href="javascript:" data-id="2328">审计经理/主管</a><a href="javascript:" data-id="2329">审计专员/助理</a><a
+                    href="javascript:" data-id="2330">税务经理/税务主管</a><a href="javascript:" data-id="2331">税务专员/助理</a><a
+                    href="javascript:" data-id="2332">统计员</a><a href="javascript:" data-id="2333">其他</a><a
+                    href="javascript:" data-id="2334">结算专员</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="24">金融/证券/期货/投资</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2410">金融/证券/期货/投资</a><a href="javascript:"
+                                                                        data-id="2411">证券/期货/外汇经纪人</a><a
+                    href="javascript:" data-id="2412">证券分析师</a><a href="javascript:" data-id="2413">股票/期货操盘手</a><a
+                    href="javascript:" data-id="2414">金融/经济研究员</a><a href="javascript:" data-id="2415">投资/基金项目经理</a><a
+                    href="javascript:" data-id="2416">投资/理财顾问</a><a href="javascript:" data-id="2417">投资银行业务</a><a
+                    href="javascript:" data-id="2418">融资经理/融资主管</a><a href="javascript:" data-id="2419">融资专员</a><a
+                    href="javascript:" data-id="2420">拍卖师</a><a href="javascript:" data-id="2421">其他</a><a
+                    href="javascript:" data-id="2422">高级证券分析师</a><a href="javascript:" data-id="2423">理财总监</a><a
+                    href="javascript:" data-id="2424">理财经理</a><a href="javascript:" data-id="2425">融资总监</a><a
+                    href="javascript:" data-id="2426">证券总监/部门经理</a><a href="javascript:" data-id="2427">证券/投资客户总监</a><a
+                    href="javascript:" data-id="2428">证券/投资客户经理</a><a href="javascript:" data-id="2429">证券/投资客户主管</a><a
+                    href="javascript:" data-id="2430">证券/投资客户代表</a><a href="javascript:" data-id="2431">金融租赁</a><a
+                    href="javascript:" data-id="2432">金融产品经理</a><a href="javascript:" data-id="2433">金融产品销售</a><a
+                    href="javascript:" data-id="2434">基金项目经理</a><a href="javascript:" data-id="2435">储备经理人</a><a
+                    href="javascript:" data-id="2436">投资经理</a><a href="javascript:" data-id="2437">投资银行财务分析</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="25">银行</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2510">银行</a><a href="javascript:" data-id="2511">行长/副行长</a><a
+                    href="javascript:" data-id="2512">个人业务部门经理/主管</a><a href="javascript:" data-id="2513">个人业务客户经理</a><a
+                    href="javascript:" data-id="2514">公司业务部门经理/主管</a><a href="javascript:" data-id="2515">公司业务客户经理</a><a
+                    href="javascript:" data-id="2516">综合业务经理/主管</a><a href="javascript:" data-id="2517">综合业务专员</a><a
+                    href="javascript:" data-id="2518">资产评估/分析</a><a href="javascript:" data-id="2519">风险控制</a><a
+                    href="javascript:" data-id="2520">信贷管理</a><a href="javascript:" data-id="2521">信审核查</a><a
+                    href="javascript:" data-id="2522">进出口/信用证结算</a><a href="javascript:" data-id="2523">外汇交易</a><a
+                    href="javascript:" data-id="2524">清算人员</a><a href="javascript:" data-id="2525">高级客户经理/客户经理</a><a
+                    href="javascript:" data-id="2526">客户主管/专员</a><a href="javascript:" data-id="2527">营业部大堂经理</a><a
+                    href="javascript:" data-id="2528">银行柜员</a><a href="javascript:" data-id="2529">银行卡、电子银行业务推广</a><a
+                    href="javascript:" data-id="2530">其他</a><a href="javascript:" data-id="2531">银行大堂经理</a><a
+                    href="javascript:" data-id="2532">银行客户总监</a><a href="javascript:" data-id="2533">银行客户经理</a><a
+                    href="javascript:" data-id="2534">银行客户代表</a><a href="javascript:" data-id="2535">银行客户服务</a><a
+                    href="javascript:" data-id="2536">信用卡销售</a><a href="javascript:" data-id="2537">银行柜员</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="26">保险</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2610">保险</a><a href="javascript:" data-id="2611">保险精算师</a><a
+                    href="javascript:" data-id="2612">保险产品开发/项目策划</a><a href="javascript:"
+                                                                        data-id="2613">保险业务经理/主管</a><a
+                    href="javascript:" data-id="2614">保险代理/经纪人/客户经理</a><a href="javascript:"
+                                                                          data-id="2615">理财顾问/财务规划师</a><a
+                    href="javascript:" data-id="2616">储备经理人</a><a href="javascript:" data-id="2617">保险核保</a><a
+                    href="javascript:" data-id="2618">保险理赔</a><a href="javascript:" data-id="2619">保险客户服务/续期管理</a><a
+                    href="javascript:" data-id="2620">保险培训师</a><a href="javascript:" data-id="2621">保险内勤</a><a
+                    href="javascript:" data-id="2622">契约管理</a><a href="javascript:" data-id="2623">其他</a><a
+                    href="javascript:" data-id="2624">汽车定损/车险理赔</a><a href="javascript:" data-id="2625">保险电销</a><a
+                    href="javascript:" data-id="2626">保险核安</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="27">生产/营运</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2710">生产/营运</a><a href="javascript:" data-id="2711">工厂经理/厂长</a><a
+                    href="javascript:" data-id="2712">总工程师/副总工程师</a><a href="javascript:" data-id="2713">项目总监</a><a
+                    href="javascript:" data-id="2714">项目经理/主管</a><a href="javascript:" data-id="2715">项目工程师</a><a
+                    href="javascript:" data-id="2716">营运经理</a><a href="javascript:" data-id="2717">营运主管</a><a
+                    href="javascript:" data-id="2718">生产总监</a><a href="javascript:" data-id="2719">生产经理/车间主任</a><a
+                    href="javascript:" data-id="2720">生产计划/物料管理(PMC)</a><a href="javascript:" data-id="2721">生产主管/督导/领班/组长</a><a
+                    href="javascript:" data-id="2722">生产文员</a><a href="javascript:" data-id="2723">化验员</a><a
+                    href="javascript:" data-id="2724">其他</a><a href="javascript:" data-id="2725">技术工程师 </a><a
+                    href="javascript:" data-id="2726">设备管理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="28">质量/安全管理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2810">质量/安全管理</a><a href="javascript:"
+                                                                    data-id="2811">质量管理/测试经理(QA/QC经理)</a><a
+                    href="javascript:" data-id="2812">质量管理/测试主管(QA/QC主管)</a><a href="javascript:" data-id="2813">质量管理/测试工程师(QA/QC工程师)</a><a
+                    href="javascript:" data-id="2814">质量检验员/测试员</a><a href="javascript:" data-id="2815">可靠度工程师</a><a
+                    href="javascript:" data-id="2816">故障分析工程师</a><a href="javascript:" data-id="2817">认证工程师/审核员</a><a
+                    href="javascript:" data-id="2818">体系工程师/审核员</a><a href="javascript:" data-id="2819">环境/健康/安全经理/主管（EHS）</a><a
+                    href="javascript:" data-id="2820">环境/健康/安全工程师（EHS）</a><a href="javascript:" data-id="2821">供应商管理</a><a
+                    href="javascript:" data-id="2822">采购材料、设备质量管理</a><a href="javascript:" data-id="2823">其他</a><a
+                    href="javascript:" data-id="2824">安全消防</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="29">工程/机械/能源</a></th>
+        <td>
+            <div><a href="javascript:" data-id="2910">工程/机械/能源</a><a href="javascript:" data-id="2911">技术研发经理/主管</a><a
+                    href="javascript:" data-id="2912">技术研发工程师</a><a href="javascript:" data-id="2913">产品工艺/制程工程师</a><a
+                    href="javascript:" data-id="2914">产品规划工程师</a><a href="javascript:" data-id="2915">实验室负责人/工程师</a><a
+                    href="javascript:" data-id="2916">工程/设备经理</a><a href="javascript:" data-id="2917">工程/设备主管</a><a
+                    href="javascript:" data-id="2918">工程/设备工程师</a><a href="javascript:" data-id="2919">工程/机械绘图员</a><a
+                    href="javascript:" data-id="2920">工业工程师</a><a href="javascript:" data-id="2921">材料工程师</a><a
+                    href="javascript:" data-id="2922">机械工程师</a><a href="javascript:" data-id="2923">结构工程师</a><a
+                    href="javascript:" data-id="2924">模具工程师</a><a href="javascript:" data-id="2925">机电工程师</a><a
+                    href="javascript:" data-id="2926">维修经理/主管</a><a href="javascript:" data-id="2927">维修工程师</a><a
+                    href="javascript:" data-id="2928">装配工程师/技师</a><a href="javascript:" data-id="2929">铸造/锻造工程师/技师</a><a
+                    href="javascript:" data-id="2930">注塑工程师/技师</a><a href="javascript:" data-id="2931">焊接工程师/技师</a><a
+                    href="javascript:" data-id="2932">夹具工程师/技师</a><a href="javascript:" data-id="2933">CNC工程师</a><a
+                    href="javascript:" data-id="2934">冲压工程师/技师</a><a href="javascript:" data-id="2935">锅炉工程师/技师</a><a
+                    href="javascript:" data-id="2936">电力工程师/技术员</a><a href="javascript:" data-id="2937">光源与照明工程</a><a
+                    href="javascript:" data-id="2938">汽车/摩托车工程师</a><a href="javascript:" data-id="2939">船舶工程师</a><a
+                    href="javascript:" data-id="2940">轨道交通工程师/技术员</a><a href="javascript:" data-id="2941">飞机维修机械师</a><a
+                    href="javascript:" data-id="2942">飞行器设计与制造</a><a href="javascript:" data-id="2943">水利/水电工程师</a><a
+                    href="javascript:" data-id="2944">石油天然气技术人员</a><a href="javascript:" data-id="2945">矿产勘探/地质勘测工程师</a><a
+                    href="javascript:" data-id="2946">其他</a><a href="javascript:" data-id="2947">研发总监</a><a
+                    href="javascript:" data-id="2948">研发经理</a><a href="javascript:" data-id="2949">研发主管</a><a
+                    href="javascript:" data-id="2950">研发工程师</a><a href="javascript:" data-id="2951">助理研发工程师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="30">汽车</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3010">汽车</a><a href="javascript:" data-id="3011">汽车机构工程师</a><a
+                    href="javascript:" data-id="3012">汽车设计工程师</a><a href="javascript:" data-id="3013">汽车电子工程师</a><a
+                    href="javascript:" data-id="3014">汽车质量管理</a><a href="javascript:" data-id="3015">汽车安全性能工程师</a><a
+                    href="javascript:" data-id="3016">汽车装配工艺工程师</a><a href="javascript:" data-id="3017">汽车修理人员</a><a
+                    href="javascript:" data-id="3018">4S店经理/维修站经理</a><a href="javascript:" data-id="3019">汽车销售/经纪人</a><a
+                    href="javascript:" data-id="3020">二手车评估师</a><a href="javascript:" data-id="3021">其他</a><a
+                    href="javascript:" data-id="3022">汽车定损/车险理赔</a><a href="javascript:" data-id="3023">汽车零配件销售</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="31">技工</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3110">技工</a><a href="javascript:" data-id="3111">钳工/机修工/钣金工</a><a
+                    href="javascript:" data-id="3112">电焊工/铆焊工</a><a href="javascript:"
+                                                                    data-id="3113">车工/磨工/铣工/冲压工/锣工</a><a
+                    href="javascript:" data-id="3114">切割技工</a><a href="javascript:" data-id="3115">模具工</a><a
+                    href="javascript:" data-id="3116">电工</a><a href="javascript:" data-id="3117">叉车工</a><a
+                    href="javascript:" data-id="3118">空调工/电梯工/锅炉工</a><a href="javascript:" data-id="3119">水工/木工/漆工</a><a
+                    href="javascript:" data-id="3120">普工/操作工</a><a href="javascript:" data-id="3121">裁缝印纺熨烫</a><a
+                    href="javascript:" data-id="3122">汽车修理工</a><a href="javascript:" data-id="3123">其他</a><a
+                    href="javascript:" data-id="3124">装配工</a><a href="javascript:" data-id="3125">万能工</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="32">服装/纺织/皮革</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3210">服装/纺织/皮革</a><a href="javascript:" data-id="3211">服装/纺织设计总监</a><a
+                    href="javascript:" data-id="3212">服装/纺织设计</a><a href="javascript:" data-id="3213">面料辅料开发</a><a
+                    href="javascript:" data-id="3214">面料辅料采购</a><a href="javascript:" data-id="3215">服装/纺织/皮革跟单</a><a
+                    href="javascript:" data-id="3216">质量管理/验货员(QA/QC)</a><a href="javascript:" data-id="3217">板房/楦头/底格出格师</a><a
+                    href="javascript:" data-id="3218">打样/制版</a><a href="javascript:" data-id="3219">电脑放码员</a><a
+                    href="javascript:" data-id="3220">纸样师/车板工</a><a href="javascript:" data-id="3221">裁床</a><a
+                    href="javascript:" data-id="3222">其他</a><a href="javascript:" data-id="3223">服装/纺织品/皮革销售</a><a
+                    href="javascript:" data-id="3224">服装/纺织品/皮革质量管理</a><a href="javascript:"
+                                                                          data-id="3225">服装/纺织/皮革项目管理</a><a
+                    href="javascript:" data-id="3226">剪裁工</a><a href="javascript:" data-id="3227">缝纫工</a><a
+                    href="javascript:" data-id="3228">纺织工/针织工</a><a href="javascript:" data-id="3229">配色工</a><a
+                    href="javascript:" data-id="3230">印染工</a><a href="javascript:" data-id="3231">漂染工</a><a
+                    href="javascript:" data-id="3232">挡车工</a><a href="javascript:" data-id="3233">浆纱工</a><a
+                    href="javascript:" data-id="3234">整经工</a><a href="javascript:" data-id="3235">鞋子设计</a><a
+                    href="javascript:" data-id="3236">细纱工</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="33">采购</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3310">采购</a><a href="javascript:" data-id="3311">采购总监</a><a
+                    href="javascript:" data-id="3312">采购经理</a><a href="javascript:" data-id="3313">采购主管</a><a
+                    href="javascript:" data-id="3314">采购员</a><a href="javascript:" data-id="3315">采购助理</a><a
+                    href="javascript:" data-id="3316">买手</a><a href="javascript:" data-id="3317">供应商开发</a><a
+                    href="javascript:" data-id="3318">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="34">贸易</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3410">贸易</a><a href="javascript:" data-id="3411">贸易/进出口经理/主管</a><a
+                    href="javascript:" data-id="3412">贸易/进出口专员/助理</a><a href="javascript:" data-id="3413">国内贸易人员</a><a
+                    href="javascript:" data-id="3414">业务跟单经理</a><a href="javascript:" data-id="3415">高级业务跟单</a><a
+                    href="javascript:" data-id="3416">业务跟单</a><a href="javascript:" data-id="3417">助理业务跟单</a><a
+                    href="javascript:" data-id="3418">其他</a><a href="javascript:" data-id="3419">报关员</a><a
+                    href="javascript:" data-id="3420">国际贸易主管/专员</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="35">物流/仓储</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3510">物流/仓储</a><a href="javascript:" data-id="3511">物流总监</a><a
+                    href="javascript:" data-id="3512">物流经理</a><a href="javascript:" data-id="3513">物流主管</a><a
+                    href="javascript:" data-id="3514">物流专员/助理</a><a href="javascript:" data-id="3515">供应链总监</a><a
+                    href="javascript:" data-id="3516">供应链经理</a><a href="javascript:" data-id="3517">供应链主管/专员</a><a
+                    href="javascript:" data-id="3518">物料经理</a><a href="javascript:" data-id="3519">物料主管/专员</a><a
+                    href="javascript:" data-id="3520">仓库经理/主管</a><a href="javascript:" data-id="3521">仓库管理员</a><a
+                    href="javascript:" data-id="3522">运输经理/主管</a><a href="javascript:" data-id="3523">项目经理/主管</a><a
+                    href="javascript:" data-id="3524">货运代理</a><a href="javascript:" data-id="3525">集装箱业务</a><a
+                    href="javascript:" data-id="3526">海关事务管理</a><a href="javascript:" data-id="3527">报关员</a><a
+                    href="javascript:" data-id="3528">单证员</a><a href="javascript:" data-id="3529">船务/空运陆运操作</a><a
+                    href="javascript:" data-id="3530">快递员</a><a href="javascript:" data-id="3531">调度员</a><a
+                    href="javascript:" data-id="3532">理货员</a><a href="javascript:" data-id="3533">其他</a><a
+                    href="javascript:" data-id="3534">物流/仓储项目管理</a><a href="javascript:" data-id="3535">海关事务管理</a><a
+                    href="javascript:" data-id="3536">订单处理员</a><a href="javascript:" data-id="3537">外卖快递</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="36">生物/制药/医疗器械</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3610">生物/制药/医疗器械</a><a href="javascript:" data-id="3611">生物工程/生物制药</a><a
+                    href="javascript:" data-id="3612">化学分析测试员</a><a href="javascript:" data-id="3613">医药技术研发管理人员</a><a
+                    href="javascript:" data-id="3614">医药技术研发人员</a><a href="javascript:" data-id="3615">临床研究员</a><a
+                    href="javascript:" data-id="3616">临床协调员</a><a href="javascript:" data-id="3617">临床数据分析员</a><a
+                    href="javascript:" data-id="3618">药品注册</a><a href="javascript:" data-id="3619">药品生产/质量管理</a><a
+                    href="javascript:" data-id="3620">药品市场推广经理</a><a href="javascript:" data-id="3621">药品市场推广主管/专员</a><a
+                    href="javascript:" data-id="3622">医药招商</a><a href="javascript:" data-id="3623">政府事务管理</a><a
+                    href="javascript:" data-id="3624">招投标管理</a><a href="javascript:" data-id="3625">医药销售经理/主管</a><a
+                    href="javascript:" data-id="3626">医药销售代表</a><a href="javascript:" data-id="3627">医疗设备注册</a><a
+                    href="javascript:" data-id="3628">医疗设备生产/质量管理</a><a href="javascript:" data-id="3629">医疗器械市场推广</a><a
+                    href="javascript:" data-id="3630">医疗器械销售</a><a href="javascript:" data-id="3631">医疗器械维修人员</a><a
+                    href="javascript:" data-id="3632">其他</a><a href="javascript:" data-id="3633">研发总监</a><a
+                    href="javascript:" data-id="3634">研发经理</a><a href="javascript:" data-id="3635">研发主管</a><a
+                    href="javascript:" data-id="3636">研发工程师</a><a href="javascript:" data-id="3637">助理研发工程师</a><a
+                    href="javascript:" data-id="3638">医药学术推广</a><a href="javascript:" data-id="3639">医药项目管理</a><a
+                    href="javascript:" data-id="3640">临床推广经理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="37">化工</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3710">化工</a><a href="javascript:" data-id="3711">化工技术应用/化工工程师</a><a
+                    href="javascript:" data-id="3712">化工实验室研究员/技术员</a><a href="javascript:" data-id="3713">涂料研发工程师</a><a
+                    href="javascript:" data-id="3714">配色技术员</a><a href="javascript:" data-id="3715">塑料工程师</a><a
+                    href="javascript:" data-id="3716">化妆品研发</a><a href="javascript:" data-id="3717">食品/饮料研发</a><a
+                    href="javascript:" data-id="3718">造纸研发</a><a href="javascript:" data-id="3719">其他</a><a
+                    href="javascript:" data-id="3720">化学操作</a><a href="javascript:" data-id="3721">化学制剂研发</a><a
+                    href="javascript:" data-id="3722">油漆/化工涂料研发</a><a href="javascript:" data-id="3723">化学实验室技术员/研究员</a><a
+                    href="javascript:" data-id="3724">化工项目管理</a><a href="javascript:" data-id="3725">橡胶工程师</a><a
+                    href="javascript:" data-id="3726">化学/化工技术总监</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="38">医院/医疗/护理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3810">医院/医疗/护理</a><a href="javascript:" data-id="3811">医院管理人员</a><a
+                    href="javascript:" data-id="3812">内科医生</a><a href="javascript:" data-id="3813">外科医生</a><a
+                    href="javascript:" data-id="3814">专科医生</a><a href="javascript:" data-id="3815">牙科医生</a><a
+                    href="javascript:" data-id="3816">麻醉医生</a><a href="javascript:" data-id="3817">美容整形师</a><a
+                    href="javascript:" data-id="3818">理疗师</a><a href="javascript:" data-id="3819">中医科医生</a><a
+                    href="javascript:" data-id="3820">针灸、推拿</a><a href="javascript:" data-id="3821">儿科医生</a><a
+                    href="javascript:" data-id="3822">心理医生</a><a href="javascript:" data-id="3823">营养师</a><a
+                    href="javascript:" data-id="3824">药库主任/药剂师</a><a href="javascript:" data-id="3825">医药学检验</a><a
+                    href="javascript:" data-id="3826">公共卫生/疾病控制</a><a href="javascript:" data-id="3827">护理主任/护士长</a><a
+                    href="javascript:" data-id="3828">护士/护理人员</a><a href="javascript:" data-id="3829">兽医</a><a
+                    href="javascript:" data-id="3830">验光师</a><a href="javascript:" data-id="3831">其他</a><a
+                    href="javascript:" data-id="3832">院长</a><a href="javascript:" data-id="3833">医学影像/放射科医师</a><a
+                    href="javascript:" data-id="3834">眼科医生</a><a href="javascript:" data-id="3835">综合门诊/全科医生</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="39">广告</a></th>
+        <td>
+            <div><a href="javascript:" data-id="3910">广告</a><a href="javascript:" data-id="3911">广告客户总监/副总监</a><a
+                    href="javascript:" data-id="3912">广告客户经理</a><a href="javascript:" data-id="3913">广告客户主管/专员</a><a
+                    href="javascript:" data-id="3914">广告创意/设计经理</a><a href="javascript:" data-id="3915">广告创意总监</a><a
+                    href="javascript:" data-id="3916">广告创意/设计主管/专员</a><a href="javascript:" data-id="3917">美术指导</a><a
+                    href="javascript:" data-id="3918">文案/策划</a><a href="javascript:" data-id="3919">企业/业务发展经理</a><a
+                    href="javascript:" data-id="3920">企业策划人员</a><a href="javascript:" data-id="3921">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="40">公关/媒介</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4010">公关/媒介</a><a href="javascript:" data-id="4011">公关经理</a><a
+                    href="javascript:" data-id="4012">公关主管</a><a href="javascript:" data-id="4013">公关专员</a><a
+                    href="javascript:" data-id="4014">会务/会展经理</a><a href="javascript:" data-id="4015">会务/会展主管</a><a
+                    href="javascript:" data-id="4016">会务/会展专员</a><a href="javascript:" data-id="4017">媒介经理</a><a
+                    href="javascript:" data-id="4018">媒介主管</a><a href="javascript:" data-id="4019">媒介专员</a><a
+                    href="javascript:" data-id="4020">公关/媒介助理</a><a href="javascript:" data-id="4021">媒介销售</a><a
+                    href="javascript:" data-id="4022">活动策划</a><a href="javascript:" data-id="4023">其他</a><a
+                    href="javascript:" data-id="4024">品牌经营</a><a href="javascript:" data-id="4025">广告协调</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="41">市场/营销</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4110">市场/营销</a><a href="javascript:" data-id="4111">市场/营销/拓展总监</a><a
+                    href="javascript:" data-id="4112">市场/营销/拓展经理</a><a href="javascript:"
+                                                                       data-id="4113">市场/营销/拓展主管</a><a
+                    href="javascript:" data-id="4114">市场/营销/拓展专员</a><a href="javascript:" data-id="4115">市场助理</a><a
+                    href="javascript:" data-id="4116">市场分析/调研人员</a><a href="javascript:" data-id="4117">产品/品牌经理</a><a
+                    href="javascript:" data-id="4118">产品/品牌主管</a><a href="javascript:" data-id="4119">产品/品牌专员</a><a
+                    href="javascript:" data-id="4120">市场通路经理/主管</a><a href="javascript:" data-id="4121">市场通路专员</a><a
+                    href="javascript:" data-id="4122">市场企划经理/主管</a><a href="javascript:" data-id="4123">市场企划专员</a><a
+                    href="javascript:" data-id="4124">促销经理</a><a href="javascript:" data-id="4125">促销主管/督导</a><a
+                    href="javascript:" data-id="4126">促销员/导购</a><a href="javascript:" data-id="4127">选址拓展/新店开发</a><a
+                    href="javascript:" data-id="4128">其他</a><a href="javascript:" data-id="4129">商务专员</a><a
+                    href="javascript:" data-id="4130">商务专员/经理</a><a href="javascript:" data-id="4131">网络营销/推广</a><a
+                    href="javascript:" data-id="4132">海外市场</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="42">影视/媒体</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4210">影视/媒体</a><a href="javascript:" data-id="4211">影视策划/制作人员</a><a
+                    href="javascript:" data-id="4212">导演/编导</a><a href="javascript:" data-id="4213">艺术/设计总监</a><a
+                    href="javascript:" data-id="4214">经纪人/星探</a><a href="javascript:" data-id="4215">演员/模特/主持人</a><a
+                    href="javascript:" data-id="4216">摄影师/摄像师</a><a href="javascript:" data-id="4217">后期制作</a><a
+                    href="javascript:" data-id="4218">音效师</a><a href="javascript:" data-id="4219">配音员</a><a
+                    href="javascript:" data-id="4220">放映经理/主管</a><a href="javascript:" data-id="4221">放映员</a><a
+                    href="javascript:" data-id="4222">化妆师/造型师</a><a href="javascript:" data-id="4223">其他</a><a
+                    href="javascript:" data-id="4224">转播工程师</a><a href="javascript:" data-id="4225">视频主播</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="43">写作/出版/印刷</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4310">写作/出版/印刷</a><a href="javascript:" data-id="4311">总编/副总编</a><a
+                    href="javascript:" data-id="4312">编辑</a><a href="javascript:" data-id="4313">作家/撰稿人</a><a
+                    href="javascript:" data-id="4314">记者</a><a href="javascript:" data-id="4315">电话采编</a><a
+                    href="javascript:" data-id="4316">美术编辑</a><a href="javascript:" data-id="4317">排版设计</a><a
+                    href="javascript:" data-id="4318">校对/录入</a><a href="javascript:" data-id="4319">出版/发行</a><a
+                    href="javascript:" data-id="4320">电分操作员</a><a href="javascript:" data-id="4321">印刷排版/制版</a><a
+                    href="javascript:" data-id="4322">数码直印/菲林输出</a><a href="javascript:" data-id="4323">打稿机操作员</a><a
+                    href="javascript:" data-id="4324">调墨技师</a><a href="javascript:" data-id="4325">印刷机械机长</a><a
+                    href="javascript:" data-id="4326">晒版/拼版/装订/烫金技工</a><a href="javascript:" data-id="4327">其他</a><a
+                    href="javascript:" data-id="4328">文案策划</a><a href="javascript:" data-id="4329">复卷工</a><a
+                    href="javascript:" data-id="4330">压痕工</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="44">艺术/设计</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4410">艺术/设计</a><a href="javascript:" data-id="4411">平面设计总监</a><a
+                    href="javascript:" data-id="4412">平面设计经理/主管</a><a href="javascript:" data-id="4413">平面设计师</a><a
+                    href="javascript:" data-id="4414">绘画</a><a href="javascript:" data-id="4415">动画/3D设计</a><a
+                    href="javascript:" data-id="4416">原画师</a><a href="javascript:" data-id="4417">展览/展示/店面设计</a><a
+                    href="javascript:" data-id="4418">多媒体设计</a><a href="javascript:" data-id="4419">包装设计</a><a
+                    href="javascript:" data-id="4420">工业/产品设计</a><a href="javascript:" data-id="4421">工艺品/珠宝设计鉴定</a><a
+                    href="javascript:" data-id="4422">家具/家居用品设计</a><a href="javascript:" data-id="4423">玩具设计</a><a
+                    href="javascript:" data-id="4424">其他</a><a href="javascript:" data-id="4425">艺术/设计总监</a><a
+                    href="javascript:" data-id="4426">CAD设计/制图</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="45">建筑装潢/市政建设</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4510">建筑装潢/市政建设</a><a href="javascript:" data-id="4511">高级建筑工程师/总工</a><a
+                    href="javascript:" data-id="4512">建筑工程师</a><a href="javascript:" data-id="4513">建筑设计师</a><a
+                    href="javascript:" data-id="4514">市政工程师</a><a href="javascript:" data-id="4515">结构/土木/土建工程师</a><a
+                    href="javascript:" data-id="4516">公路/桥梁/港口/隧道工程</a><a href="javascript:" data-id="4517">岩土工程</a><a
+                    href="javascript:" data-id="4518">楼宇自动化</a><a href="javascript:" data-id="4519">建筑机电工程师</a><a
+                    href="javascript:" data-id="4520">安防工程师</a><a href="javascript:" data-id="4521">给排水/暖通工程</a><a
+                    href="javascript:" data-id="4522">幕墙工程师</a><a href="javascript:" data-id="4523">规划与设计</a><a
+                    href="javascript:" data-id="4524">室内外装潢设计</a><a href="javascript:" data-id="4525">园艺/园林/景观设计</a><a
+                    href="javascript:" data-id="4526">测绘/测量</a><a href="javascript:" data-id="4527">建筑制图</a><a
+                    href="javascript:" data-id="4528">开发报建</a><a href="javascript:" data-id="4529">工程造价师/预结算经理</a><a
+                    href="javascript:" data-id="4530">预结算员</a><a href="javascript:" data-id="4531">建筑工程管理/项目经理</a><a
+                    href="javascript:" data-id="4532">建筑工程验收</a><a href="javascript:" data-id="4533">工程监理</a><a
+                    href="javascript:" data-id="4534">合同管理</a><a href="javascript:" data-id="4535">安全员</a><a
+                    href="javascript:" data-id="4536">资料员</a><a href="javascript:" data-id="4537">施工员</a><a
+                    href="javascript:" data-id="4538">其他</a><a href="javascript:" data-id="4539">施工队长</a><a
+                    href="javascript:" data-id="4540">建筑施工现场管理</a><a href="javascript:" data-id="4541">软装设计师</a><a
+                    href="javascript:" data-id="4542">土建勘察</a><a href="javascript:" data-id="4543">硬装设计师</a><a
+                    href="javascript:" data-id="4544">工程总监</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="46">房地产</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4610">房地产</a><a href="javascript:" data-id="4611">房地产项目/开发/策划经理</a><a
+                    href="javascript:" data-id="4612">房地产项目/开发/策划主管/专员</a><a href="javascript:"
+                                                                             data-id="4613">房产项目配套工程师</a><a
+                    href="javascript:" data-id="4614">房地产项目招投标</a><a href="javascript:" data-id="4615">房地产评估</a><a
+                    href="javascript:" data-id="4616">房地产中介/交易</a><a href="javascript:" data-id="4617">房地产销售经理/主管</a><a
+                    href="javascript:" data-id="4618">房地产销售人员</a><a href="javascript:" data-id="4619">其他</a><a
+                    href="javascript:" data-id="4620">项目总监</a><a href="javascript:" data-id="4621">项目经理</a><a
+                    href="javascript:" data-id="4622">项目主管</a><a href="javascript:" data-id="4623">质量管理</a><a
+                    href="javascript:" data-id="4624">研发总监</a><a href="javascript:" data-id="4625">研发经理</a><a
+                    href="javascript:" data-id="4626">研发主管</a><a href="javascript:" data-id="4627">研发工程师</a><a
+                    href="javascript:" data-id="4628">助理研发工程师</a><a href="javascript:" data-id="4629">设计总监</a><a
+                    href="javascript:" data-id="4630">设计经理</a><a href="javascript:" data-id="4631">设计主管</a><a
+                    href="javascript:" data-id="4632">监察人员</a><a href="javascript:" data-id="4633">地产店长/经理</a><a
+                    href="javascript:" data-id="4634">房地产内勤</a><a href="javascript:" data-id="4635">房地产客服</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="47">物业管理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4710">物业管理</a><a href="javascript:" data-id="4711">高级物业顾问/物业顾问</a><a
+                    href="javascript:" data-id="4712">物业管理经理/主管</a><a href="javascript:" data-id="4713">物业管理专员/助理</a><a
+                    href="javascript:" data-id="4714">物业招商/租赁/租售</a><a href="javascript:" data-id="4715">物业设施管理人员</a><a
+                    href="javascript:" data-id="4716">物业机电工程师</a><a href="javascript:" data-id="4717">物业维修人员</a><a
+                    href="javascript:" data-id="4718">其他</a><a href="javascript:" data-id="4719">监控维护</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="48">人力资源</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4810">人力资源</a><a href="javascript:" data-id="4811">人事总监</a><a
+                    href="javascript:" data-id="4812">人事经理</a><a href="javascript:" data-id="4813">人事主管</a><a
+                    href="javascript:" data-id="4814">人事专员</a><a href="javascript:" data-id="4815">人事助理</a><a
+                    href="javascript:" data-id="4816">招聘经理/主管</a><a href="javascript:" data-id="4817">招聘专员/助理</a><a
+                    href="javascript:" data-id="4818">薪资福利经理/主管</a><a href="javascript:" data-id="4819">薪资福利专员/助理</a><a
+                    href="javascript:" data-id="4820">绩效考核经理/主管</a><a href="javascript:" data-id="4821">绩效考核专员/助理</a><a
+                    href="javascript:" data-id="4822">培训经理/主管</a><a href="javascript:" data-id="4823">培训专员/助理/培训师</a><a
+                    href="javascript:" data-id="4824">企业文化/员工关系/工会管理</a><a href="javascript:"
+                                                                           data-id="4825">人力资源信息系统专员</a><a
+                    href="javascript:" data-id="4826">其他</a><a href="javascript:" data-id="4827">人力资源总监</a><a
+                    href="javascript:" data-id="4828">人力资源经理</a><a href="javascript:" data-id="4829">人力资源主管</a><a
+                    href="javascript:" data-id="4830">人力资源专员</a><a href="javascript:" data-id="4831">企业培训师/讲师</a><a
+                    href="javascript:" data-id="4832">人事信息系统(HRIS)管理</a><a href="javascript:" data-id="4833">猎头顾问/助理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="49">高级管理</a></th>
+        <td>
+            <div><a href="javascript:" data-id="4910">高级管理</a><a href="javascript:" data-id="4911">首席执行官CEO/总裁/总经理</a><a
+                    href="javascript:" data-id="4912">首席运营官COO</a><a href="javascript:" data-id="4913">副总经理/副总裁</a><a
+                    href="javascript:" data-id="4914">合伙人</a><a href="javascript:" data-id="4915">总监/部门经理</a><a
+                    href="javascript:" data-id="4916">策略发展总监</a><a href="javascript:" data-id="4917">办事处首席代表</a><a
+                    href="javascript:" data-id="4918">办事处/分公司/分支机构经理</a><a href="javascript:"
+                                                                           data-id="4919">总裁助理/总经理助理</a><a
+                    href="javascript:" data-id="4920">其他</a><a href="javascript:" data-id="4921">运营总监</a><a
+                    href="javascript:" data-id="4922">运营经理</a><a href="javascript:" data-id="4923">运营主管</a><a
+                    href="javascript:" data-id="4924">企业秘书/董事会秘书</a><a href="javascript:" data-id="4925">投资者关系</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="50">行政/后勤</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5010">行政/后勤</a><a href="javascript:" data-id="5011">行政总监</a><a
+                    href="javascript:" data-id="5012">行政经理/主管/办公室主任</a><a href="javascript:"
+                                                                          data-id="5013">行政专员/助理</a><a
+                    href="javascript:" data-id="5014">经理助理/秘书</a><a href="javascript:" data-id="5015">前台接待/总机/接待生</a><a
+                    href="javascript:" data-id="5016">后勤</a><a href="javascript:" data-id="5017">图书管理员/资料管理员</a><a
+                    href="javascript:" data-id="5018">电脑操作员/打字员</a><a href="javascript:" data-id="5019">其他</a><a
+                    href="javascript:" data-id="5020">文员</a><a href="javascript:" data-id="5021">内勤人员</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="51">咨询/顾问</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5110">咨询/顾问</a><a href="javascript:" data-id="5111">专业顾问</a><a
+                    href="javascript:" data-id="5112">咨询总监</a><a href="javascript:" data-id="5113">咨询经理</a><a
+                    href="javascript:" data-id="5114">专业培训师</a><a href="javascript:" data-id="5115">咨询员</a><a
+                    href="javascript:" data-id="5116">调研员</a><a href="javascript:" data-id="5117">猎头/人才中介</a><a
+                    href="javascript:" data-id="5118">情报信息分析人员</a><a href="javascript:" data-id="5119">其他</a><a
+                    href="javascript:" data-id="5120">数据分析师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="52">律师/法务/合规</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5210">律师/法务/合规</a><a href="javascript:" data-id="5211">律师/法律顾问</a><a
+                    href="javascript:" data-id="5212">律师助理</a><a href="javascript:" data-id="5213">法务经理</a><a
+                    href="javascript:" data-id="5214">法务主管/专员</a><a href="javascript:" data-id="5215">法务助理</a><a
+                    href="javascript:" data-id="5216">合规经理</a><a href="javascript:" data-id="5217">合规主管/专员</a><a
+                    href="javascript:" data-id="5218">知识产权/专利顾问/专员</a><a href="javascript:" data-id="5219">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="53">教师</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5310">教师</a><a href="javascript:" data-id="5311">校长</a><a
+                    href="javascript:" data-id="5312">大学教授</a><a href="javascript:" data-id="5313">讲师/助教</a><a
+                    href="javascript:" data-id="5314">中学教师</a><a href="javascript:" data-id="5315">小学教师</a><a
+                    href="javascript:" data-id="5316">幼教</a><a href="javascript:" data-id="5317">院校教务管理人员</a><a
+                    href="javascript:" data-id="5318">兼职教师</a><a href="javascript:" data-id="5319">家教</a><a
+                    href="javascript:" data-id="5320">职业技术教师</a><a href="javascript:" data-id="5321">其他</a><a
+                    href="javascript:" data-id="5322">职业技术教师</a><a href="javascript:" data-id="5323">理科教师</a><a
+                    href="javascript:" data-id="5324">文科教师</a><a href="javascript:" data-id="5325">外语教师</a><a
+                    href="javascript:" data-id="5326">音乐教师</a><a href="javascript:" data-id="5327">美术教师</a><a
+                    href="javascript:" data-id="5328">体育老师/教练</a><a href="javascript:" data-id="5329">舞蹈老师</a><a
+                    href="javascript:" data-id="5330">外籍教师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="54">培训</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5410">培训</a><a href="javascript:" data-id="5411">培训督导</a><a
+                    href="javascript:" data-id="5412">培训讲师</a><a href="javascript:" data-id="5413">培训策划</a><a
+                    href="javascript:" data-id="5414">培训产品开发</a><a href="javascript:" data-id="5415">培训/课程顾问</a><a
+                    href="javascript:" data-id="5416">培训助理</a><a href="javascript:" data-id="5417">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="55">科研人员</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5510">科研人员</a><a href="javascript:" data-id="5511">科研管理人员</a><a
+                    href="javascript:" data-id="5512">科研人员</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="56">餐饮/娱乐</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5610">餐饮/娱乐</a><a href="javascript:" data-id="5611">餐饮/娱乐管理</a><a
+                    href="javascript:" data-id="5612">餐饮/娱乐领班/部长</a><a href="javascript:" data-id="5613">餐饮/娱乐服务员</a><a
+                    href="javascript:" data-id="5614">传菜主管/传菜员</a><a href="javascript:" data-id="5615">礼仪/迎宾</a><a
+                    href="javascript:" data-id="5616">司仪</a><a href="javascript:" data-id="5617">行政主厨/厨师长</a><a
+                    href="javascript:" data-id="5618">厨师/面点师</a><a href="javascript:" data-id="5619">调酒师/吧台员</a><a
+                    href="javascript:" data-id="5620">茶艺师</a><a href="javascript:" data-id="5621">其他</a><a
+                    href="javascript:" data-id="5622">食品加工/处理</a><a href="javascript:" data-id="5623">营养师</a><a
+                    href="javascript:" data-id="5624">厨工</a><a href="javascript:" data-id="5625">中餐厨师</a><a
+                    href="javascript:" data-id="5626">西餐厨师</a><a href="javascript:" data-id="5627">日式厨师</a><a
+                    href="javascript:" data-id="5628">西点师</a><a href="javascript:" data-id="5629">厨师助理/学徒</a><a
+                    href="javascript:" data-id="5630">送餐员</a><a href="javascript:" data-id="5631">烧烤师</a><a
+                    href="javascript:" data-id="5632">品酒师</a><a href="javascript:" data-id="5633">杂工</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="57">酒店/旅游</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5710">酒店/旅游</a><a href="javascript:" data-id="5711">酒店/宾馆经理</a><a
+                    href="javascript:" data-id="5712">酒店/宾馆营销</a><a href="javascript:" data-id="5713">宴会管理</a><a
+                    href="javascript:" data-id="5714">大堂经理</a><a href="javascript:" data-id="5715">宾客服务经理</a><a
+                    href="javascript:" data-id="5716">楼面经理</a><a href="javascript:" data-id="5717">前厅接待</a><a
+                    href="javascript:" data-id="5718">预定部主管</a><a href="javascript:" data-id="5719">预定员</a><a
+                    href="javascript:" data-id="5720">客房服务员/楼面服务员</a><a href="javascript:" data-id="5721">机场代表</a><a
+                    href="javascript:" data-id="5722">行李员</a><a href="javascript:" data-id="5723">管家部经理/主管</a><a
+                    href="javascript:" data-id="5724">清洁服务人员</a><a href="javascript:" data-id="5725">健身房服务</a><a
+                    href="javascript:" data-id="5726">旅游产品销售</a><a href="javascript:" data-id="5727">导游/旅行顾问</a><a
+                    href="javascript:" data-id="5728">行程管理/操作</a><a href="javascript:" data-id="5729">票务/订房服务</a><a
+                    href="javascript:" data-id="5730">签证专员</a><a href="javascript:" data-id="5731">其他</a><a
+                    href="javascript:" data-id="5732">酒店试睡员</a><a href="javascript:" data-id="5733">门卫</a><a
+                    href="javascript:" data-id="5734">质量管理</a><a href="javascript:" data-id="5735">客房管理</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="58">美容/健身/体育</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5810">美容/健身/体育</a><a href="javascript:" data-id="5811">美容顾问/化妆</a><a
+                    href="javascript:" data-id="5812">彩妆培训师</a><a href="javascript:" data-id="5813">专柜彩妆顾问(BA)</a><a
+                    href="javascript:" data-id="5814">美容助理/见席美容师</a><a href="javascript:" data-id="5815">瘦身顾问</a><a
+                    href="javascript:" data-id="5816">发型师</a><a href="javascript:" data-id="5817">发型助理/学徒</a><a
+                    href="javascript:" data-id="5818">美甲师</a><a href="javascript:" data-id="5819">按摩/足疗</a><a
+                    href="javascript:" data-id="5820">健身顾问/教练</a><a href="javascript:" data-id="5821">体育运动教练</a><a
+                    href="javascript:" data-id="5822">救生员</a><a href="javascript:" data-id="5823">瑜伽/舞蹈老师</a><a
+                    href="javascript:" data-id="5824">宠物护理/美容</a><a href="javascript:" data-id="5825">其他</a><a
+                    href="javascript:" data-id="5826">高尔夫教练</a><a href="javascript:" data-id="5827">户外/游戏教练</a><a
+                    href="javascript:" data-id="5828">美体师</a><a href="javascript:" data-id="5829">美容整形师</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="59">百货/连锁/零售服务</a></th>
+        <td>
+            <div><a href="javascript:" data-id="5910">百货/连锁/零售服务</a><a href="javascript:"
+                                                                       data-id="5911">店长/卖场经理/楼面管理</a><a
+                    href="javascript:" data-id="5912">品类经理</a><a href="javascript:" data-id="5913">店员/营业员</a><a
+                    href="javascript:" data-id="5914">安防主管</a><a href="javascript:" data-id="5915">防损员/内保</a><a
+                    href="javascript:" data-id="5916">收银主管/收银员</a><a href="javascript:" data-id="5917">理货员/陈列员/收货员</a><a
+                    href="javascript:" data-id="5918">导购员</a><a href="javascript:" data-id="5919">西点师/面包糕点加工</a><a
+                    href="javascript:" data-id="5920">生鲜食品加工/处理</a><a href="javascript:" data-id="5921">熟食加工</a><a
+                    href="javascript:" data-id="5922">兼职店员</a><a href="javascript:" data-id="5923">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="60">交通运输服务</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6010">交通运输服务</a><a href="javascript:" data-id="6011">飞机机长/副机长</a><a
+                    href="javascript:" data-id="6012">空乘人员</a><a href="javascript:" data-id="6013">地勤人员</a><a
+                    href="javascript:" data-id="6014">列车/地铁车长</a><a href="javascript:" data-id="6015">列车/地铁司机</a><a
+                    href="javascript:" data-id="6016">船长/副船长</a><a href="javascript:" data-id="6017">船员</a><a
+                    href="javascript:" data-id="6018">乘务员</a><a href="javascript:" data-id="6019">司机</a><a
+                    href="javascript:" data-id="6020">其他</a><a href="javascript:" data-id="6021">安检员</a><a
+                    href="javascript:" data-id="6022">驾驶教练</a><a href="javascript:" data-id="6023">交通管理员</a><a
+                    href="javascript:" data-id="6024">代驾</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="61">保安/家政/其他服务</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6110">保安/家政/其他服务</a><a href="javascript:" data-id="6111">保安经理</a><a
+                    href="javascript:" data-id="6112">保安人员</a><a href="javascript:" data-id="6113">保镖</a><a
+                    href="javascript:" data-id="6114">寻呼员/话务员</a><a href="javascript:" data-id="6115">搬运工</a><a
+                    href="javascript:" data-id="6116">清洁工</a><a href="javascript:" data-id="6117">家政服务/保姆</a><a
+                    href="javascript:" data-id="6118">其他</a><a href="javascript:" data-id="6119">钟点工</a><a
+                    href="javascript:" data-id="6120">月嫂</a><a href="javascript:" data-id="6121">家电维修</a><a
+                    href="javascript:" data-id="6122">婚礼/庆典策划服务</a></div>
+        </td>
+    </tbody>
+</table>
+<table style="display:none;" class="child_item" cellpadding="0">
+    <tbody></tr>
+    <tr>
+        <th><a href="javascript:" data-id="62">公务员</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6210">公务员</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="63">翻译</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6310">翻译</a><a href="javascript:" data-id="6311">英语翻译</a><a
+                    href="javascript:" data-id="6312">日语翻译</a><a href="javascript:" data-id="6313">德语翻译</a><a
+                    href="javascript:" data-id="6314">法语翻译</a><a href="javascript:" data-id="6315">俄语翻译</a><a
+                    href="javascript:" data-id="6316">意大利语翻译</a><a href="javascript:" data-id="6317">西班牙语翻译</a><a
+                    href="javascript:" data-id="6318">葡萄牙语翻译</a><a href="javascript:" data-id="6319">阿拉伯语翻译</a><a
+                    href="javascript:" data-id="6320">韩语/朝鲜语翻译</a><a href="javascript:" data-id="6321">泰语翻译</a><a
+                    href="javascript:" data-id="6322">中国方言翻译</a><a href="javascript:" data-id="6323">其他语种翻译</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="64">在校学生</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6410">在校学生</a><a href="javascript:" data-id="6411">研究生</a><a
+                    href="javascript:" data-id="6412">大学/大专应届毕业生</a><a href="javascript:" data-id="6413">中专/职校生</a><a
+                    href="javascript:" data-id="6414">其他</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="65">储备干部/培训生/实习生</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6510">储备干部/培训生/实习生</a><a href="javascript:" data-id="6511">储备干部</a><a
+                    href="javascript:" data-id="6512">培训生</a><a href="javascript:" data-id="6513">实习生</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="66">兼职</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6610">兼职</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="67">其他</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6710">其他</a><a href="javascript:" data-id="6711">驯兽师/助理驯兽师</a><a
+                    href="javascript:" data-id="6712">志愿者</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="68">环保</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6810">环保</a><a href="javascript:" data-id="6811">环保工程师</a><a
+                    href="javascript:" data-id="6812">环境影响评价工程师</a><a href="javascript:" data-id="6813">环保检测</a><a
+                    href="javascript:" data-id="6814">水质检测员</a><a href="javascript:" data-id="6815">污水处理工程师</a><a
+                    href="javascript:" data-id="6816">固废工程师</a><a href="javascript:" data-id="6819">其它</a>
+    </tr>
+    <tr>
+        <th><a href="javascript:" data-id="69">农/林/牧/渔</a></th>
+        <td>
+            <div><a href="javascript:" data-id="6910">农/林/牧/渔</a><a href="javascript:" data-id="6911">养殖部主管</a><a
+                    href="javascript:" data-id="6912">场长(农/林/牧/渔业)</a><a href="javascript:" data-id="6913">农艺师</a><a
+                    href="javascript:" data-id="6914">畜牧师</a><a href="javascript:" data-id="6915">饲养员</a><a
+                    href="javascript:" data-id="6916">动物营养/饲料研发</a><a href="javascript:" data-id="6917">其他</a></div>
+        </td>
+    </tbody>
+</table>
+</body>
+</html>

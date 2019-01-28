@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Title</title>
+    <script src="../597搜索页测试/jquery-1.8.3.min.js"></script>
+    <script src="http://assets.huibo.com/js/v2/data/jobSortData.js?v=20150237"></script>
+                 <!--http://assets.huibo.com/js/v2/data/jobSortData.js?v=2015023-->
+    <script src="http://xm.597.cs/api/web/jobclass.api?id=0"></script>
+    <script src="http://xm.597.cs/api/web/jobclass.api?act=multiple&id=1"></script>
+</head>
+<body>
+<div id="dv" style="position: absolute;width: 320px;height: 200px;overflow-x: auto">
+    <div style="width: 1000px;">
+        <p>12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴12312312312ddd点点滴滴</p>
+    </div>
+    <!--<img src="../testmui/images/img.png" height="36" width="33"/>-->
+    <input type="checkbox" id="cb" style="width: 100px;height: 100px;background: url(../testmui/images/img.png) no-repeat left top;">
+</div>
+<input style="margin-top:300px;" type="button" value="向左移动" id="btn">
+<script>
+    // document.getElementById('btn').onclick=function (ev) {
+    //     var dv=document.getElementById('dv');
+    //     console.log(dv.scrollLeft);
+    //     dv.style.scrollLeft = 0 + 'px';
+    // }
+    $(function () {
+        $("#btn").click(function(){
+            alert($("div").scrollLeft());
+            $("div").animate({scrollLeft:1000},500);
+        });
+    });
+    $.get('',function (data) {
+        console.log(data);
+    })
+</script>
+</body>
+</html>

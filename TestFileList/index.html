@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../图片裁切器（改良版）/js/jquery-1.8.3.min.js"></script>
+
+</head>
+<body>
+<form action="/" id="myForm">
+    <input type="text" name="userName" value="小明">
+    <input type="file" name="file00" style="display: none;" id="file0">
+</form>
+<input type="file" onchange="filechange(this);" >
+</body>
+
+<script>
+function filechange(obj) {
+
+
+    var file0=obj.files[0];
+    $('#file0').val(file0);
+    var uploadForm=new FormData($('#myForm')[0]);
+    uploadForm.append("file0", file0);
+
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        cache: false,
+        data: uploadForm,
+        processData: false,
+        contentType: false
+    }).done(function(res) {
+        console.log(res)
+    }).fail(function(res) {});
+
+
+}
+/*function filechange(input) {
+    //支持chrome IE10
+    if (window.FileReader) {
+        var file = input.files[0];
+        filename = file.name.split(".")[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            console.log(this.result)
+            alert(this.result);
+        }
+        reader.readAsText(file);
+    }
+    //支持IE 7 8 9 10
+    else if (typeof window.ActiveXObject != 'undefined'){
+        var xmlDoc;
+        xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        xmlDoc.async = false;
+        xmlDoc.load(input.value);
+        alert(xmlDoc.xml);
+    }
+    //支持FF
+    else if (document.implementation && document.implementation.createDocument) {
+        var xmlDoc;
+        xmlDoc = document.implementation.createDocument("", "", null);
+        xmlDoc.async = false;
+        xmlDoc.load(input.value);
+        alert(xmlDoc.xml);
+    } else {
+        alert('error');
+    }
+}*/
+
+/*function filechange(input) {
+    if (typeof window.ActiveXObject != 'undefined') {
+        var file = input.value;
+        var content = "";
+        try {
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var reader = fso.openTextFile(file, 1);
+            /!*while (!reader.AtEndofStream) {
+                content += reader.readline();
+                content += "\n";
+            }*!/
+            content = reader.readAll();
+            alert(content);
+            reader.close();
+        } catch (e) {
+            alert("Internet Explore read local file error: \n" + e);
+        }
+
+        console.log(content);
+        alert(content);
+    } else {
+        var file = input.files[0];
+        filename = file.name.split(".")[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            console.log(this.result)
+            alert(this.result);
+        }
+        reader.readAsText(file);
+    }
+}*/
+
+
+</script>
+</html>

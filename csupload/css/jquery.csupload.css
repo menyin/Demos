@@ -1,0 +1,11 @@
+.csupload_btn {
+    display: block;
+    width: 80px;
+    height: 30px;
+    background: #ff770e;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    border-radius: 2px;
+}

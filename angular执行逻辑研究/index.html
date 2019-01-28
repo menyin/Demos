@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="angular-1.4.8.js"></script>
+    <script>
+        var qq=angular.module('myApp', [])
+            .controller('myCtrl',['$scope',function ($scope) {
+                $scope.data = [
+                    /*{id:111,name:'王莽'},
+                    {id:222,name:'曹操'},
+                    {id:333,name:'大爷'},*/
+                ];
+                $scope.dd=11;
+            }]);
+        angular.module("myApp.aaaaa",[]).controller('myCtrl2',['$scope',function ($scope) {
+            $scope.dd=11;
+        }]);
+        console.log(qq);
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<script>
+    console.log('{{data}}');
+</script>
+<p data-dd="{{dd}}"></p>
+<ul>
+    <li ng-repeat="item in data">{{item.name}}</li>
+</ul>
+
+
+</body>
+</html>

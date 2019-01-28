@@ -7,7 +7,7 @@ $(function() {
 	 * 
 	 * @author 陈南阳
 	 * @vision 1.0.0
-	 * @createtime 2017-03-06
+	 * @createtime 2018-03-06
 	 * @reference jquey-1.8.3.min.js+ jquery-ui-widget.js
 	 *            jquery.iframe-transport.js jquery.fileupload.js
 	 *            js/layer-v3.0.2/layer.js layer.css jquery.Jcrop.js

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+        .flex-box{
+            display:flex;
+            flex-flow: row wrap;
+        }
+        .flex-box:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .col{border:1px solid black;}
+        .col1{
+            width:100px;
+            background:red;
+        }
+        .col2{
+            width:200px;
+            background:red;
+        }
+        .col3{
+            width:300px;
+            background:red;
+        }
+        .col4{
+            width:100px;
+            background:red;
+        }
+        .col5{
+            width:200px;
+            background:red;
+        }
+        .col6{
+            width:300px;
+            background:red;
+        }
+    </style>
+</head>
+<body>
+<div class="flex-box">
+    <p class="col1 col">aaaaa</p>
+    <p class="col2 col">aaaaa</p>
+    <p class="col3 col">aaaaa</p>
+    <p class="col4 col">aaaaa</p>
+    <p class="col5 col">aaaaa</p>
+    <p class="col6 col">aaaaa</p>
+</div>
+</body>
+</html>

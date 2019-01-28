@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/jquery.csupload.css">
+    <script>function func(data) {
+        alert(data);
+    }</script>
+</head>
+
+<body>
+<!--<a href="#" id="csupload" class="csupload_btn">选择文件</a>
+<input type="button" id="submitBtn" value="确定上传">-->
+<!--<form action="" enctype ="multipart/form-data" multiple="multiple">
+    <input type="file" name="file">
+    <input type="text" name="txt" value="11">
+</form>-->
+<input type="button" id="btn" value="按钮">
+
+<form id="uploadForm"  action="http://192.168.1.21:8080/upload/"
+      method="post"
+      enctype="multipart/form-data">
+    <input type="file" name="Filedata">
+</form>
+
+<!--<iframe id="iframeF" name="iframeF" ></iframe>
+<form id="uploadForm" method="post"
+      action="http://192.168.1.21:8080/upload/"
+      target="iframeF"
+      encoding="multipart/form-data"
+      enctype="multipart/form-data">
+
+    <input type="file" name="Filedata">
+</form>-->
+</body>
+<!--<script src="https://cdn.597.com/www/js/jquery.js?v=20130808"></script>-->
+<!--<script src="http://code.jquery.com/jquery-2.1.4.js"></script>-->
+
+<script src="https://cdn.597.com/js/jquery-1.8.3.min.js?v=2017"></script>
+<!--<script src="http://malsup.github.io/jquery.form.js"></script>-->
+<script src="js/jquery.form.js"></script>
+
+<!--<script src="https://cdn.597.com/js/common.js?v=2017"></script>-->
+<!--<script src="https://cdn.597.com/js/jquery.form.js?v=2017"></script>-->
+<script>
+    $(function () {
+        $('#btn').on('click',function () {
+            // $("form").get(0).submit();
+          /* var iframe=document.getElementById('iframeF');
+            var iframWin=iframe.contentDocument||iframe.contentWindow;
+            var form=$(iframWin).find("form").get(0);*/
+           /* document.getElementById('iframeF').contentWindow.onresize=function () {
+                var that=this;
+                debugger;
+            }*/
+            /*document.getElementById('iframeF').onreadystatechange = function() {
+                if (this.readyState && this.readyState == 'complete') {
+                    var that=this;
+                    debugger;
+                }
+            }*/
+            // document.getElementById('uploadForm').submit();
+            // form.submit();
+            // debugger;
+//
+            /*$("form").submitForm({ beforeSubmit: function(){
+
+                },data: {act:'photo'},
+                success:function(json){
+                    console.log(json);
+                    debugger;
+                },clearForm:false});*/
+
+            $("#uploadForm").ajaxSubmit({
+                type : "POST",
+                // type : "JSONP",
+                // url : "http://192.168.1.21:8080/upload/",
+                // url : "http://xm.597.cs/api/web/uploadify.api",
+                // url : "http://localhost:8080/upload",
+                // url : "http://192.168.1.246:8080/upload",
+                // url : "http://192.168.1.246:8080/upload",
+
+                data: {act:'photo',timestamp:1543397119,fileSize:500},
+                contentType : false,
+                // contentType : 'text/plain',
+                processData : false,
+                success : function(data) {
+                    debugger;
+                   /* var li = eval(data);
+                    alert(li);
+                    if (li != 0) {
+                        alert("成功");
+                    }*/
+                }
+            });
+
+        })
+    })
+
+</script>
+<!--<script src="https://cdn.597.com/www/js/jquery.js?v=20130808"></script>
+<script src="https://cdn.597.com/js/jquery.form.js?v=2017"></script>
+<script src="http://192.168.1.21:8080/assets/js/spark-md5.js"></script>
+<script src="js/jquery.csupload.js?d=1"></script>
+<script>
+    var IE=true;//模拟ie环境
+
+    $('#csupload').csupload({
+        // uploadUrl:'http://192.168.1.21:8080/upload/',//上传接口的url，默认不传
+        // accept:'.png',//上传input:file的name 限制值文件上传类型，默认不传
+        // name:'file',//上传input:file的name，默认不传
+        submitBtn:'#submitBtn',//触发上传的按钮$选择器，默认不传，即自动上传
+        preview:function (files) {//预览操作，注意<IE10下此配置无效
+            debugger;
+            console.log('previe_begin');
+            for(key in files){
+                console.log(files[key]);
+            }
+            console.log('previe_end');
+        },
+        success:function (result) {
+            console.log('success_begin');
+            console.log(result);
+            console.log('success_end');
+
+        }
+
+    });
+</script>-->
+</html>

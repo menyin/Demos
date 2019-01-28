@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/idangerous.swiper.css">
+    <style>
+        body{background: grey;}
+        .swiper-container-wrapper{position: relative;}
+        .swiper-slide{height: 300px!important;background: #fff;text-align: center;}
+        .swiper-slide img{max-width: 100%;max-height: 100%;}
+        .swiper-button-next,.swiper-button-prev{color:yellow;font-size:100px;position:absolute;top:100px;z-index: 9999;}
+        .swiper-button-next{left:-50px;}
+        .swiper-button-prev{right:-50px;}
+    </style>
+    <script  src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/idangerous.swiper.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var mySwiper = $('.swiper-container').swiper({
+                mousewheelControl:true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoHeight: true,
+                loop: true
+                //其他设置
+            });
+            $('.swiper-button-next').on('click', function(e){
+                e.preventDefault()
+                mySwiper.swipeNext()
+            })
+            $('.swiper-button-prev').on('click', function(e){
+                e.preventDefault()
+                mySwiper.swipePrev()
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="swiper-container-wrapper" style="width: 400px;margin: 0 auto;">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="images/img1.png"/></div>
+            <div class="swiper-slide"><img src="images/img2.jpg"/></div>
+            <div class="swiper-slide"><img src="images/img3.jpg"/></div>
+        </div>
+    </div>
+    <div class="swiper-button-next">‹</div>
+    <div class="swiper-button-prev">›</div>
+</div>
+<div>社会主义好--------------</div>
+</body>
+</html>

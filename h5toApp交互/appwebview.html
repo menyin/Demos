@@ -14,11 +14,25 @@
          *此方法由app在页面加载完后调用
          */
         function pageLoadEvent() {
-            sendMsg(JSON.stringify({activity:'',version:null,msg:''}));
+            var isPerson='';
+            var agent=navigator.userAgent;
+            try{
+                isPerson=agent.substring(a.indexOf('isPerson')).split('=')[1];
+            }catch(e) {
+            }
+            if(isPerson&&isPerson.indexOf('yes')!=-1){
+                sendMsg(JSON.stringify({activity:'update1.3.6',version:{iosPer:'1.0.1',iosCom:'1',androidPer:'1',androidCom:'1'},msg:'更新ios1.3.6-版本',agentPer:agent}));
+                setTimeout(function () {
+                    location.href='https://xm.m.597.com/';
+                },1000)
+            }else{
+                sendMsg(JSON.stringify({activity:'update1.3.6',version:{iosPer:'1',iosCom:'1',androidPer:'1',androidCom:'1'},msg:'更新ios1.3.6-版本',agentCom:agent}));
+            }
+
         }
     </script>
     <script type="text/javascript">
-//        window.onload=pageLoadEvent;
+       window.onload=pageLoadEvent;
     </script>
 </head>
 <body>

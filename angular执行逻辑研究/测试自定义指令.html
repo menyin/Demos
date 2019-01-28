@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="module1">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="angular-1.4.8.js"></script>
+    <script>
+        var module1 = angular.module('module1',[]);
+        module1.controller('ctl1', function($scope) {
+            $scope.content = '社会主义好';
+            $scope.name = 'module1';
+            $scope.save = function(param) {
+                console.log('is function save'+param);
+
+            };
+        });
+        module1.directive('testDirective', function() {
+            // 将对象return出去
+            return{
+                restrict: 'E',// 指令类型  E：element A：attribute M：comment C: class
+                template: '<div><input type="button" ng-click="save({param:11})" value="测试按钮子">我是指令生成的内容111<p style="color:red;">{{msg}}</p></div>',
+                scope:{msg: "=",save:'&saveA' },
+                // scope:true,
+                replace: false ,//使用模板替换原始标记  指令内原本的数据将被清空
+                /*controller:function (scope, element, attrs, transclude, otherInjectables) {
+                    console.log('link++');
+                    console.log(scope);
+                    console.log('link--');
+                },*/
+                link:function(scope, iElement, iAttrs) {
+                    console.log('link++');
+                    console.log(scope);
+                    console.log('link--');
+
+                }
+             }
+        });
+        angular.bootstrap(document.body,['module1']);
+        angular.bind(document,function(e){
+            debugger;
+        });
+    </script>
+</head>
+<body>
+<div ng-controller="ctl1">{{content}}
+    <input type="button" value="测试按钮父" ng-click="save()">
+    <test-directive msg="content" save-a="save(param)">这是原本的内容</test-directive>
+</div>
+
+</body>
+</html>

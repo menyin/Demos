@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" id="setValue">
+<input type="button" id="btnShow">
+<input type="file">
+<script>
+    var defOption = {name: '123'};
+
+    function dd(option) {
+        document.getElementById('btnShow').onclick = function () {
+            alert(option.name);
+        }
+    }
+
+    dd(defOption);
+    document.getElementById('setValue').onclick = function () {
+        defOption.name = 111;
+    }
+</script>
+
+<!--<input type="button" value="模拟app请求" id="btn1">-->
+<pre id="inputMsg" class="rongcloud-text rongcloud-grey ng-valid ng-isolate-scope ng-touched ng-dirty"
+     contenteditable="" contenteditable-dire="" ng-focus="showemoji=fase"
+     style="background-color: rgba(0, 0, 0, 0); color: rgb(169, 169, 169);" ctrl-enter-keys="" fun="send()"
+     ctrlenter="false" placeholder="请输入文字..." ondrop="return false"
+     ng-model="conversation.messageContent">请输入文字...</pre>
+
+</body>
+<script src="ajax_com_demo/jquery-1.8.3.min.js"></script>
+<!--<script>
+    $('#btn1').on('click',function () {
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/cnysite/login',
+            // data to be added to query string:
+            data: { username:'thinkgem',password:'admin',mobileLogin:true,validateCode:'' },
+            // type of data we are expecting in return:
+            dataType: 'json',
+            // timeout: 300,
+            // context: $('body'),
+            success: function(data){
+                debugger;
+                console.log(data);
+            },
+            error: function(xhr, type){
+                debugger;
+                console.log(xhr);
+                console.log(type);
+            }
+        })
+    })
+</script>-->
+<script>
+    function flashChecker() {
+        var hasFlash = 0;　　　　 //是否安装了flash
+        var flashVersion = 0;　　 //flash版本
+        if (document.all) {
+            var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+            if (swf) {
+                hasFlash = 1;
+                VSwf = swf.GetVariable("$version");
+                flashVersion = parseInt(VSwf.split(" ")[1].split(",")[0]);
+            }
+        } else {
+            if (navigator.plugins && navigator.plugins.length > 0) {
+                var swf = navigator.plugins["Shockwave Flash"];
+                if (swf) {
+                    hasFlash = 1;
+                    var words = swf.description.split(" ");
+                    for (var i = 0; i < words.length; ++i) {
+                        if (isNaN(parseInt(words[i]))) continue;
+                        flashVersion = parseInt(words[i]);
+                    }
+                }
+            }
+        }
+        return {f: hasFlash, v: flashVersion};
+    }
+
+    var fls = flashChecker();
+    var s = "";
+    if (!fls.f) {
+        if (confirm("您的浏览器未安装Flash插件，现在安装？")) {
+            window.location.href = "http://get.adobe.com/cn/flashplayer/";
+        }
+    }
+</script>
+</html>

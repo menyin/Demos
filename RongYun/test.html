@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var a={q:11};
+        (function (a) {
+            a.x = 1;
+            console.log("111111111");
+            console.log(a);
+        })(a||(a={}));
+        var a={m:11};
+        (function (a) {
+            a.y = 1;
+            console.log("22222222");
+            console.log(a);
+        })(a||(n={}));
+        var a={z:11};
+        (function (a) {
+            a.z = 1;
+            console.log("33333333");
+            console.log(a);
+        })(a||(a={}));
+        console.log("44444444");
+        console.log(a);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

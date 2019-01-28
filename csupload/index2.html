@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .csupload_btn, #submitBtn {
+            display: block;
+            width: 80px;
+            height: 30px;
+            background: #ff6e01;
+            border-radius: 2px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 12px;
+            color: #fff;
+            line-height: 30px;
+        }
+
+        #submitBtn {
+            border: none;
+            margin-top: 10px;
+            background: green;
+        }
+
+        .preview {
+            padding: 0;
+            border: 1px solid green;
+            margin: 10px 0;
+            width: 200px;
+        }
+
+        .preview li img {
+            width: 80px;
+            vertical-align: middle;
+        }
+
+        .preview li {
+            list-style: none;
+            border-bottom: 1px dashed grey;
+            width: 180px;
+            vertical-align: middle;
+            margin: 10px 0;
+        }
+
+        .preview li span.have {
+            color: green;
+        }
+
+        .preview li span.nohave {
+            color: red;
+        }
+
+        .businessFormWrapper{margin:10px 0; border:1px solid #643003;padding:4px;width: 190px;}
+        .businessFormWrapper input[type="text"]{width: 120px;}
+        .businessFormWrapper h4{margin:10px 0;}
+    </style>
+    <script src="https://cdn.597.com/js/jquery-1.8.3.min.js?v=2017"></script>
+    <script src="js/uploadify/jquery.uploadify.js"></script>
+    <script src="http://192.168.1.21:8080/assets/js/spark-md5.js"></script>
+    <script src="js/jquery.csupload.js"></script>
+    <script>
+        /**
+         * 使用步骤：
+         *  1.引入jquery.js、jquery.uploadify.js、spark-md5.js、jquery.csupload.js
+         *  2.调用$('#csupload').csupload(options)，#csupload一般使用a标签
+         *  @param options 说明如下
+         *  uploadUrl: 'http://192.168.1.21:8080/upload/',//上传接口url，默认不传
+         *  name: 'file',//input[type="file"]的name属性
+         *  submitBtn: null, //IE下无效，默认自动上传，当传递$选择器时则手动上传，如：'#submitBtn',
+         *  preview:function(files){},//预览回调，IE下无效，因为无法读取文件内容并md5判断是否存在
+         *  success: function (result){}，//成功回调
+         *  error: function (e) {}//错误回调
+         */
+        $(function () {
+            /*图片上传*/
+            $('#csupload').csupload({
+                submitBtn: '#submitBtn',
+                preview: function (files) {
+                    console.log(files);
+                    var sPreview = '';
+                    for (prop in files) {
+                        if (files[prop].isUploaded == '0') {//0 未上传
+                            sPreview += '<li><img src="' + files[prop].strBase64 + '" alt=""> <span class="nohave">未上传</span></li>';
+                        } else {//1 已上传
+                            sPreview += '<li><img src="' + files[prop].strBase64 + '" alt=""> <span class="have">已上传</span></li>';
+                        }
+                    }
+                    $('.preview').html(sPreview);
+                },
+                success: function (result) {
+                    var preLi = $('.preview li img');
+                    var sPreview = '';
+
+                    for (prop in result) {
+                        debugger;
+                        sPreview += '<li><img src="http://192.168.1.21:8080/k/' + result[prop] + '!100_150" alt=""> <span class="have">已上传</span></li>';
+                    }
+                    $('.preview').html(sPreview);
+
+
+                    console.log(result);
+                },
+                error: function (e) {
+                    debugger;
+                    console.log(e);
+                }
+            });
+
+
+            /*业务表单保存*/
+            $('#saveBtn').click(function () {
+                /**
+                 * 请求图片关联id作为业务表单保存值
+                 *  @param params 图片的key
+                 *  @param data 图片关联id
+                 */
+                $.get('http://192.168.1.21:8080/upload/api/?act=set', {}, function (data) {//请求关联id
+                    if (data) {
+                        $('#photos').val(data);
+                    }
+                    $('#businessForm').get(0).submit();
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+<a href="#" id="csupload" class="csupload_btn">选择文件</a>
+<input type="button" id="submitBtn" value="确定上传">
+<ul class="preview">
+    暂未上传图片......
+    <!--<li><img src="https://pic.597.com/photo/2018/10/30/18103009145170334.jpg" alt=""> <span class="have">已上传</span></li>
+    <li><img src="https://pic.597.com/photo/2018/10/30/18103009145170334.jpg" alt=""> <span class="nohave">未上传</span></li>-->
+</ul>
+<div class="businessFormWrapper">
+    <h4>业务表单</h4>
+    <form action="/" id="businessForm">
+        <label for="username"></label><input id="username" name="username" type="text">
+        <input type="hidden" name="photos" id="photos">
+        <input type="button" id="saveBtn" value="保存">
+    </form>
+</div>
+</body>
+</html>

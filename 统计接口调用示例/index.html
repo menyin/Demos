@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="tongji.js"></script>
+    <script>
+        //页面同步时demo，设置要收集的参数列表，该调用为非必须的
+        analysis.setParms({
+            search_keyword: 'saler00',
+            search_order: '1'
+        });
+
+        /* //ajax异步时demo，如统一了ajax请求入口，可在统一的入口里做拦截
+         $.post('/demo.api', {a: 11}, function () {
+             analysis.setParms({
+                 api_act:'saler00',
+                 search_order:'1'
+             })();
+         });*/
+
+
+    </script>
+</head>
+<body>
+<div class="rongcloud-Message rongcloud-clearfix ng-scope"
+     ng-class="{'rongcloud-Message-send': item.messageDirection == 1}" ng-switch-when="1">
+    <div class="rongcloud-Messages-unreadLine"></div>
+    <div>
+        <div class="rongcloud-Message-header"><img
+                class="rongcloud-img rongcloud-u-isActionable rongcloud-Message-avatar rongcloud-avatar"
+                ng-src="//pic.597.cs/photo/2018/01/04/18010403284481395.jpg"
+                err-src="http://7xo1cb.com1.z0.glb.clouddn.com/rongcloudkefu2.png" errsrcserasdfasdfasdfa="" alt=""
+                src="//pic.597.cs/photo/2018/01/04/18010403284481395.jpg">
+            <!-- ngIf: item.messageDirection == 2 -->
+            <div class="rongcloud-Message-author rongcloud-clearfix ng-scope" ng-if="item.messageDirection == 2">
+                <a class="rongcloud-author rongcloud-u-isActionable ng-binding">苏小才</a></div>
+            <!-- end ngIf: item.messageDirection == 2 --></div>
+    </div>
+    <div class="rongcloud-Message-body" ng-switch="item.messageType"><!-- ngSwitchWhen: TextMessage -->
+        <textmessage ng-switch-when="TextMessage" msg="item.content" class="ng-scope ng-isolate-scope">
+            <div class="">
+                <div class="rongcloud-Message-text">
+                    <pre class="rongcloud-Message-entry ng-binding" ng-bind-html="msg.content|trustHtml">啦啦啦</pre>
+                </div>
+            </div>
+        </textmessage><!-- end ngSwitchWhen: --><!-- ngSwitchWhen: ImageMessage --><!-- ngSwitchWhen: VoiceMessage -->
+        <!-- ngSwitchWhen: LocationMessage --><!-- ngSwitchWhen: RichContentMessage --></div>
+</div>
+
+</body>
+</html>
