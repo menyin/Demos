@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" language="javascript" src="http://cdn.597.com/js/jquery-1.8.3.min.js?v=20140312"></script>
+    <script>
+        $.ajax({
+            type: "POST",
+            url: "/ajax_com_demo/data.js",
+            data: "name=John&location=Boston",
+            dataFilter:function(data,type){//AJAX异步返回数据
+                debugger;
+               return true;
+
+            },
+            success: function(msg){
+                debugger;
+                alert( "Data Saved: " + msg );
+            }
+        });
+    </script>
 </head>
 <body>
 <!--nav头部-->
-<nav class="navbar navbar-default navbar-fixed-top">
+<!--<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <a href="#" style="padding:0;" class="navbar-brand"><img src="img/logo.png" alt="logo"></a>
@@ -25,6 +42,6 @@
             </ul>
         </div>
     </div>
-</nav>
+</nav>-->
 </body>
 </html>

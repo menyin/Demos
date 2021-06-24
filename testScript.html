@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.597.com/js/jquery-1.8.3.js?v=20140312"></script>
+</head>
+<body>
+<input id="txt" type="text" >
+<input type="button" id="btn">
+</body>
+<script>
+    $(function () {
+        $('#btn').click(function () {
+            console.log(escape($('#txt').val()));
+        });
+    });
+
+    function escape(val) {
+        return val.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&acute;');
+    }
+</script>
+</html>

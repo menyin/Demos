@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #group1 {
+            border: 2px solid #803900;
+            padding: 10px;
+            width: 420px;
+            height: 300px;
+            position: relative;
+        }
+
+        #childIframe {
+            width: 400px;
+            height: 250px;
+        }
+
+        #startBtn, #stopBtn, #result {
+            width: 80px;
+            padding:4px 0;
+            margin:4px 0;
+            display: inline-block;
+        }
+        #result{
+            width: 230px;
+        }
+        #startBtn{
+            background: green;
+        }
+        #stopBtn{
+            background: red;
+        }
+        #btns {
+            text-align: left;
+            margin:0;
+        }
+        #closeBtn,#newBtn{
+            position: absolute;
+            right: 0;
+            top:0;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            color:#fff;
+            text-decoration: none;
+            line-height: 20px;
+            text-align: center;
+        }
+        #newBtn{
+            top:22px;
+        }
+    </style>
+</head>
+<body>
+<div id="group1">
+    <p id="btns">
+        <input type="button" value="启动" id="startBtn">
+        <input type="button" value="停止" id="stopBtn">
+        <input type="text" id="result">
+    </p>
+    <iframe src="welcome.html" width="" id="childIframe"></iframe>
+
+    <a href="javascript:;" id="closeBtn">×</a>
+    <!--<a href="javascript:;" id="newBtn">+</a>-->
+</div>
+</body>
+<script>
+    var childIframe = document.getElementById("childIframe");
+    var startBtn = document.getElementById("startBtn");
+    var stopBtn = document.getElementById("stopBtn");
+    var resultDom = document.getElementById("result");
+    var closeBtn = document.getElementById("closeBtn");
+    childIframe.onload = function () {
+        // iframe加载完成后要进行的操作
+        startBtn.onclick = function () {
+            startProcess();
+        }
+        stopBtn.onclick = function () {
+            stopProcess();
+        }
+
+    }
+    /**
+     * 关闭当前iframe
+     */
+    closeBtn.onclick=function () {
+        var iframeId=self.frameElement.getAttribute('id');
+        top.removeIframe(iframeId);
+    }
+
+    /*newBtn.onclick=function () {
+            top.addIframe();
+        }*/
+
+    /**
+     * 供子iframe设置结果值
+     */
+    function setResult(result) {
+        resultDom.value = result;
+    }
+
+
+    /**
+     * 启动进程
+     */
+    function startProcess() {
+        childIframe.src=resultDom.value;
+        childIframe.onload=function () {
+            childIframe.contentWindow.startProcess();
+        };
+    }
+    /**
+     * 停止进程
+     */
+    function stopProcess() {
+        childIframe.contentWindow.stopProcess();
+    }
+
+</script>
+
+
+</html>

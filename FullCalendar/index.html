@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .calendarBox{
+            width: 600px;
+            height: 600px;
+            margin:100px auto;
+        }
+    </style>
+    <link rel="stylesheet" href="fullcalendar/fullcalendar.css">
+<!--    <link rel="stylesheet" href="https://www.helloweba.net/demo/2017/Fullcalendar/fullcalendar/fullcalendar.css">-->
+
+</head>
+<body>
+<div class="calendarBox"><div id="calendar"></div></div>
+</body>
+<!-- Full Calendar -->
+<script src="jquery.min.js"></script>
+<!--<script src="https://www.helloweba.net/demo/2017/Fullcalendar/lib/jquery.min.js"></script>-->
+    <script src="fullcalendar/moment.min.js"></script>
+<!--<script src="https://www.helloweba.net/demo/2017/Fullcalendar/lib/moment.min.js"></script>-->
+<script src="fullcalendar/fullcalendar.min.js"></script>
+<!--<script src="https://www.helloweba.net/demo/2017/Fullcalendar/fullcalendar/fullcalendar.min.js"></script>-->
+
+<script>
+    $(document).ready(function() {
+        var initialLocaleCode = 'zh-cn'; //中文
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listMonth'
+            },
+            defaultDate: '2017-10-12',
+            locale: initialLocaleCode,
+            //displayEventTime: false,
+            // slotDuration: '00:01:00',//精度单位
+            slotDuration: '01:00:00',//精度为小时
+            slotLabelInterval: '01:00:00',
+            slotLabelFormat: 'hh:mm',
+            displayEventEnd: true,
+            eventLimit: 3,
+            eventLimitText: '更多',
+            buttonIcons: false, // show the prev/next text
+            weekNumbers: true,
+            navLinks: true, // can click day/week names to navigate views   可以进入当天选择时间
+            dayClick: function(date, jsEvent, view) {
+                debugger;
+                alert('Clicked on: ' + date.format('YYYY-MM-DD hh:mm:ss'));
+                alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                alert('Current view: ' + view.name);
+                // change the day's background color just for fun
+                // $(this).css('background-color', 'red');
+            },
+            editable: true,
+            events: [
+                {
+                    title: '3条备忘',
+                    start: '2017-10-01'
+                },
+                {
+                    title: 'Long Event',
+                    start: '2017-10-07',
+                    end: '2017-10-10'
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: '2017-10-09T16:00:00'
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: '2017-10-16T16:00:00'
+                },
+                {
+                    title: 'Conference',
+                    start: '2017-10-11',
+                    end: '2017-10-13'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2017-10-12T10:30:00',
+                    end: '2017-10-12T12:30:00'
+                },
+                {
+                    title: 'Lunch',
+                    start: '2017-10-12T12:00:00'
+                },
+                {
+                    title: 'Meeting',
+                    start: '2017-10-12T14:30:00'
+                },
+                {
+                    title: 'Happy Hour',
+                    start: '2017-10-12T17:30:00'
+                },
+                {
+                    title: 'Dinner',
+                    start: '2017-10-12T20:00:00'
+                },
+                {
+                    title: 'Birthday Party',
+                    start: '2017-10-13T07:00:00'
+                },
+                {
+                    title: 'Click for Google',
+                    url: 'http://google.com/',
+                    start: '2017-10-28'
+                }
+            ]
+        });
+
+    });
+</script>
+</html>

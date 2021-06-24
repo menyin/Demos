@@ -8,6 +8,105 @@
 <input type="button" id="setValue">
 <input type="button" id="btnShow">
 <input type="file">
+
+<div class="jobcn_selector jobcn_selector_{{data.type}} {{data.lang}} {{data.css}} hide" id="{{data.id}}">
+    <section class="head_wrap">
+        <div class="selector_head"><a class="back"></a>{{data.description[data.lang][data.type+"_title"]}}<a
+                class="save">{{data.description[data.lang]["save_btn"]}}</a></div>
+        <div class="selector_opted  clearfix">
+            <div>
+                <div class="clear_count"><span>{{data.description[data.lang]["area_selected_tip"]}}</span>
+                    <div class="right_position"><span class="selector_checker_count"><span class="currentNum">{{options.originalValueLength}}</span>/{{data.max}}</span>
+                        <span class="selector_clear clearSelector" style="display:block"> {{data.description[data.lang]["clear_btn"]}}</span>
+                    </div>
+                </div>
+                {%var tips = data.description[data.lang]["area_select_tip"].replace(/{{num}}/,data.max)%} <span
+                    class="selector_checker_tip {{ Object.keys(options.selectedItems).length ? " hide" : "" }}">{{ tips
+                }}</span>
+                <div class="selector_checker_plan clearfix" style="display: block;height:70px;">
+                    <ul class="selectedItems">
+                        {% for ( var k in options.selectedItems ) {
+                          if (!options.selectedItems.hasOwnProperty(k) ) continue;
+                          for ( var mk in options.selectedItems[k] ){
+                            if ( !options.selectedItems[k].hasOwnProperty(mk) ) continue;
+                            for ( var i = 0, l =options.selectedItems[k][mk].length; i < l; i++ ){
+                                var item = options.selectedItems[k][mk][i];
+                        if(!dic[item])continue;
+                         %}
+                        <li class="selectedIcon"><a class="selector_selected "><span>{{dic[item][data.lang]}}</span><i
+                                data-sv="{{item}}" class="selected_icon"></i></a></li>
+                        {% } } } %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="currant_position"><i class="position_icon"></i>{{data.description[data.lang]["location_tip"]}}<a
+                class="getLocation">{{data.description[data.lang]["reset_location"]}}</a><span
+                class="selected_area"></span></div>
+    </section>  <!--selector_body-->
+    <div class="main_box selectorBody" style="display:block">
+        <div class="selector_body_box bodyMainBox">
+            <div class="selector_body">
+                <div class="selector_category_box1 selectorLv1 provinceBox">
+                    <ul class="provinceItems">
+                        <li data-pv="0" class="title"><span>{{data.description[data.lang]["unlimited_area"]}}</span>
+                        </li>
+                        <li class="title nearly_area active" data-pv="last"><span><i></i>{{data.description[data.lang]["recent_choice"]}}</span>
+                        </li>
+                        <li class="title hot_area" data-pv="hot"><span><i></i>{{data.description[data.lang]["hot_city"]}}</span>
+                        </li>
+                        {% var sort; var py;
+                            var sortList = data.lang==="cn" ? dic.PYLIST : dic.ENLIST;
+                            var langType =                        data.lang==="cn" ? "py" : "en";
+                            var isSelected = function (v) {
+                                if ( !options.selectedItems[v] ) return "";
+                                if ( !Object.keys(options.selectedItems[v]).length ) return "";
+                                for ( var k in options.selectedItems[v] ) {
+                                 if ( options.selectedItems[v][k] && options.selectedItems[v][k].length ) return " subSelected";
+                                }
+                             };
+                             for ( var k in sortList ) {
+                            var list = sortList[k];
+                            for ( var i = 0, l = list.length; i < l ; i++ ) {
+                            py = dic[list[i]][langType].slice(0,1);
+                        %}
+                            <li data-pv="{{list[i]}}" class="title{{isSelected(list[i])}} "><span>
+                                {% if ( sort !== py ) { sort = py; %}<i
+                                    class="character">{{sort}}</i>
+                                if(!dic[list[i]])continue;
+                                {% } %}
+                                {{dic[list[i]][data.lang]}}</li>
+                            </span>
+                        {% } } %}
+                    </ul>
+                    <div class="shade_box"></div>
+                </div>
+                <div class="selector_category_box2 selectorLv2 cityBox">
+                    <div class="selector_category_items">
+                        <ul class="hide" data-pv="0">
+                            <li class="selector_item " data-cv="0"><span>{{data.description[data.lang]["unlimited"]}}<i
+                                    class="item_check"></i><i class="item_icon hide"></i></span></li>
+                        </ul>
+                        <ul class="cityItems" data-pv="last"> {% if ( options.lastSelectedItems ) {
+                            var lastSelectedItems = options.lastSelectedItems.length > 0 ? options.lastSelectedItems.split(",") : [] ;
+                            for ( var i = 0, l = lastSelectedItems.length; i < l; i++ ) {
+                            if ( (!data.showTown && lastSelectedItems[i].length === 6)|| !dic[lastSelectedItems[i]]) continue;
+                            %}
+                            <li data-lv="{{lastSelectedItems[i]}}" class="selector_item"><span>{{dic[lastSelectedItems[i]][data.lang]}}<i
+                                    class="item_check"></i></span></li>
+                            {% } } %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="selector_category_box3 selectorLv3 townBox">
+                    <div class="selector_category_items" class="townItems"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     var defOption = {name: '123'};
 
@@ -90,5 +189,339 @@
             window.location.href = "http://get.adobe.com/cn/flashplayer/";
         }
     }
+</script>
+
+<script>
+
+
+
+
+
+
+    /**
+     * Created by Administrator on 2017/3/8.
+     */
+    $(function() {
+        $('head').append('<style>.layui-layer-btn1{display: none!important;}</style>');//解决layerjs弹框第二个按钮只能是【取消】的问题
+        /**
+         * 图片裁剪器
+         *
+         * @author 陈南阳
+         * @vision 1.0.0
+         * @createtime 2017-03-06
+         * @reference jquey-1.8.3.min.js+ jquery-ui-widget.js
+         *            jquery.iframe-transport.js jquery.fileupload.js
+         *            js/layer-v3.0.2/layer.js layer.css jquery.Jcrop.js
+         *            jquery.Jcrop.css
+         */
+        (function(w) {
+            w.imgCutor = {
+                defOption:{
+//title:'图片裁剪器',
+                    title:'上传图片',
+                    yesbt:'确定',
+                    nobt:'取消',
+//filebt:'浏览',
+                    filebt:'换图',
+                    noimgmsg:'请先选择裁切的图片！',
+
+                    initImg:''
+                }
+            };
+            w.imgCutor.open = open;
+
+            /**
+             * 打开图片裁剪器窗口
+             *
+             * @params {object} options 初始化参数
+             * @desciption options包含以下属性： title 裁切器标题 yesbt 裁切器确定按钮标题 nobt 裁切器取消按钮标题
+             *             filebt 裁切器浏览按钮标题 uploadurl 原图上传功能后台服务地址 imgcuturl
+             *             截图处理功能后台服务地址，本插件会再选定截图区域后给该服务接口传递参数x、y、width、height
+             *             yescall 裁切完成后回调(yesbt按钮确定后触发)
+             *             包含参数，形如：{bigimg:'http:www.server.com/bigimg.jpg',bigimg:'http:www.server.com/litteimg.jpg'}
+             */
+            function open(options) {
+                if (!options) {
+                    return console.error('error:options must be require');
+                }
+//if (!options.uploadurl) {
+//return 'error:uploadurl must be require';
+//}
+                w.imgCutor.options=options=$.extend(w.imgCutor.defOption,options);
+
+                closeloading();//关闭上传已有上传进度条
+                var url='/h5/?d=0';
+                if(options.initImg){
+                    w.imgCutor.initImg=options.initImg;
+                }
+                if(options.uploadurl){
+                    url=url+'&uploadurl='+options.uploadurl;
+                }
+                if(options.aspectRatio){
+                    url=url+'&aspectRatio='+options.aspectRatio;
+                }
+                layer.open({
+                    type : 2,
+                    title : options.title,
+//shadeClose : true,
+                    shade : 0.8,
+// area: ['50%', '60%'],
+//area : [ '820px', '580px' ],
+//area : [ '820px', '610px' ],
+                    area : [ '750px', '620px' ],
+//area : [ '900px', '610px' ],
+//btn : [ options.yesbt, options.nobt, options.filebt ],//
+                    btn : [ options.yesbt, options.nobt, options.filebt ],//
+// content : sHtml,// content内容形式由type参数决定，1为html文本，2为iframe嵌套页面...
+                    content : url,// content内容形式由type参数决定，1为html文本，2为iframe嵌套页面...
+                    success : function(layero, index) {
+// /* 初始化上传控件 */
+// var img = new Image();
+// // initialFileButton(options.uploadurl);
+// var src = 'https://pic.597.com/pos/2020/09/02/20090202364739978.jpg';
+// img.onload = function() {
+//     $('#target').attr('src', src);
+//     change_image(src);
+// }
+// img.src = src;
+                    },
+                    yes : function(index, dom) {
+
+
+                        var body = layer.getChildFrame('body', index);  //此处我理解的是加载目标页面的内容
+// $("#当前页面需要设置的元素").val(body.find('#h_bankName').val());　　//查到目标页面的内容赋给当前页面元素
+                        $(body).find('.btn-success[data-method="getCroppedCanvas"]').click();
+                        debugger
+//得到iframe页的窗口对象
+//var iframeWin = $('iframe[name="layui-layer-iframe1"]')[0];
+//执行iframe页的showMsg方法
+//iframeWin.contentWindow.click_getCroppedCanvas();
+// childIframe.contentWindow
+//layer.close(index);
+                    },
+                    cancel : function(index) {
+                        closeloading();
+                    },
+                    btn3 : function(index) {// 浏览文件确定按钮
+                        debugger
+//document.querySelector('.layui-layer-iframe iframe').contentWindow
+                        var body = layer.getChildFrame('body', index);  //此处我理解的是加载目标页面的内容
+// $("#当前页面需要设置的元素").val(body.find('#h_bankName').val());　　//查到目标页面的内容赋给当前页面元素
+                        $(body).find('#inputImage').click();　　//查到目标页面的内容赋给当前页面元素
+                        return false;
+                    }
+                });
+            }
+
+            /**
+             * 浏览文件按钮初始化
+             */
+            function initialFileButton(uploadUrl) {
+                $('#fileuploadBtn').fileupload({
+                    url : uploadUrl,
+                    dataType : 'json',
+                    pasteZone : $('#fileuploadBtn'),
+                    formData : {},
+                    done : function(e, data) {
+
+                        if (data.result.flag != undefined) {
+                            if (data.result.flag == "false") {
+                                var j_lang_err = locale.indexOf('zh')>-1?"文件上传失败！":"File upload failed!"
+                                layer.alert(j_lang_err);
+                                closeloading();
+                                return false;
+                            }
+                        }
+
+                        var img = new Image();
+                        img.onload = function() {
+                            $('#target').attr('src', data.result[0].ori);
+                            change_image(data.result[0].ori);
+                        }
+                        img.src = data.result[0].ori;
+
+                    },
+                    change : function(e, data) {
+                    },
+                    fail : function(e, data) {
+
+                    },
+                    progressall : function(e, data) {
+
+                        console.log(data.loaded + '--' + data.total);
+                    },
+                    send:function(e, data){
+                        openloading();
+                    }
+                });
+            }
+
+            /**
+             * 图片裁切器初始化
+             *
+             * @param {string}
+             *            sImgSrc 将要裁切的大图url
+             */
+            function change_image(sImgSrc) {
+                /* 设置各个位置img的src begin */
+                $('#target,#preview,#preview2,.jcrop-holder img').attr('src',
+                    sImgSrc);
+                /* 设置各个位置img的src end */
+
+                /* 测试 begin */
+// $("#target").attr('src', 'images/eeeeeee.png');
+// $("#preview").attr('src', 'images/eeeeeee.png');
+// $("#preview2").attr('src', 'images/eeeeeee.png');
+                /* 测试 end */
+
+                var iOrignHeight = $('#target').height();
+                var iTargetW = $('#target').width();
+                var iTargetH = $('#target').height();
+                /* 限定图片则固定区域内 begin */
+                if (iTargetW > iTargetH) {
+                    $('#target').css({
+                        'width' : '100%'
+                    });
+                } else {
+                    $('#target').css({
+                        'height' : '100%'
+                    });
+                }
+                /* 限定图片则固定区域内 begin */
+
+// 存储缩放比例
+// var
+// iOrignScale=Math.round(($('#target').width()/iTargetW)*100)/100;
+                var iOrignScale = iTargetW / $('#target').width();
+                var jcrop_api, boundx, boundy;
+                setTimeout(function() {
+                    $('#target').Jcrop({
+                        minSize : [ 48, 48 ],// 初始化最小裁切区域
+                        setSelect : [ 0, 0, 220, 220 ],// 初始化裁切区域
+                        onChange : updatePreview,
+                        onSelect : updatePreview,
+                        onSelect : updateCoords,
+                        aspectRatio :0
+                    }, function() {
+// Use the API to get the real image size
+                        var bounds = this.getBounds();
+                        boundx = bounds[0];
+                        boundy = bounds[1];
+// Store the API in the jcrop_api variable
+                        jcrop_api = this;
+                    });
+
+                    function updatePreview(c) {
+                        if (parseInt(c.w) > 0) {
+                            var rx = 48 / c.w; // 小头像预览Div的大小
+                            var ry = 48 / c.h;
+
+                            $('#preview').css({
+                                width : Math.round(rx * boundx) + 'px',
+                                height : Math.round(ry * boundy) + 'px',
+                                marginLeft : '-' + Math.round(rx * c.x) + 'px',
+                                marginTop : '-' + Math.round(ry * c.y) + 'px'
+                            });
+                        }
+                        {
+                            var rx = 199 / c.w; // 大头像预览Div的大小
+                            var ry = 199 / c.h;
+                            $('#preview2').css({
+                                width : Math.round(rx * boundx) + 'px',
+                                height : Math.round(ry * boundy) + 'px',
+                                marginLeft : '-' + Math.round(rx * c.x) + 'px',
+                                marginTop : '-' + Math.round(ry * c.y) + 'px'
+                            });
+                        }
+                    }
+                    ;
+
+                    function updateCoords(c) {
+// $('#x').val(c.x);
+// $('#y').val(c.y);
+// $('#w').val(c.w);
+// $('#h').val(c.h);
+// 因为原图放到容器里有进行缩放，所以要原图比例映射裁切尺寸，以便推送给服务器。
+                        $('#x').val(parseInt(c.x * iOrignScale));
+                        $('#y').val(parseInt(c.y * iOrignScale));
+                        $('#w').val(parseInt(c.w * iOrignScale));
+                        $('#h').val(parseInt(c.h * iOrignScale));
+                    }
+                    ;
+                    closeloading();
+                }, 500);
+
+            }
+
+            /* 弹出框html */
+            var sLoadingImg = '<div class="loadingImg" style="display:none;position:absolute;left:206px;top:206px;width:37px; height:37px;background: url(js/imgcutor1.0.0/images/loading0.gif) no-repeat center center;">'
+                /*+ '<p class="item1" style="display:none;margin:0 6px;width:14px;height:14px;background:#4898d5;float:left"></p>'
+                + '<p class="item2" style="display:none;margin:0 6px;width:14px;height:14px;background:#4898d5;float:left"></p>'
+                + '<p class="item3" style="display:none;margin:0 6px;width:14px;height:14px;background:#4898d5;float:left"></p>'
+                + '<p class="item4" style="display:none;margin:0 6px;width:14px;height:14px;background:#4898d5;float:left"></p>'
+                + '<p class="item5" style="display:none;margin:0 6px;width:14px;height:14px;background:#4898d5;float:left"></p>'*/
+                + '</div>';
+
+            var background='url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC);';
+            var sHtml = sLoadingImg+'<div id="imgcutor" style="width:450px;height: 450px;float: left;background: '+background+'margin:0 20px;"><img  id="target"></div>'
+                + '<div style="width:190px;height:195px;margin:0 20px;overflow:hidden; float:right;"><img style="float:left;" id="preview2" ></div>'
+                + '<div style="width:48px;height:48px;margin:0 10px;overflow:hidden; float:right;"><img style="float:left;" id="preview" ></div>'
+                + '<div style="clear: both;"></div>'
+                + '<form action="#" method="post" onsubmit="return checkCoords()" style="width: 0;height: 0;" enctype="multipart/form-data" id="form">'
+                + '<input type="file" name="file" style="width: 0;height: 0;" id="fileuploadBtn" onchange="">'
+                + '<input type="hidden" id="x" name="x" />'
+                + '<input type="hidden" id="y" name="y" />'
+                + '<input type="hidden" id="w" name="w" />'
+                + '<input type="hidden" id="h" name="h" />' +
+                // '<input type="submit" value="裁剪"/>'+
+                '</form>';
+            var iNow = 0;
+            var timer =null;
+            function openloading(){
+                timer= setInterval(function() {
+                    if (iNow == 5) {
+                        iNow = 0
+                        $('.loadingImg').find('p').hide();
+                    } else {
+                        iNow++;
+                        $('.loadingImg').find('.item' + iNow).show();
+                    }
+                }, 200);
+            }
+
+            function closeloading(){
+                iNow = 0;
+                clearInterval(timer);
+                $('.loadingImg').find('p').hide();
+            }
+
+        })(window);
+
+    });
+    debugger;
+    function uploadImg (e,callback) {
+        const file = e.target.files[0];
+        this.fileType = file.type
+        if (!['image/png', 'image/jpg', 'image/gif', 'image/jpeg'].includes(this.fileType)) {
+            alert('请上传正确的图片')
+            return
+        }
+        if (file.size > 20 * 1024 * 1024) {
+            alert('请选择20M以内的图片')
+            return
+        }
+        if (typeof FileReader === 'function') {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                var Base64Val = event.target.result;
+                console.log( Base64Val)
+                callback(Base64Val);
+            }
+        } else {
+            alert('对不起，您的浏览器暂不支持此功能！');
+        }
+    }
+    window.uploadImg=uploadImg;
 </script>
 </html>

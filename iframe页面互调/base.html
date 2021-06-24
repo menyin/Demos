@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        iframe {
+            width: 460px;
+            height: 340px;
+            border:none;
+            float: left;
+        }
+        #btns{
+            padding:0 10px;
+        }
+        .btn {
+            background: green;
+            width: 80px;
+            padding: 4px 0;
+            margin: 4px 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div id="btns">
+    <input type="button" class="btn" value="新增请求" id="addBtn">
+    <input type="button" class="btn" value="全部启动" id="startAll">
+    <input type="button" class="btn" value="全部停止" id="stopAll">
+</div>
+<div id="iframes">
+    <iframe id="parent0" src="parent.html"></iframe>
+</div>
+</body>
+<script>
+    var addBtn=document.getElementById('addBtn');
+    var startAll=document.getElementById('startAll');
+    var stopAll=document.getElementById('stopAll');
+    var iframes=document.getElementById('iframes');
+    var iframeNum=0;
+    addBtn.onclick=function () {
+        addIframe();
+    }
+    startAll.onclick=function () {
+        startAllProcess();
+    }
+    stopAll.onclick=function () {
+        stopAllProcess();
+    }
+
+
+
+
+    /**
+     * 删除指定iframe
+     * @param iframeId
+     */
+    function removeIframe(iframeId){
+        iframes.removeChild(document.getElementById(iframeId));
+    }
+
+    /**
+     * 新增iframe
+     */
+    function addIframe() {
+        var iframe=document.createElement("iframe");
+        ++iframeNum;
+        iframe.id='parent'+iframeNum;
+        iframe.src='parent.html';
+        iframes.appendChild(iframe)
+    }
+
+
+
+    /**
+     * 启动全部iframe进程
+     */
+    function startAllProcess() {
+        var iframeList=document.getElementsByTagName('iframe');
+        for (var i=0;i<iframeList.length;i++){
+            iframeList[i].contentWindow.startProcess();
+        }
+
+    }
+
+    /**
+     * 停止全部iframe进程
+     */
+    function stopAllProcess() {
+        var iframeList=document.getElementsByTagName('iframe');
+        for (var i=0;i<iframeList.length;i++){
+            iframeList[i].contentWindow.stopProcess();
+        }
+
+    }
+</script>
+</html>

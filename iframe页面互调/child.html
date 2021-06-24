@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #result{
+            color:yellowgreen;
+        }
+        p {
+            margin:2px 0;
+        }
+    </style>
+</head>
+<body>
+<p>结果：<span id="result"></span></p>
+</body>
+<script>
+
+    var flage = false;
+    var result = 0;
+    var resultDom = document.getElementById('result');
+    var parentWindow=window.parent;
+    var resultParentDom = parentWindow.document.getElementById('result');
+
+    /**
+     * 子页面调用，将子页面结果回显给父页面父页面
+     */
+    function setWinParentResult(result) {
+        parentWindow.setResult(result);
+    }
+
+    /**
+     * 供父页面调用的启动方法
+     */
+    function startProcess() {
+        flage = true;
+        result=resultParentDom.value?resultParentDom.value*1:0;//根据父页面文本框调节初始值
+        recursion();
+        function recursion() {
+            window.myTimer = setTimeout(function () {
+                resultDom.innerHTML = '程序执行中' + result + '...';
+                setWinParentResult(result);
+                result++;
+                if (flage) {
+                    recursion();
+                } else {
+                    if(window.myTimer)window.clearTimeout(window.myTimer);
+                }
+            }, 1000);
+        }
+
+    }
+
+    /**
+     * 供父页面调用的停止方法
+     */
+    function stopProcess() {
+        flage = false;
+        if(window.myTimer)window.clearTimeout(window.myTimer);
+    }
+</script>
+</html>

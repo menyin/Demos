@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            var link = document.getElementById('link');
+            link.onclick = function () {
+                copyUrl2();
+            }
+            // txt.innerHTML='aaaa \\r bbbb';
+        };
+
+        function copyUrl2() {
+            var Url2 = document.getElementById("link").getAttribute("data-href");
+            var oInput = document.createElement('input');
+            oInput.value = Url2;
+            document.body.appendChild(oInput);
+            oInput.select(); // 选择对象
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            oInput.className = 'oInput';
+            oInput.style.display = 'none';
+            alert('复制成功');
+        }
+    </script>
+
+</head>
+<body>
+<!--<a href="javascript:void(0);" data-href="http://www.taobao.com"  id="link">点我啊</a>
+<textarea id="txt">aa</br>bb</textarea>-->
+
+
+
+
+<div class="jobcn_selector jobcn_selector_{{data.type}} {{data.lang}} {{data.css}} hide" id="{{data.id}}">
+    <section class="head_wrap">
+        <div class="selector_head"><a class="back"></a>{{data.description[data.lang][data.type+"_title"]}}<a
+                class="save">{{data.description[data.lang]["save_btn"]}}</a></div>
+        <div class="selector_opted  clearfix">
+            <div>
+                <div class="clear_count"><span>{{data.description[data.lang]["area_selected_tip"]}}</span>
+                    <div class="right_position"><span class="selector_checker_count"><span class="currentNum">{{options.originalValueLength}}</span>/{{data.max}}</span>
+                        <span class="selector_clear clearSelector" style="display:block"> {{data.description[data.lang]["clear_btn"]}}</span>
+                    </div>
+                </div>
+                {%var tips = data.description[data.lang]["area_select_tip"].replace(/{{num}}/,data.max)%} <span
+                    class="selector_checker_tip {{ Object.keys(options.selectedItems).length ? " hide" : "" }}">{{ tips
+                }}</span>
+                <div class="selector_checker_plan clearfix" style="display: block;height:70px;">
+                    <ul class="selectedItems"> {% for ( var k in options.selectedItems ) { if (
+                        !options.selectedItems.hasOwnProperty(k) ) continue; for ( var mk in options.selectedItems[k] )
+                        { if ( !options.selectedItems[k].hasOwnProperty(mk) ) continue; for ( var i = 0, l =
+                        options.selectedItems[k][mk].length; i < l; i++ ){ var item = options.selectedItems[k][mk][i];
+                        %}
+                        <li class="selectedIcon"><a class="selector_selected "><span>{{dic[item][data.lang]}}</span><i
+                                data-sv="{{item}}" class="selected_icon"></i></a></li>
+                        {% } } } %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="currant_position"><i class="position_icon"></i>{{data.description[data.lang]["location_tip"]}}<a
+                class="getLocation">{{data.description[data.lang]["reset_location"]}}</a><span
+                class="selected_area"></span></div>
+    </section>  <!--selector_body-->
+    <div class="main_box selectorBody" style="display:block">
+        <div class="selector_body_box bodyMainBox">
+            <div class="selector_body">
+                <div class="selector_category_box1 selectorLv1 provinceBox">
+                    <ul class="provinceItems">
+                        <li data-pv="0" class="title"><span>{{data.description[data.lang]["unlimited_area"]}}</span>
+                        </li>
+                        <li class="title nearly_area active" data-pv="last"><span><i></i>{{data.description[data.lang]["recent_choice"]}}</span>
+                        </li>
+                        <li class="title hot_area" data-pv="hot"><span><i></i>{{data.description[data.lang]["hot_city"]}}</span>
+                        </li>
+                        {% var sort; var py; var sortList = data.lang==="cn" ? dic.PYLIST : dic.ENLIST; var langType =
+                        data.lang==="cn" ? "py" : "en"; var isSelected = function (v) { if ( !options.selectedItems[v] )
+                        return ""; if ( !Object.keys(options.selectedItems[v]).length ) return ""; for ( var k in
+                        options.selectedItems[v] ) { if ( options.selectedItems[v][k] &&
+                        options.selectedItems[v][k].length ) return " subSelected"; } }; for ( var k in sortList ) { var
+                        list = sortList[k]; for ( var i = 0, l = list.length; i < l ; i++ ) { py =
+                        dic[list[i]][langType].slice(0,1); %}
+                        <li data-pv="{{list[i]}}" class="title{{isSelected(list[i])}} "><span>{% if ( sort !== py ) { sort = py; %}<i
+                                class="character">{{sort}}</i>{% } %}{{dic[list[i]][data.lang]}}</li>
+                        </span>{% } } %}
+                    </ul>
+                    <div class="shade_box"></div>
+                </div>
+                <div class="selector_category_box2 selectorLv2 cityBox">
+                    <div class="selector_category_items">
+                        <ul class="hide" data-pv="0">
+                            <li class="selector_item " data-cv="0"><span>{{data.description[data.lang]["unlimited"]}}<i
+                                    class="item_check"></i><i class="item_icon hide"></i></span></li>
+                        </ul>
+                        <ul class="cityItems" data-pv="last"> {% if ( options.lastSelectedItems ) { var
+                            lastSelectedItems = options.lastSelectedItems.length > 0 ?
+                            options.lastSelectedItems.split(",") : [] ; for ( var i = 0, l = lastSelectedItems.length; i
+                            < l; i++ ) { if ( !data.showTown && lastSelectedItems[i].length === 6 ) continue; %}
+                            <li data-lv="{{lastSelectedItems[i]}}" class="selector_item"><span>{{dic[lastSelectedItems[i]][data.lang]}}<i
+                                    class="item_check"></i></span></li>
+                            {% } } %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="selector_category_box3 selectorLv3 townBox">
+                    <div class="selector_category_items" class="townItems"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

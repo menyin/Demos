@@ -1,5 +1,16 @@
-$(function () {
 
+
+$(function () {
+  //获取url中的参数
+  function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+  }
+  var initImg=getUrlParam('initImg');
+ if(initImg){
+   $('#image').attr('src',initImg);
+ }
   'use strict';
 
   var console = window.console || { log: function () {} };
@@ -204,7 +215,6 @@ $(function () {
                 // $('#returnImg').attr('src','/images/'+JSON.parse(httprequest.responseText).json);
               }
             };*/
-
             var data= result.toDataURL(uploadedImageType);//类型与进上传图片一致
             data=data.split(',')[1];
             data=window.atob(data);
@@ -217,8 +227,13 @@ $(function () {
             console.log(blob);
             // fd.append('avatarFile',blob,'image.png');
             fd.append('Filedata',blob,uploadedImageName);//名称与上传图片一致
+            // 又拍接口参数
+            fd.append('policy','eyJidWNrZXQiOiI1OTctcGljIiwiZXhwaXJhdGlvbiI6MTYxODgxNzQzNiwiaW1hZ2Utd2lkdGgtcmFuZ2UiOiIwLDQwMjQiLCJpbWFnZS1oZWlnaHQtcmFuZ2UiOiIwLDQwMjQiLCJhbGxvdy1maWxlLXR5cGUiOiJqcGcsZ2lmLHBuZyxibXAsdGlmLGpwZWciLCJzYXZlLWtleSI6IlwvcGhvdG9cL3t5ZWFyfVwve21vbn1cL3tkYXl9XC97eWVhcn17bW9ufXtkYXl9e2hvdXJ9e21pbn17c2VjfTY2NjI2ey5zdWZmaXh9In0=');
+            fd.append('signature','421218c44d314f231640a4ef5fbe7b92');
+
             $.ajax({
-              url: 'http://xm.597.com/api/web/uploadify.api',
+              // url: 'http://xm.597.com/api/web/uploadify.api',
+              url: 'https://v0.api.upyun.com/597-pic',
               type: 'POST',
               cache: false,
               data: fd,
@@ -228,9 +243,13 @@ $(function () {
             }).done(function(res) {
               debugger;
               console.log('成功！')
+
+              // window.parent.imgCutor.([参数]);	//调用父窗口方法
             }).fail(function(res) {
               debugger;
               console.log('失败！')
+
+
             });
           }
           break;

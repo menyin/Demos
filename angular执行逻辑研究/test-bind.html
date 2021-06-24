@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="angular-1.4.8.js"></script>
+    <script>
+        var qq=angular.module('myApp', [])
+            .controller('myCtrl',['$scope',function ($scope) {
+                $scope.htmlStr ="二、岗位要求：&lt;div&gt;1、&lt;/div&gt;&lt;div&gt;2、&lt;/div&gt;";
+            }]);
+
+    </script>
+</head>
+<body ng-controller="myCtrl">
+<pre class="rongcloud-Message-entry ng-binding" >{{htmlStr}}</pre>
+
+</body>
+</html>

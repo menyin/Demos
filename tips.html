@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .tips {
+            width: 320px;
+            height: 80px;
+            line-height: 80px;
+            position: fixed;
+            top: 100px;
+            left: calc(50% - 160px);
+            background: #f7235e;
+            color: #fff;
+            border-radius: 4px;
+            text-align: center;
+
+        }
+        .tips .btn{
+            position: absolute;
+            right: 4px;
+            top:4px;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+        }
+    </style>
+    <script src="http://cdn.6.cs/www/js/jquery.min.js"></script>
+    <!--<script>
+        // $.ajax('')
+        // var data={"common":{"status":-160,"t":3},"toast":{"m":"\u4f60\u597d\u6211\u662f\u571f\u53f8\u5927\u4eba","t":3}}
+        $.ajax({
+            url: "/Demos/data.js",
+            success: function (data) {
+                var data=JSON.parse(data);
+                if(data.toast){
+                    tips(data.toast.m,data.toast.t,myCallbcak)
+                }else{
+                    myCallbcak(data);
+                }
+
+            }
+        });
+
+
+
+        function tips(msg, time, callback) {
+            $('body').append('<div class="tips"><span>'+msg+'</span><i class="btn" onclick="$(this).parent().remove()">x</i></div>');
+            setTimeout(function () {
+                $('.tips').remove();
+                callback && callback();
+            }, time*1000);
+        }
+
+    </script>-->
+
+    <script>
+
+    </script>
+</head>
+<body>
+<!--<div class="tips"><span>你好吐司大人</span><i class="btn" onclick="$(this).parent().remove()">x</i></div>-->
+
+<form action="" id="form">
+    <input type="text" name="name" value="jack">
+    <input type="text" name="id" value="11">
+</form>
+</body>
+
+<script>
+    $(function () {
+        // console.log($("form").serialize());
+        $.post("data.js", $("form").serialize(), function () {
+
+        });
+    });
+    /*function myCallbcak(data) {
+        // alert('执行业务代码');
+        console.log('执行业务代码');
+        location.href = 'http://www.baidu.com';
+    }*/
+</script>
+</html>

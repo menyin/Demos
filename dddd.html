@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://cdn.6.cs/www/js/jquery.min.js"></script>
+    <style>
+        div {
+            width: 300px;
+            height: 125px;
+            background: url(//cdn.597.com/img/common/logo.gif) repeat left top;
+            position: absolute;
+            z-index: 10002;
+            left: 380px;
+            top: 408.5px;
+        }
+
+        .dialog, .dialogCon {
+            background: none;
+            border: 0;
+        }
+
+        .dialog {
+            background: url(/img/common/dialogBg.png) repeat;
+            padding: 5px;
+            _background: none;
+            _padding: 0;
+            text-align: left;
+        }
+    </style>
+    <script>
+        //显示设置隐私框
+        $("#prBtn").click(function () {
+            $('#prSet').css({'display': 'block'});
+            $('#prSetBg').css({'display': 'block'});
+        });
+
+        $('#prSet').find('li').find('label').click(function () {
+            var $this = $(this);
+            var $thisInput = $this['siblings']('input');
+            /*//zy半公开特殊处理
+            if($thisInput['val']()==2 && $thisInput['attr']("data-bgk")==0){
+                $thisInput['attr']("data-bgk",1);//标示
+                dowmApp();
+                return;
+            }*/
+            $.ajax({
+                url: '/api/web/resumes.api?act=privacy',
+                type: 'post',
+                dataType: 'json',
+                data: {display: $thisInput['val']()},
+                success: function (json) {
+                    if (json.status > 0) {
+                        $this['closest']('li').siblings('li').find('i.jpFntWes').html('&#xf10c;').closest('li').removeClass('check');
+                        $this['find']('i.jpFntWes').html('&#xf058;').closest('li').addClass('check');
+
+                        $('#prSet').css({'display': 'none'});
+                        $('#prSetBg').css({'display': 'none'});
+                        if (json.display == '1') {
+                            alert('设置成功！');
+                            $('#display').val(1);
+                            $('#emOpenMode').html('简历公开');
+                            $('#privacy').css('display', 'block');
+                        } else if (json.display == '2') {
+                            alert('设置成功！');
+                            $('#display').val(2);
+                            $('#emOpenMode').html('简历公开');
+                            $('#privacy').css('display', 'none');
+
+                            if ($thisInput['attr']("data-bgk") == 0) {//cny_add
+                                $thisInput['attr']("data-bgk", 1);//标示
+                                dowmApp();
+                                return;
+                            }
+                        } else {
+                            alert('设置成功！');
+                            $('#display').val(0);
+                            $('#emOpenMode').html('简历保密');
+                            $('#privacy').css('display', 'none');
+                        }
+                        window.location.href = window.location.href;
+                    } else {
+                        alert('设置失败！');
+                    }
+                }
+
+            });
+        });
+
+        var wrapH = $(document).height();
+        $('#blackWrap').height(wrapH);
+        $('#shareBtn').click(function () {
+            $('#blackWrap,.share').show();
+        });
+        $('#blackWrap,#cancel').click(function () {
+            $('#blackWrap,.share').hide();
+        });
+
+        $('#shareWeixin').click(function () {
+            $('#weixinBox').toggle();
+        });
+        $('.close').click(function () {
+            $('#weixinBox').hide();
+        });
+        })
+        ;
+
+
+        $('#selBox dt').click(function () {
+            $(this).siblings('dd').show();
+            $('#selBox p').each(function () {
+                if ($(this).text() === $('#selectEm').text()) {
+                    $(this).hide().siblings().show();
+                }
+            });
+        });
+        //cny_add
+        var selBoxDD = $('#selBox dd');
+        $(document).click(function (e) {
+            var isShow = selBoxDD.is(':visible'),
+                selBox = $('#selBox'),
+                x = e.clientX,
+                y = e.clientY,
+                xStart = selBox.offset().left,
+                xEnd = xStart + 60,
+                yStart = selBox.offset().top,
+                yEnd = yStart + 94;
+            if (isShow && (x < xStart || x > xEnd || y < yStart || y > yEnd)) {
+                selBoxDD.hide();
+            }
+        });
+        $('#selectEm').html('全文');
+
+
+        $('#selBox p').click(function () {
+            $(this).parent().hide();
+            $('#selectEm').html($(this).text());
+            $('#selectType').val($(this).attr('data-val'));
+        });
+
+    </script>
+</head>
+<body>
+<video id="chzbvpjcnkkewomqzy" src="https://jypx.fjylzbrt.com/sv/34d52544-177f6f1f2d4/34d52544-177f6f1f2d4.mp4"
+       width="100%" height="100%" preload="preload" webkit-playsinline="" playsinline="" x-webkit-airplay=""
+       x5-playsinline="" style="width: 100%; height: 100%; background-color: rgb(0, 0, 0);"></video>
+<div>
+
+</div>"{"PlayRecId":"516448","PlayedTimes":[2,3,4,5,6]}"
+
+<script>
+    /* release版本 */
+    let reqInfo={SubSys: "Stu",FuncTag: "Stu_CourseVideoPlayRec",Operate: "DoSavePlayRecord",DataInfo:{PlayRecId: "414187",PlayedTimes:[]}};
+    let operateText='保存播放记录';
+    let operate='DoSavePlayRecord';
+    let vv=document.querySelector('video');
+    let dd=vv.duration;
+    let i=3089;
+    let interval = setInterval(function (){
+        i++;
+        if(i>dd){clearInterval(interval);}
+        if(reqInfo.DataInfo.constructor.name=='String'){
+            reqInfo.DataInfo=JSON.parse(reqInfo.DataInfo);
+        }
+
+        if(i%40==0){
+            console.log(reqInfo.DataInfo);
+            $.ProcessOperate (null, operate, operateText, reqInfo, function(res){console.log(res);})
+            if(reqInfo.DataInfo.constructor.name=='String'){
+                reqInfo.DataInfo=JSON.parse(reqInfo.DataInfo);
+            }
+            reqInfo.DataInfo.PlayedTimes=[];
+        }
+
+        reqInfo.DataInfo.PlayedTimes.push(i)
+    },100);
+</script>
+
+<script>
+    /* release版本 */
+    let reqInfo={SubSys: "Stu",FuncTag: "Stu_CourseVideoPlayRec",Operate: "DoSavePlayRecord",DataInfo:{PlayRecId: "518229",PlayedTimes:[]}};
+    let operateText='保存播放记录';
+    let operate='DoSavePlayRecord';
+    let vv=document.querySelector('video');
+    let dd=vv.duration;
+    let step=50;
+
+    let i=3123;
+    let interval = setInterval(function (){
+        if(i>dd){clearInterval(interval);}
+        let j=0;
+        for(;;){
+            j++;
+            i++;
+            if(reqInfo.DataInfo.constructor.name=='String'){
+                reqInfo.DataInfo=JSON.parse(reqInfo.DataInfo);
+            }
+            reqInfo.DataInfo.PlayedTimes.push(i);
+
+            if(j==step){
+                console.log(reqInfo.DataInfo);
+                $.ProcessOperate (null, operate, operateText, reqInfo, function(res){console.log(res);})
+                if(reqInfo.DataInfo.constructor.name=='String'){
+                    reqInfo.DataInfo=JSON.parse(reqInfo.DataInfo);
+                }
+                reqInfo.DataInfo.PlayedTimes=[];
+                break;
+            }
+        }
+
+    },500);
+	/* release版本 */
+	
+	/* 尝试清空记录 */
+	let reqInfo={SubSys: "Stu",FuncTag: "Stu_CourseVideoPlayRec",Operate: "DoSavePlayRecord",DataInfo:{PlayRecId: "520143",PlayedTimes:[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, -11, -12, -13, -14, -15, -16, -17, -18, -19, -20, -21, -22, -23, -24, -25, -26, -27, -28, -29, -30, -31, -32, -33, -34, -35, -36, -37, -38, -39, -40, -41, -42, -43, -44, -45, -46, -47, -48, -49, -50, -51, -52, -53, -54, -55, -56, -57, -58, -59, -60]}};
+	let operateText='保存播放记录';
+	let operate='DoSavePlayRecord';
+	let vv=document.querySelector('video');
+	let dd=vv.duration;
+	$.ProcessOperate (null, operate, operateText, reqInfo, function(res){console.log(res);})
+	
+
+    /* 批量保存记录 */ 
+    let PlayRecId="364653";
+    let operateText='保存播放记录';
+    let operate='DoSavePlayRecord';
+    let vv=document.querySelector('video');
+    let dd=vv.duration;
+    let arr=[];
+    for(let a=1;a<3600;a++){arr.push(a);}
+    let reqInfo={SubSys: "Stu",FuncTag: "Stu_CourseVideoPlayRec",Operate: "DoSavePlayRecord",DataInfo:{PlayRecId: PlayRecId,PlayedTimes:arr}};
+    $.ProcessOperate (null, operate, operateText, reqInfo, function(res){console.log(res);});
+
+
+
+
+
+
+    var pushArr=[];
+    var tt=vv.currentTime;
+    // for (var i=1;i<dd+1;i++){
+    //
+    // }
+
+    // if(reqInfo.DataInfo.constructor.name=='String')var di=JSON.parse(reqInfo.DataInfo);
+    // di.PlayedTimes.push(ii);
+    // reqInfo.DataInfo=di;
+</script>
+</body>
+</html>
+
+
+
+area:'',	string	N		地址id
+condition:'',	int	N		类型：1职位 2公司 3全文
+keyword:'',	string	N		关键词
+txtAddress:'',	string	N		按街道
+selUpdateStep:'',	int	N		刷新时间
+Degree:'',	string	N		学历
+selGender:'',	int	N		性别
+ComProperty:'',	intstring	N		公司性质
+ComSize:'',	intstring	N		公司规模
+joinType:'',	string	N		工作类型
+callingId:'',	string	N		招聘行业
+minSalary:'',	int	N		薪资最小值
+maxSalary:'',	int	N		薪资最大值
+Reward:'',	string	N		福利待遇
+workYear:'',	string	N		工作经历
+order:'',	string	N		排序。默认更新时间（2薪资降序；3薪资升序；4工龄降序；5工龄升序；6创建时间降序；7创建时间升序；8权重降序；9权重升序；10活跃度降序；11获取度升序）
+distance:'',	int	N		附近几公里
+comLatitude:'',	string	N		维度
+comLongitude:'',	string	N		经度
+pp:'',	int	N		每页显示几条。默认10条
+page:'',	int	N		页码
+jobClassId:'',	string	N	2010,2011	职业类别
+auth:'',

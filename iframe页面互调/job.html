@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="my">
+    <ul></ul>
+</div>
+
+
+<script type="text/javascript" language="javascript" src="http://cdn.597.com/js/jquery-1.8.3.min.js?v=20140312"></script>
+<script>
+
+
+
+</script>
+<script>
+    var flage = false;
+    var parentWindow=window.parent;
+    var resultParentDom = parentWindow.document.getElementById('result');
+
+    var pageUrl = document.URL;
+    var pageName = window.location.pathname.toLowerCase();
+    var id = getUrlParam(pageUrl,'id');
+
+    // startProcess();
+
+    /**
+     * 供父页面调用的启动方法
+     */
+    function startProcess() {
+        flage = true;
+        get();
+        function get() {
+            $.ajax({
+                //async: false,
+                type : "GET",
+                dataType : "jsonp",
+                timeout : 20000,
+                url : "http://xm.597.cs/tool/spider-xm/job.php?id="+id,
+                success : function(json) {
+                    if (json.status!=0){
+                        id=json.status;//当前id改变
+                        setWinResult(json);
+                        setWinParentResult();
+                    }
+                    id>0&&flage&&get(id);
+
+                },
+                error: function () {
+                    id>0&&flage&&get(id);
+
+                }
+            });
+
+        }
+
+    }
+
+    /**
+     * 供父页面调用的停止方法
+     */
+    function stopProcess() {
+        flage = false;
+    }
+
+
+    /**
+     * 子页面调用，将子页面结果回显给父页面父页面
+     */
+    function setWinParentResult() {
+        //将当前页面结果值替换下
+        var newResult=resultParentDom.value.replace(/(?![?&])(id)=\w+/gi,"id="+id);//根据父页面文本框调节初始值
+        parentWindow.setResult(newResult);
+    }
+
+    /**
+     * 设置当前页面结果值
+     * @param result
+     */
+    function setWinResult(json){
+        if ($('ul li').size()==10){
+            $('ul li').first().remove();
+            $('ul').append('<LI>'+json.msg+'</LI>');
+        }else{
+            $('UL').append('<LI>'+json.msg+'</LI>');
+        }
+    }
+
+    /**
+     * 获取url参数
+     * @param url
+     * @param name
+     * @returns {*}
+     */
+    function getUrlParam(url,name){
+        var reg = new RegExp("(\\\?|&)"+ name +"=([^&]*)(&|$)");
+        var r = url.match(reg);
+        if (r!=null) return unescape(r[2]); return null;
+    }
+</script>
+
+
+
+</body>
+</html>

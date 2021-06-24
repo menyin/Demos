@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script language="javascript" type="text/javascript" src="//cdn.597.com/www/js/jquery.js?v=20130808"></script>
+    <style>
+        .poptips {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, .4);
+        }
+
+        .poptips_box {
+            width: 90%;
+            height: 70%;
+            border-radius: 6px;
+            background: #fff;
+            margin: 0 auto;
+            margin-top: 20%;
+        }
+
+        .poptips_header {
+            height: 46px;
+            border-bottom: 1px solid #E9E9E9;
+            color: #1D1D1D;
+            font-size: 16px;
+            line-height: 46px;
+            position: relative;
+            text-align: center;
+            font-weight:600;
+        }
+
+        .poptips_close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 45px;
+            height: 45px;
+            background: url("//cdn.597.com/images/close.png") no-repeat 15px 15px;
+            background-size:16px 16px;
+        }
+
+        .poptips_body {
+            height: calc(100% - 47px);
+            overflow-y: auto;
+        }
+
+        .poptips_item {
+            width: 90%;
+            margin: 0 auto;
+            padding:10px 0;
+            position: relative;
+            border-bottom: 1px solid #E9E9E9;
+
+
+        }
+
+       .poptips_item_jobname{
+            height: 20px;
+           padding:4px 0;
+            font-size: 14px;
+           color:rgba(29,29,29,1);
+           font-weight:600;
+        }
+        .poptips_item_jobcom{
+            height: 20px;
+            padding:4px 0;
+            font-size: 12px;
+            color:rgba(29,29,29,.6);
+        }
+        .poptips_item_msg{
+            font-size:12px;
+            font-weight:500;
+            color:rgba(244,36,62,1);
+            line-height:17px;
+        }
+        .poptips_item_left {
+            width: calc(100% - 30px);
+
+        }
+
+        .poptips_item_right {
+            width: 20px;
+            height: 100%;
+            top:0;
+            right: 0;
+            position: absolute;
+
+        }
+        .poptips_item_status{
+            position: absolute;
+            top:37px;
+        }
+        .status_success{
+            background: url("//cdn.597.com/images/success.png") no-repeat center center;
+            background-size:18px 16px;
+
+        }
+        .status_failure{
+            background: url("//cdn.597.com/images/failure.png") no-repeat center center;
+            background-size:16px 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="poptips">
+    <div class="poptips_box">
+        <div class="poptips_header">
+            批量投递
+            <span class="poptips_close" onclick="$(this).closest('.poptips').remove();"></span>
+        </div>
+        <div class="poptips_body">
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                    <div class="poptips_item_msg">
+                        投递数量已经超过每日上限
+                    </div>
+                </div>
+                <div class="poptips_item_right status_failure">
+                </div>
+            </div>
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                </div>
+                <div class="poptips_item_right status_success">
+                </div>
+            </div>
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                    <div class="poptips_item_msg">
+                        投递数量已经超过每日上限
+                    </div>
+                </div>
+                <div class="poptips_item_right status_success">
+                </div>
+            </div>
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                    <div class="poptips_item_msg">
+                        投递数量已经超过每日上限
+                    </div>
+                </div>
+                <div class="poptips_item_right status_success">
+                </div>
+            </div>
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                    <div class="poptips_item_msg">
+                        投递数量已经超过每日上限
+                    </div>
+                </div>
+                <div class="poptips_item_right status_success">
+                </div>
+            </div>
+            <div class="poptips_item">
+                <div class="poptips_item_left">
+                    <div class="poptips_item_jobname">
+                        UI设计师
+                    </div>
+                    <div class="poptips_item_jobcom">
+                        美图秀秀
+                    </div>
+                    <div class="poptips_item_msg">
+                        投递数量已经超过每日上限
+                    </div>
+                </div>
+                <div class="poptips_item_right status_success">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+
+</script>
+</body>
+</html>

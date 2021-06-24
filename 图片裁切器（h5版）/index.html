@@ -14,6 +14,18 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/cropper.css">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    /*UI调整 begin*/
+
+    .alert.alert-warning,
+    /*.docs-buttons,*/
+    .docs-data .input-group:nth-of-type(5),
+    .docs-data .input-group:nth-of-type(6),
+    .docs-data .input-group:nth-of-type(7){
+      display: none;
+    }
+    /*UI调整 end*/
+  </style>
   <script>
     /*  window.onload = function() {
           if (window.applicationCache) {
@@ -23,9 +35,10 @@
           }
       }*/
       if (history.pushState) {
-          alert("你的浏览器支持HTML5");
+          // alert("你的浏览器支持HTML5");
       } else {
-          alert("你的浏览器不支持HTML5");
+          // alert("你的浏览器不支持HTML5");
+          alert("你的浏览器不支持图片裁切");
       }
 
 
@@ -56,9 +69,9 @@
     }
     var fls = flashChecker();
       if(fls.f) {
-          alert("安装了flash")
+          // alert("安装了flash")
       }else {
-          alert("没有安装了flash")
+          // alert("没有安装了flash")
       }
   </script>
 </head>
@@ -588,7 +601,8 @@
 
   <!-- Scripts -->
   <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+  <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
   <!--<script src="https://fengyuanchen.github.io/js/common.js"></script>-->
   <script src="js/cropper.js"></script>

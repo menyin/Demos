@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  class Person{
+public name;
+public age;
+public generate;
+
+      constructor(...args){
+          if(args.length==2) {
+              this._constructor2(...args);
+          }else if(args.length==3){
+              this._constructor3(...args);
+          }
+      }
+      _constructor3(name,age,generate){
+          this.name=name;
+          this.age=age;
+          this.generate=generate;
+      }
+      _constructor2(name,age){
+          this.name=name;
+          this.age=age;
+      }
+      show(){
+          console.log(name, age, generate);
+      }
+  }
+  let p1=new Person('jack',18);
+  p1.show();
+  let p2=new Person('rose',18,generate);
+  p2.show();
+</script>
+</html>

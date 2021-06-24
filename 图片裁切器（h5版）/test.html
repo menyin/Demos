@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" id="btn" value="裁切图片">
+</body>
+
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+
+<!--<script src="js/jqueryfileupload/js/vendor/jquery.ui.widget.js"></script>-->
+<!--<script src="js/jqueryfileupload/js/jquery.iframe-transport.js"></script>-->
+<!--<script src="js/jqueryfileupload/js/jquery.fileupload.js"></script>-->
+<script src="js/layer-v3.0.2/layer.js"></script>
+<script src="http://xm.597.zl/h5/"></script>
+<!--<script src="js/img-cuter.js"></script>-->
+<script src="//www.{ROOT_DOMAIN}/h5/imgCuter.html"></script>
+
+<script >
+
+    $(function () {
+        var locale='${LOCALE_LANG}';
+        var yesbt='确定';
+        var nobt='取消';
+        var filebt='浏览';
+        var noimgmsg='请先选择裁切的图片';
+        $('#btn').click(function(){
+            imgCutor.open({
+                title:'图片裁切器',//[可选]
+                yesbt:yesbt,//[可选]
+                nobt:nobt,//[可选]
+                filebt:filebt,//[可选]
+                noimgmsg:noimgmsg,//[可选]
+                uploadurl:'upload.api?zoomScale=200&saveDir=album/photo&oriImg=1&fl=at1',//上传服务地址//[可选]
+                initImg:'https://pic.597.com/pos/2020/11/12/20111209100697887.jpg',//[可选] 初始化图片
+                yescall:function(data){//根据data判断成功与否
+                   // successData= "{"status":1,"name":"2021\/04\/20\/21042010510819654.jpg","path":"\/\/pic.597.zl\/logo\/2021\/04\/20\/21042010510819654.jpg"}"
+                   // failData= "{"status":-1,“msg":"请求服务器出错"}"
+                    debugger
+                    data=JSON.parse(data);
+                    if(data.status>0){
+                        alert(data);
+                    }else{
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+    });
+
+
+</script>
+</html>
