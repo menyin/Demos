@@ -4,76 +4,639 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>招聘会</title>
     <style>
-        .banner img{
-            width: 100%;
-        }
-        .change-city{
-            width: 80%;
-            border-bottom: 1px solid #eae7ea;
-            /*background: red;*/
+        .job-sec {
+            position: relative;
+            width: 660px;
             margin:10px auto;
-            text-align: center;
-
+            padding: 30px;
+            background: #FFFFFF;
         }
-        .area_btn{
-            display: block;
-            margin:0 auto -15px;
-            width: 80px;
-            height:30px;
+        .job-sec h3 {
+            font-weight: 700;
+            font-size: 15px;
+            color: #424a5e;
+
+            /*line-height: 50px;*/
+            line-height: 20px;
+            /*padding: 0 0 10px 0;*/
+            margin-bottom: 0;
+            background: url(../images/line-sec.png) 0 45px no-repeat;
+        }
+        .job-sec h3.job-sec-tit {
+            font-size: 16px;
+            line-height: 18px;
+            color: #295266;
+            font-weight: bold;
+            border-left: 4px solid #38b7ea;
+            text-indent: 9px;
+        }
+        .job-sec.job-list {
+            width: 100%;
+
+            margin-right: 0;
+            min-height: 260px;
+            margin-bottom: 50px;
+            padding: 0;
+
+            background: 0 0;
+        }
+        .job-list li,.job-list  ol,.job-list  ul {
+            list-style: none;
+        }
+        .job-sec .job-list li {
+            border-bottom: 1px solid #f4f4f6;
+            margin-bottom: 0;
+
+            position: relative;
+
+            height: 112px;
             background: #fff;
-            /*background: green;*/
-            line-height: 30px;
-            color:#1e1b1e;
-            text-decoration: none;
-            text-align: center;
+
+            cursor: pointer;
         }
-        .card{
+
+        .job-sec .job-list .job-primary {
+            margin: 0;
+
+            border: none;
+            padding-top: 30px;
+
+            padding-right: 0;
+
+            height: 48px;
+            color: #4a4160;
+            padding: 20px 0 19px;
+            position: relative;
+        }
+
+        .job-sec .job-list li .job-primary .name {
+            padding-bottom: 0;
+
+            font-size: 0;
+
+            text-overflow: unset;
+
+            font-weight: 400;
+            height: 26px;
+            line-height: 26px;
+            white-space: nowrap;
+            overflow: hidden;
+
+            padding: 0 0 10px 0;
+            margin-bottom: 0;
+            background: url(../images/line-sec.png) 0 45px no-repeat;
+        }
+
+        .job-list li .name .title-box {
+            height: 26px;
+            white-space: nowrap;
+            display: inline-block;
+            line-height: 26px;
 
         }
-        .card .line{
-           height: 30px;
-            /*background: darkseagreen;*/
-            line-height: 30px;
+        .job-sec .job-list li .job-primary .name .title-box .job-title {
+            max-width: 192px;
+
+            font-size: 16px;
+            color: #ff3030;
+            font-weight: 400;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             vertical-align: middle;
 
+            height: 26px;
+            line-height: 26px;
         }
-        .cf:after{
+
+        .job-sec .job-list li .job-primary .name .title-box .job-area {
+            display: inline-block;
+            color: #ff3030;
+            font-size: 16px;
+            max-width: 200px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-left: 10px;
+
+            vertical-align: middle;
+
+            line-height: 26px;
+        }
+
+        .job-sec .job-list li .job-primary .name .title-box .job-pub-time {
+            font-size: 13px;
+            color: #8d92a1;
+
+            margin-left: 10px;
+
+            vertical-align: middle;
+        }
+
+        .job-sec .info-detail {
+            width: 458px;
+            white-space: normal;
+            padding-top: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px 0 rgb(65 74 96 / 20%);
+        }
+
+        .job-primary .info-detail {
+            position: absolute;
+            right: -30px;
+            height: auto;
+            display: none;
+            padding: 0;
+            color: #abafba;
+            z-index: 1001;
+        }
+
+        .job-primary .detail-bottom {
+            background: #fff;
+            padding: 0 20px 23px;
+            font-size: 13px;
+        }
+
+        .job-sec .info-detail .detail-bottom-title {
+            font-size: 16px;
+
+            padding: 10px 0 0;
+            color: #414a60;
+        }
+
+        .job-primary .detail-bottom .detail-bottom-text {
+            max-height: 260px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 10;
+            color: #51586d;
+        }
+
+        .job-sec .info-detail .detail-bottom-labels {
+            font-size: 0;
+            margin-top: 10px;
+        }
+
+        .job-sec .info-detail .detail-bottom-labels .detail-bottom-label {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            padding: 0 12px;
+            margin-right: 20px;
+            min-width: auto;
+            background: #fff;
+            border: 1px solid #d1d4db;
+        }
+        .job-list li, .job-list ol, .job-list ul{
+            padding-left:0!important;
+
+            list-style: none;
+        }
+        .job-sec .job-list .job-primary .info-primary {
+            width: 480px;
+            float: left;
+        }
+        .job-sec .job-list li .job-primary .info-primary .name+p {
+            font-size: 14px;
+            color: #61687c;
+            margin-top: 5px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .red {
+            color: #fc703e!important;
+        }
+
+        .vline {
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            vertical-align: middle;
+            background: #e0e0e0;
+            margin: 0 10px;
+        }
+
+        .job-sec .job-list .info-publis {
+            display: block!important;
+
+            width: 294px;
+
+            float: right;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 175px;
+            text-overflow: ellipsis;
+            text-align: right;
+        }
+        .job-sec .job-list li:hover .info-publis {
+            display: none!important;
+        }
+
+        .job-sec .job-list li .job-primary .info-publis .name {
+            font-size: 14px;
+            height: 50px;
+            line-height: 50px;
+
+            text-overflow: unset;
+
+            font-weight: 400;
+
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .job-primary .info-publis img {
+            width: 20px;
+            height: 20px;
+            border-radius: 40px;
+            vertical-align: middle;
+            margin: -3px 10px 0 0;
+
+            border: none;
+        }
+
+        #header:after, #main:after, .clearfix:after, .home-box:after, .inner:after, .job-author:after, .job-list li:after, .job-primary:after, .promotion-job li:after {
+            content: '';
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .job-sec .job-list li .startchat-box {
+            right: 0;
+
+            padding-top: 3px;
+            top: 35px;
+
+            display: none;
+
+            float: right;
+            width: 175px;
+            text-align: right;
+            position: absolute;
+        }
+
+        .job-sec .job-list li:hover .startchat-box{
+            display: block;
+        }
+
+        .job-sec .btn {
+            display: inline-block;
+            min-width: 112px;
+            box-sizing: content-box;
+            height: 36px;
+            line-height: 36px;
+            border: 1px #ff3030 solid;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1px;
+            background: #ff3030;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .job-sec .btn:hover{
+            color:#FFFFFF;
+        }
+
+
+    </style>
+
+    <style>
+        .recruiter-list{
+            width:260px;
+            margin:0;
+            padding:0;
+
+            display: block;
+            width: 260px;
+            height: auto;
+            margin-bottom: 10px;
+            /* border: 10px solid white; */
+            box-shadow: 0 0 6px #dbdbdb;
+        }
+        .company-sider .job-sec h3 {
+            font-size: 15px;
+            margin-top: 0;
+        }
+        .chat-sider h3,.job-sec h3,.secretary-sec h3 {
+            line-height: 50px;
+            padding: 0 0 10px 0;
+            margin-bottom: 0;
+            background: url(../images/line-sec.png) 0 45px no-repeat
+        }
+
+        .recruiter-list ul{
+            padding-left:0;
+            padding-top: 13px;
+            padding-bottom: 10px;
+        }
+        .recruiter-list li {
+            list-style: none;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px #f5f7f9 solid;
+        }
+        .recruiter-list li:after{
             content: '';
             display: block;
             clear: both;
         }
-        .arrow{
-            display: block;
-            line-height: 30px;
-            width: 24px;
-            height: 30px;
-            background: url(//cdn.597.top/m/images/left-btn.png) no-repeat right center;
-            background-size: 8px;
-            float: right;
+        .recruiter-list .figure {
+            margin-left:10px;
+            width: 50px;
+            height: 50px;
+            float: left
         }
-        padding-right-10{
-            padding-right: 10px;
+        .recruiter-list .figure img {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%
+        }
+        img {
+            border: none
+        }
+
+        .job-sec .text,.secretary-sec .text {
+            color: #61687c;
+            line-height: 36px
+        }
+        .recruiter-list .text {
+            margin-left: 70px;
+            padding-right:6px;
+
+        }
+
+        .recruiter-list .text .name {
+            position: relative;
+            line-height: 24px;
+            font-size: 16px;
+            padding-bottom: 5px
+        }
+        .recruiter-list .text .name .company-full-name {
+            display: none;
+            position: absolute;
+            bottom: 25px;
+            left: -80px;
+            right: 0;
+            padding-bottom: 10px;
+            line-height: 30px;
+            text-align: center;
+            cursor: default;
+            overflow: hidden;
+        }
+        .recruiter-list .text .name .company-full-name span {
+            display: inline-block;
+            padding: 0 10px;
+            background-color: rgba(159,163,176,.95);
+            color: #fff;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .recruiter-list .text .gray {
+            line-height: 28px;
+            color: #61687c;
+            margin:0;
+        }
+        .vline {
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            vertical-align: middle;
+            background: #e0e0e0;
+            margin: 0 10px
+        }
+        .recruiter-list ul li .name a{
+            text-decoration: none;
+            color: #414a60
+        }
+        .recruiter-list ul li .name a:hover {
+            color:#ff3030;
+        }
+        .recruiter-list .view-more {
+            margin-top: -23px
+        }
+        .promotion-job .view-more a, .recruiter-list .view-more a {
+            display: block;
+            border: 1px #e3e7ed solid;
+            height: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: #414a60
+        }
+        .promotion-job .view-more .more,.recruiter-list .view-more .more {
+            float: none;
+            display: inline-block;
+            font-style: normal;
+            margin-top: 7px;
+
+            font-size: 14px;
+            color: #9fa3b0;
+            background-position: right -1581px;
+            padding-right: 28px;
+            margin-right: -10px;
+            font-weight: 400
         }
     </style>
 </head>
 <body>
-<div class="context">
-    <div class="banner">
-        <img src="https://cdn.597.com/images/school_head.png?v=1" alt="">
-    </div>
-    <div class="change-city">
-        <a class="area_btn left font17"  href="/changecity.html">
-            <span class="area_btn_txt ellipsis">厦门地区</span>
-            <i class="arrow_down_f"></i>
-        </a>
-    </div>
-    <div class="cards">
-        <div class="card">
-            <p class="line cf padding-right-10"><span>2019-12-01</span> <i class="arrow "></i></p>
-        </div>
+<div class="job-sec  company-desc">
+    <h3 class="job-sec-tit">在招职位</h3>
+    <div class="job-list">
+        <ul>
+            <li>
+                <div data-lid="5aUN2bRVYTO.search.4" data-jid="9fef22d2d8d53b711nBy29y0GVVX" ka="comp_desc_joblist_1">
+                    <div class="job-primary">
+                        <div class="info-primary">
+                            <h3 class="name">
+                                <div class="title-box">
+                                    <a href="/job_detail/9fef22d2d8d53b711nBy29y0GVVX.html" target="_blank" class="job-title" title="需求分析工程师" ka="comp_desc_joblist_1" data-lid="5aUN2bRVYTO.search.4">需求分析工程师</a>
+                                    <span class="job-area">[厦门]</span>
+                                    <span class="job-pub-time"></span>
+                                </div>
+                                <div class="info-detail" style="top: 0px;"><div class="detail-bottom">
+                                    <div class="detail-bottom-title">职位描述</div>
+                                    <div class="detail-bottom-text">
+                                        985 211计算机强校或 海外名校优先<br>懂信贷业务 或风险管理 监管报送 资产负债等银行业务者优先<br>负责完成项目的用户需求调研、需求讨论、需求梳理、需求分析等工作<br>学习能力强，认真负责具备较强的沟通<br>需要有一定的数据分析能力和基本的项目管理能力善于控制需求，进行版本范围及项目管理
+                                    </div>
+                                    <div class="detail-bottom-title">职位关键词</div>
+                                    <div class="detail-bottom-labels">
+                                        <span class="detail-bottom-label">需求调研</span>
+                                        <span class="detail-bottom-label">软件实施</span>
+                                        <span class="detail-bottom-label">需求管理</span>
+                                    </div>
+                                </div>
+                                </div>
+                            </h3>
+                            <p>
+                                <span class="red">15-30K·14薪</span>
+                                经验不限<em class="vline"></em>本科
+                            </p>
+                        </div>
+                        <div class="info-publis">
+                                                                <span class="name">
+                                                                    <img src="https://img.bosszhipin.com/beijin/upload/avatar/20200610/06ba5453e8137438ac16469447e94db75ee84d6c2567859408a25da09f9f2a7a_s.jpg?x-oss-process=image/resize,w_40,limit_0">
+                                                                    李女士<em class="vline"></em>招聘者
+                                                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="startchat-box">
+                    <a ka="job-1-chat" href="javascript:;" data-url="/wapi/zpgeek/friend/add.json?securityId=T1KoTOD657YFI-O1Jmn1BDIW-CUna6r494cvy_T2vrnM4t-RQu_vbl6V2tBff3kkOKsNv7jCOGOu4MchdtmbpGUrUuQAaC4MJawnX2fGOoaY-03GJckGVRSa-U3oio7ZGR5ldsHzH7JjGwxn5UpghTgPiLkJeIQTd2UtTquU5Oq9wl0cF0MiS-54cKMrzjhuqlxqlKf9JefZifOAghmQ0JaPP7m5iRxlZll6R8JyDYL1QiOQ8zzcWds1UpibunsLG7N2KMNPFpGT4WS3OsVZ1n6FPjoopQ~~&amp;jobId=9fef22d2d8d53b711nBy29y0GVVX&amp;lid=5aUN2bRVYTO.search.4" redirect-url="/web/geek/chat?id=0474dc947e8434c31nNy2d-8&amp;lid=5aUN2bRVYTO.search.4" class="btn btn-startchat">立即沟通</a>
+                </div>
+            </li>
+            <li>
+                <div data-lid="5aUN2bRVYTO.search.5" data-jid="be88ec6a100a5cf81nV909u9E1BZ" ka="comp_desc_joblist_2">
+                    <div class="job-primary">
+                        <div class="info-primary">
+                            <h3 class="name">
+                                <div class="title-box">
+                                    <a href="/job_detail/be88ec6a100a5cf81nV909u9E1BZ.html" target="_blank" class="job-title" title="高级软件工程师" ka="comp_desc_joblist_2" data-lid="5aUN2bRVYTO.search.5">高级软件工程师</a>
+                                    <span class="job-area">[广州]</span>
+                                    <span class="job-pub-time"></span>
+                                </div>
+                                <div class="info-detail" style="top: 0px;"></div>
+                            </h3>
+                            <p>
+                                <span class="red">15-30K·14薪</span>
+                                3-5年<em class="vline"></em>本科
+                            </p>
+                        </div>
+                        <div class="info-publis">
+                                                                <span class="name">
+                                                                    <img src="https://img.bosszhipin.com/beijin/upload/tmp/20201224/5fdf0e95f6be3a0abe6a1eb4f6be063ab8c3e2e58df406499067be00a8f59c93_s.jpg?x-oss-process=image/resize,w_40,limit_0">
+                                                                    洪先生<em class="vline"></em>HR助理
+                                                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="startchat-box">
+                    <a ka="job-2-chat" href="javascript:;" data-url="/wapi/zpgeek/friend/add.json?securityId=qTGRuhlnqcpLh-B1jsTghcqc6MeIUil_G575KMq4gffdg1ko3OPBetEVQQddhjMSbJGXMdl63VKM7pNcU77MgnBuMfEhpBhXVyEi9OMoecc_Hy1k07bEB2NktaV0OWs2KJBNdhbPWqSwYabIJJypC57bdMhij043q-s4zywMvaqVL8r8o_0XiDaoqR0QYH-X-9TKSaxy9Czr4KfCHgNksunMK0pVpWzXpeRJCo9Boqlx6c7YFvLePWR4FA3WzdK6YKXgvqYIaAg99weLTpJELMVY08jy3jnHVQ~~&amp;jobId=be88ec6a100a5cf81nV909u9E1BZ&amp;lid=5aUN2bRVYTO.search.5" redirect-url="/web/geek/chat?id=960f24d6f7461f990nV739y9FVFT&amp;lid=5aUN2bRVYTO.search.5" class="btn btn-startchat">立即沟通</a>
+                </div>
+            </li>
+            <li>
+                <div data-lid="5aUN2bRVYTO.search.6" data-jid="5abe55c03aa372a51nV_29q9GFBU" ka="comp_desc_joblist_3">
+                    <div class="job-primary">
+                        <div class="info-primary">
+                            <h3 class="name">
+                                <div class="title-box">
+                                    <a href="/job_detail/5abe55c03aa372a51nV_29q9GFBU.html" target="_blank" class="job-title" title="反洗钱专家" ka="comp_desc_joblist_3" data-lid="5aUN2bRVYTO.search.6">反洗钱专家</a>
+                                    <span class="job-area">[厦门]</span>
+                                    <span class="job-pub-time"></span>
+                                </div>
+                                <div class="info-detail" style="top: 0px;"></div>
+                            </h3>
+                            <p>
+                                <span class="red">15-20K</span>
+                                5-10年<em class="vline"></em>本科
+                            </p>
+                        </div>
+                        <div class="info-publis">
+                                                                <span class="name">
+                                                                    <img src="https://img.bosszhipin.com/beijin/upload/avatar/20201212/124c517dd2fdf845b79243313a145a77202be271eb6e7237d4d9e39838f1c7bf_s.png?x-oss-process=image/resize,w_40,limit_0">
+                                                                    郎先生<em class="vline"></em>国内业务组经理
+                                                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="startchat-box">
+                    <a ka="job-3-chat" href="javascript:;" data-url="/wapi/zpgeek/friend/add.json?securityId=AzP0NA3n5K39U-F1t88ioRl3wp4lqVauUOptQ8JRpfsmlys7imgFDZKFzPwTxONnZEtSBOdbu0-aiVdjcogTf1kZZG9xgiPkCr22UyOuPNgRZltZjmwgAjxA44OXZ8HpwNZevBE-HxMihX5PXQME3-0e05VAJRp_DlkR1KuLQQ8oih951S-4wLGf4JGxmGdj-nRhCaYpjDwm8vOHFFRVQ_aFulZJn_cw-mK7luwS6mVlwacIO8JUQGJ3fWQlHRF2LODc0ZDVPRSgwrofueGE5sp9zCZ-SN6x&amp;jobId=5abe55c03aa372a51nV_29q9GFBU&amp;lid=5aUN2bRVYTO.search.6" redirect-url="/web/geek/chat?id=461deabae67324551HF509W6Elc~&amp;lid=5aUN2bRVYTO.search.6" class="btn btn-startchat">立即沟通</a>
+                </div>
+            </li>
+
+        </ul>
     </div>
 </div>
+
+
+<div class="job-sec recruiter-list">
+<!--    <h3>建信金科招聘Boss</h3>-->
+    <ul>
+        <li>
+            <div class="figure">
+                <img src="https://img.bosszhipin.com/beijin/mcs/useravatar/20180515/2148b4d03f9b71a1ab5dc2e37f08c7385e49bf12bdb7b8bd85ecaac999466fc5_s.jpg?x-oss-process=image/resize,w_100,limit_0" alt="">
+            </div>
+            <div class="text">
+                <div class="name">
+                    <div class="company-full-name"><span>建信金融科技有限责任公司</span></div>
+                    <a href="/gongsir/6e19637143bd80ad1HV_3N26GQ~~.html" ka="boss-1">
+                        杨女士<em class="vline"></em>HRBP
+                    </a>
+                </div>
+                <p class="gray">正在招聘 “运维售前架构师(J10455)” 等 34 个职位</p>
+            </div>
+        </li>
+        <li>
+            <div class="figure">
+                <img src="https://img.bosszhipin.com/beijin/upload/tmp/20210815/59be04c688e0acf1f7e6aa0fa2bb233fc75980bd861b13ae49f10418728536aa_s.jpg?x-oss-process=image/resize,w_100,limit_0" alt="">
+            </div>
+            <div class="text">
+                <div class="name">
+                    <div class="company-full-name"><span>建信金融科技有限责任公司</span></div>
+                    <a href="/gongsir/6e19637143bd80ad1HV_3N26GQ~~.html" ka="boss-2">
+                        武女士<em class="vline"></em>HRBP
+                    </a>
+                </div>
+                <p class="gray">正在招聘 “VUE开发工程师” 等 6 个职位</p>
+            </div>
+        </li>
+        <li>
+            <div class="figure">
+                <img src="https://img.bosszhipin.com/boss/avatar/avatar_7.png?x-oss-process=image/resize,w_100,limit_0" alt="">
+            </div>
+            <div class="text">
+                <div class="name">
+                    <div class="company-full-name"><span>建信金融科技有限责任公司</span></div>
+                    <a href="/gongsir/6e19637143bd80ad1HV_3N26GQ~~.html" ka="boss-3">
+                        程先生<em class="vline"></em>技术专家
+                    </a>
+                </div>
+                <p class="gray">正在招聘 “Python高级开发工程师” 等 3 个职位</p>
+            </div>
+        </li>
+        <li>
+            <div class="figure">
+                <img src="https://img.bosszhipin.com/beijin/upload/avatar/20210825/607f1f3d68754fd0cc661ba00ea609b25ea86445798a36cdb1099508cbda2ad7be882ad55e7406b1_s.jpg?x-oss-process=image/resize,w_100,limit_0" alt="">
+            </div>
+            <div class="text">
+                <div class="name">
+                    <div class="company-full-name"><span>建信金融科技有限责任公司</span></div>
+                    <a href="/gongsir/6e19637143bd80ad1HV_3N26GQ~~.html" ka="boss-4">
+                        王先生<em class="vline"></em>架构师/研究员
+                    </a>
+                </div>
+                <p class="gray">正在招聘 “智能物联与工业互联网产品经理” 等 6 个职位</p>
+            </div>
+        </li>
+    </ul>
+<!--    <div class="view-more"><a href="/gongsir/6e19637143bd80ad1HV_3N26GQ~~.html" ka="all-jobs-boss"><i class="more">查看所有Boss的在招职位</i></a></div>-->
+</div>
+
+<script>
+    $.post("/api/web/company/hr.api?act=getHr", {}, function (data) {
+        if(data.constructor.name=='String'){
+            data=JSON.parse(data);
+        }
+        if(data.status>0){
+            var html = template('recruiterListTpl', data.data.hrList);
+            debugger;
+            $('#recruiterListTpl').after(html);
+        }else{
+            console.log(data.msg);
+        }
+
+    });
+</script>
 </body>
 </html>

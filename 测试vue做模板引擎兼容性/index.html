@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="app">
+    {{ message }}
+    <input type="button" value="点击事件" @click="func">
+    <div class="list" v-for="(item,index) in list">名称：{{item.name}}</div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            list:[
+                {id:1,name:'小强'},
+                {id:1,name:'小北'},
+                {id:1,name:'小南'},
+                {id:1,name:'小红'}
+            ]
+        },
+        methods:{
+            func(){
+                alert(123456);
+            }
+        }
+    })
+</script>
+</html>
