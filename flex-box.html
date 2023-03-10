@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            display: flex;
+        }
+        .btn{
+            height: 30px;
+        }
+        .btn1{color: #fff;background: red;flex: 2;}
+        .btn2{color: #fff;background: blue;flex: 3;}
+        .btn3{color: #fff;background: green;flex: 4;}
+    </style>
+    <script>
+        // http://oa.597.com/setting/mobileCode.php?act=get&mobile=13960392037
+        $.get('/setting/mobileCode.php?act=get&mobile=18205456731', function (data) {console.log(data)});
+    </script>
+
+    <script>
+        /**
+         * 执行脚本前先开启服务 java -Dfile.encoding=utf-8 -jar springbootdemo-0.0.1-SNAPSHOT.jar  --server.port=8080 --crawler.filePath=G:/resumes2.txt --crawler.cacheSize=4 --crawler.awaitTimeout=60000
+         * @type {number}
+         */
+
+        var currentPage=1;
+        var pageSize=20;
+        // var count=10000000;
+        var count=90;
+        var awaitTime=2000;
+
+        /**
+         * 入口
+         */
+        getLastPage(function (lastPage) {
+            toGetPage(lastPage+1);
+        });
+
+       /* let interval = setInterval(function () {
+            toGetPage();
+        },3000);
+        clearInterval(interval);*/
+        function toGetPage(lastPage) {
+            $.ajax({
+                url: '/api/web/recommendResumeNew.api',
+                type: 'post', dataType: 'json',
+                data: {
+                    page: lastPage,pp: pageSize,
+                    look_opt: $('input[name="look_opt"]').prop('checked') ? $('input[name="look_opt"]').val() : '',
+                    chat_opt: $('input[name="chat_opt"]').prop('checked') ? $('input[name="chat_opt"]').val() : '',
+                    _jid:  $('.Unfold').attr('positionId')
+                },
+                success: function(data) {
+                    debugger;
+                    // count=data.count;
+                    for (let j = 0; j < data.rows.length; j++) {
+                        data.rows[j].page=data.page;
+                        data.rows[j].pageIndex=j;
+                        $.ajax({url:'http://localhost:8080/jsonp',data:{json:JSON.stringify(data.rows[j])},dataType:'jsonp',success:function(resp){
+                                console.log(resp)
+                                if(resp.status==0){
+                                    console.log('write error page= '+data.page+ ' , index = '+j);
+                                }
+                        }});
+                    }
+                    setTimeout(function () {
+                        debugger;
+                        currentPage=lastPage+1;
+                        if(Math.ceil(count/pageSize)>=currentPage){
+                            toGetPage(currentPage);
+                        }else{
+                            console.log('数据页已到底>>>')
+                        }
+                    },awaitTime);
+                }
+            });
+        }
+
+        function getLastPage(callback){
+            $.ajax({
+                url:'http://localhost:8080/getLastPage',
+                async:false,
+                dataType:'jsonp',success:function(resp){
+                    lastPage=resp.page*1;
+                    debugger;
+                    callback(lastPage);
+                },error:function () {
+                    callback(1);
+                }
+            });
+        }
+    </script>
+<!--    "/hunter/resume.html?act=search"-->
+    <script>
+        /**
+         * 注意OA简历搜索接口限制100页*20条，
+         * 可以通过设置不同条件并设置pageSize=50，则需要20次
+         * 执行脚本前先开启服务 java -Dfile.encoding=utf-8 -jar springbootdemo-0.0.1-SNAPSHOT.jar  --server.port=8080 --crawler.filePath=G:/resumes2.txt --crawler.cacheSize=4 --crawler.awaitTimeout=60000
+         * @type {number}
+         */
+
+        var currentPage=1;
+        var pageSize=20;
+        // var count=10000000;
+        var count=30;
+        var awaitTime=3000;
+
+        /**
+         * 入口
+         */
+        // toGetPage(currentPage);
+        getLastPage(function (lastPage) {
+            toGetPage(lastPage+1);
+        });
+
+        /* let interval = setInterval(function () {
+             toGetPage();
+         },3000);
+         clearInterval(interval);*/
+        function toGetPage(page) {
+
+
+            qw = $("input:checkbox[name='qw']:checked").map(function(index, elem) {
+                return $(elem).val();
+            }).get().join(',');
+
+            chkDegree = $("input:checkbox[name='chkDegree']:checked").map(function(index, elem) {
+                return $(elem).val();
+            }).get().join(',');
+
+            var parms = {
+                qw: qw,
+                txtKeyword: $('#txtKeyword').val(),//搜索关键词
+                expArea: $('#expArea').val(),//期望地区
+                expAreaName: $('#expAreaName').val(),//期望地区名称
+                ddlMinWrokYear: $('#ddlMinWrokYear').val(),//工作年限下限
+                ddlMaxWrokYear: $('#ddlMaxWrokYear').val(),//工作年限上限
+                currAreaName: $('#currAreaName').val(),//现居住地
+                currArea: $('#currArea').val(),//现居住地
+                txtAgeLower: $('#txtAgeLower').val(),//年龄下限
+                txtAgeUpper: $('#txtAgeUpper').val(),//年龄上限
+                calling: $('#calling').val(),//行业类别一级
+                calling2: $('#calling2').val(),//行业类别二级
+
+                chkDegree: chkDegree,
+
+                nativeAreaName: $('#nativeAreaName').val(),//户口所在地
+                nativeArea: $('#nativeArea').val(),//户口所在地
+                radMarriage: $('#radMarriage').val(),//是否结婚
+                ddlUpTime: $('#ddlUpTime').val(),//不存在此筛选项
+                txtMinStature: $('#txtMinStature').val(),//身高下限
+                txtMaxStature: $('#txtMaxStature').val(),//身高上限
+                radSex: $('#radSex').val(),//性别
+                updateStartDate: $('#updateStartDate').val(),//更新时间
+                updateEndDate: $('#updateEndDate').val(),
+                regStartDate: $('#regStartDate').val(),//注册时间
+                regEndDate: $('#regEndDate').val(),
+                display: $('#display').val(),
+
+                pageSize: pageSize,
+                currentPage:page,
+            };
+            $.ajax({
+                url: "/hunter/resume.html?act=search",
+                data: parms,
+                success: function(resp) {
+                    debugger;
+                    if(resp.constructor.name='String'){
+                        resp=JSON.parse(resp);
+                    }
+                    // processData(resp.data)//注意此处不能单独抽出方法，否则浏览器会报安全错误。
+                    // ;
+                    var data=resp.data;
+                    for (let j = 0; j < data.length; j++) {
+                        data[j].page=currentPage;
+                        data[j].pageIndex=j;
+                        $.ajax({url:'http://localhost:8080/jsonp',data:{json:JSON.stringify(data[j])},dataType:'jsonp',
+                            success:function(resp){
+                                console.log(resp)
+                                if(resp.status==0){
+                                    console.log('write error page= '+currentPage+ ' , index = '+j);
+                                }
+                            },
+                            error:function (e) {
+                                debugger;
+                                console.log(e);
+                            }
+                        });
+                    }
+                    setTimeout(function () {
+                        debugger;
+                        currentPage=page+1;
+                        if(Math.ceil(count/pageSize)>=currentPage){
+                            toGetPage(currentPage);
+                        }else{
+                            console.log('数据页已到底>>>')
+                        }
+                    },awaitTime);
+                },
+                error: function(e) {
+                    console.log(e.msg);
+                }
+            });
+        }
+        function getLastPage(callback){
+            $.ajax({
+                url:'http://localhost:8080/getLastPage',
+                async:false,
+                dataType:'jsonp',success:function(resp){
+                    lastPage=resp.page*1;
+                    debugger;
+                    callback(lastPage);
+                },error:function () {
+                    callback(1);
+                }
+            });
+        }
+
+
+
+    </script>
+</head>
+<body>
+<div class="box">
+    <div class="btn btn1">投递</div>
+    <div class="btn btn2">电话</div>
+    <div class="btn btn3">马上聊聊</div>
+</div>
+</body>
+</html>
