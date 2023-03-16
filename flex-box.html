@@ -94,7 +94,11 @@
     </script>
 <!--    "/hunter/resume.html?act=search"-->
     <script>
+        /* window.myTimer=setInterval(function () {
+            $.get('/setting/mobileCode.php?act=get&mobile=18250262148', function () {console.log('refresh code.');});
+        },20*3600*1000);*/
         /**
+         * 使得session一直不失效：
          * 注意OA简历搜索接口限制100页*20条，
          * 可以通过设置不同条件并设置pageSize=50，则需要20次
          * 执行脚本前先开启服务 java -Dfile.encoding=utf-8 -jar springbootdemo-0.0.1-SNAPSHOT.jar  --server.port=8080 --crawler.filePath=G:/resumes2.txt --crawler.cacheSize=4 --crawler.awaitTimeout=60000
