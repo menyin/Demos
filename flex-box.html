@@ -31,6 +31,7 @@
         var count=90;
         var awaitTime=2000;
 
+
         /**
          * 入口
          */
@@ -94,9 +95,30 @@
     </script>
 <!--    "/hunter/resume.html?act=search"-->
     <script>
+        /**
+         * 扩展方法: 时间格式化
+         */
+        Date.prototype.Format = function(fmt) {
+            var o = {
+                "M+" : this.getMonth()+1,
+                "d+" : this.getDate(),
+                "h+" : this.getHours(),
+                "m+" : this.getMinutes(),
+                "s+" : this.getSeconds()
+            };
+            if(/(y+)/.test(fmt))
+                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+            for(var k in o)
+                if(new RegExp("("+ k +")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            return fmt;
+        };
+
         /* window.myTimer=setInterval(function () {
-            $.get('/setting/mobileCode.php?act=get&mobile=18250262148', function () {console.log('refresh code.');});
-        },20*3600*1000);*/
+            // $.get('/setting/mobileCode.php?act=get&mobile=18250262148', function () {console.log('refresh code.');});
+            $.get('/setting/region.html?act=list', function () {console.log('refresh code.');});
+        },2000*1000);*/
+
         /**
          * 使得session一直不失效：
          * 注意OA简历搜索接口限制100页*20条，
@@ -104,26 +126,28 @@
          * 执行脚本前先开启服务 java -Dfile.encoding=utf-8 -jar springbootdemo-0.0.1-SNAPSHOT.jar  --server.port=8080 --crawler.filePath=G:/resumes2.txt --crawler.cacheSize=4 --crawler.awaitTimeout=60000
          * @type {number}
          */
-
+        var mode='mysql';
         var currentPage=1;
         var pageSize=20;
         // var count=10000000;
-        var count=30;
+        var count=100*20;//服务限制100*20条数据
         var awaitTime=3000;
+        var currentDate=new Date().Format('yyyy-MM-dd');/* regStartDate: 2023-03-16，regEndDate: 2023-03-16*/
+
 
         /**
          * 入口
          */
         // toGetPage(currentPage);
-        getLastPage(function (lastPage) {
-            toGetPage(lastPage+1);
+        getLastPage(function (lastPage,lastDate) {
+            toGetPage(lastPage+1,lastDate);
         });
 
         /* let interval = setInterval(function () {
              toGetPage();
          },3000);
          clearInterval(interval);*/
-        function toGetPage(page) {
+        function toGetPage(page,date) {
 
 
             qw = $("input:checkbox[name='qw']:checked").map(function(index, elem) {
@@ -159,8 +183,10 @@
                 radSex: $('#radSex').val(),//性别
                 updateStartDate: $('#updateStartDate').val(),//更新时间
                 updateEndDate: $('#updateEndDate').val(),
-                regStartDate: $('#regStartDate').val(),//注册时间
-                regEndDate: $('#regEndDate').val(),
+                // regStartDate: $('#regStartDate').val(),//注册时间
+                regStartDate: date,//注册时间
+                // regEndDate: $('#regEndDate').val(),
+                regEndDate: date,
                 display: $('#display').val(),
 
                 pageSize: pageSize,
@@ -171,25 +197,38 @@
                 data: parms,
                 success: function(resp) {
                     debugger;
+                    if(!resp){//有些页会出现响应为空问题，resp=''
+                        currentPage=page+1;
+                        toGetPage(currentPage,date);
+                        return;
+                    }
                     if(resp.constructor.name='String'){
                         resp=JSON.parse(resp);
                     }
                     // processData(resp.data)//注意此处不能单独抽出方法，否则浏览器会报安全错误。
                     // ;
                     var data=resp.data;
+                    if(data.length==0){//没数据了就递减日期抓数据
+                        console.log('要重置条件：page:'+page+',date:'+date);
+                        currentPage=0;
+                        debugger;
+
+                        currentDate=getNextDay(date);
+                        toGetPage(currentPage,currentDate);
+                        return;
+                    }
                     for (let j = 0; j < data.length; j++) {
                         data[j].page=currentPage;
                         data[j].pageIndex=j;
-                        $.ajax({url:'http://localhost:8080/jsonp',data:{json:JSON.stringify(data[j])},dataType:'jsonp',
+                        data[j].regDate=date;
+                        $.ajax({url:'http://localhost:8080/'+mode+'/jsonp',data:{json:JSON.stringify({regDate:date,pageIndex:j,page:currentPage,json:JSON.stringify(data[j])})},dataType:'jsonp',
                             success:function(resp){
-                                console.log(resp)
                                 if(resp.status==0){
                                     console.log('write error page= '+currentPage+ ' , index = '+j);
                                 }
                             },
                             error:function (e) {
-                                debugger;
-                                console.log(e);
+                                console.log('请求jsonp有出错，e:'+e);
                             }
                         });
                     }
@@ -197,36 +236,103 @@
                         debugger;
                         currentPage=page+1;
                         if(Math.ceil(count/pageSize)>=currentPage){
-                            toGetPage(currentPage);
+                            toGetPage(currentPage,date);
                         }else{
-                            console.log('数据页已到底>>>')
+                            console.log(date+' 数据页已到底>>>');
+                            currentPage=0;
+                            currentDate=getNextDay(date);
+                            toGetPage(currentPage,currentDate);
                         }
                     },awaitTime);
                 },
                 error: function(e) {
-                    console.log(e.msg);
+                    console.log('采集请求出错，e:'+e);
                 }
             });
         }
         function getLastPage(callback){
             $.ajax({
-                url:'http://localhost:8080/getLastPage',
+                url:'http://localhost:8080/'+mode+'/getLastPage',
                 async:false,
                 dataType:'jsonp',success:function(resp){
                     lastPage=resp.page*1;
+                    lastDate=resp.regDate;
                     debugger;
-                    callback(lastPage);
+                    callback(lastPage,lastDate);
                 },error:function () {
-                    callback(1);
+                    callback(1,nowDate.Format('yyyy-MM-dd'));
                 }
             });
         }
 
+        function getNextDay(dateStr) {
+            let nowDate = new Date(dateStr);
+            nowDate.setDate(nowDate.getDate() - 1);
+            return nowDate.Format('yyyy-MM-dd');
+        }
 
 
     </script>
+<!--    act: search
+    qw: 1,2,3,4,5,8,9
+    txtKeyword:
+    expArea:
+    expAreaName:
+    ddlMinWrokYear: 0
+    ddlMaxWrokYear: 0
+    currAreaName:
+    currArea:
+    txtAgeLower:
+    txtAgeUpper:
+    calling:
+    calling2: null
+    chkDegree:
+    nativeAreaName:
+    nativeArea:
+    radMarriage: 0
+    txtMinStature:
+    txtMaxStature:
+    radSex: 0
+    updateStartDate:
+    updateEndDate:
+    regStartDate: 2019-01-22
+    regEndDate: 2019-01-22
+    display: -1
+    pageSize: 20
+    currentPage: 17
+
+    以上条件会产生以下错误：
+     resp=''
+
+    导致：
+         Uncaught SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+    at Object.success (<anonymous>:104:35)
+        at o (jquery.min.js:2:14733)
+        at Object.fireWith [as resolveWith] (jquery.min.js:2:15502)
+        at w (jquery.min.js:4:12472)
+        at XMLHttpRequest.d (jquery.min.js:4:18318)
+
+       -->
 </head>
 <body>
+<div id="videoView" class="flex flex-column layui-layer-wrap" style="height: 430px; background: rgb(255, 255, 255); left: 435.5px; ">
+    <video class="margin-top-15" controls="controls" width="500" height="300" id="videoPlayer" src="//v.917.com/video/news/2023/03/17/090558k2kz33vjdou95gwk.mp4">
+        <source type="video/mp4" src="">
+        Your browser does not support the video tag.
+    </video>
+    <div>
+        <div id="videoAudit" class="mainContent"></div>
+        <div class="mainContent flex margin-top-15 font-14">
+            <span>快进：</span>
+            <a href="javascript:void(0);" class="border-btn margin-left-15 margin-right-5 speedCtrl defaultSpeed margin-bottom-0 cl-f87033" speed="1">x1</a>
+            <a href="javascript:void(0);" class="border-btn margin-left-15 speedCtrl margin-bottom-0" speed="1.5">x1.5</a>
+            <a href="javascript:void(0);" class="border-btn margin-left-15 speedCtrl margin-bottom-0" speed="2">x2</a>
+        </div>
+        <div class="margin-top-15 font-14" id="beizhuBox">备注：<input class="w-px-150 padding-l-r-10 margin-left-15" value="" id="beizhu" vid="202798"><a href="javascript:void(0);" class="border-btn margin-left-15" onclick="beizhuSave()">保存</a></div>
+    </div>
+    <div id="videoMask"></div>
+</div>
 <div class="box">
     <div class="btn btn1">投递</div>
     <div class="btn btn2">电话</div>
