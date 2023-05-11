@@ -95,6 +95,11 @@
     </script>
 <!--    "/hunter/resume.html?act=search"-->
     <script>
+        /***
+         * ********************** person **********************
+         */
+
+
         /**
          * 扩展方法: 时间格式化
          */
@@ -106,7 +111,7 @@
                 "m+" : this.getMinutes(),
                 "s+" : this.getSeconds()
             };
-            if(/(y+)/.test(fmt))
+            if(/(y+)/.test(fmt)):
                 fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
             for(var k in o)
                 if(new RegExp("("+ k +")").test(fmt))
@@ -314,6 +319,106 @@
         at XMLHttpRequest.d (jquery.min.js:4:18318)
 
        -->
+
+
+    <script>
+        /***
+         * ********************** company **********************
+         * 大概12w数据，需要获取不同接口数据（基本信息、统计、）
+         * 公司查重：http://oa.597.top/api/web/oa.api?act=check_com_unique&query=厦门才盛网络科技有限公司(天津第十分公司)&c_id=110010&currentPage=1&pageSize=5"  //查重接口，不采
+         * 合同列表：http://oa.597.top/api/web/oa.api?act=cid_product_list&currentPage=1&pageSize=20&cid=1e1c8c755390   //信息太多，而且合同过期无用，不采
+         * 广告列表：http://oa.597.top/api/web/oa.api?act=cid_adv_list&currentPage=1&pageSize=20&cid=1e1c8c755390     //购买广告的企业少，所以此部分信息大部无数据，不采
+         * 部门列表：http://oa.597.top/api/web/oa.api?act=cid_unit_list&type=3&currentPage=1&pageSize=20&cid=1e1c8c755390      //该信息大部分无数据，不采
+         * 行为统计信息：http://oa.597.top/api/web/oa.api?act=cid_tongji_list&type=3&currentPage=1&pageSize=20&cid=1e1c8c755390     //此接口包含信息在company_view基本资料页面已经有了，不采
+         */
+
+        /**
+         * 父集信息
+         * 限制显示5w：  注册时间划分：2018-2023大概43955，2014-2018大概46755，2014以前大概30554
+         * 限制账号：chenny归属厦门，只能查询厦门公司。 采集时改为全国，则上述条件还是得变更为按注册时间，每4个月一采（一年最高企业数量大概12w）
+         *
+         */
+        //http://oa.597.top/api/web/oa.api?act=service_company_list&op=all&currentPage=2&pageSize=20&ordertype=3&orderValue=1&source=0&companyType=1&followType=&nextType=&licenceCheck=100&txtStartDate=&txtEndDate=&txtStartDate1=&txtEndDate1=&q=&comIndustryId=&comWorkers=&chooseAreaId=
+       /*
+       {
+		"_cid": "b0c52d5088632",
+		"adminUsername": "无",
+		"vipStyle": "normalStyle",
+		"_username": "<a href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=b0c52d5088632&uid=b0c52d5088632#followList\" class=\"text-link\" target=\"_blank\"><strong>tangduan<\/strong><\/a><br><span>汤端娥:18975070628<\/span><br><br\/>", //用户名+真实姓名+电话
+		"_cname": "<a href=\"https:\/\/www.597.top\/com-b0c52d5088632\/\" target=\"_blank\"  class=\"text-link\"><strong>湖南永雄资产管理有限公司<\/strong><\/a><br><span><a class=\"btn btn-mini\" target=\"_blank\" href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=b0c52d5088632\">查看详情<\/a><\/span><br><span>执照状态:<font color=\"red\">未上传<\/font>(√)<\/span><br><span>绑定时间:<\/span>",//公司名+执照状态+绑定时间
+		"_nextType": "\/", //回访/跟进类型
+		"comCityId": "长沙市",
+		"companyTypeStr": "新客户",
+		"_regTime": "19-02-10 23:29\/<br>19-02-10 23:29",//注册时间+登录时间
+		"_modTime": "19-02-10 23:33\/<br>",
+		"_followTime": "\/<br>",
+		"_expireFollowTime": "",
+		"_source": "自注<br><span class=\"adminType\"><\/span>",
+		"operation": "<a class=\"btn btn-mini\" href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=b0c52d5088632#followList\" target=\"_blank\">跟进<\/a> <select name=\"nextType\" style=\"width:100px;height:23px;padding:0px 0px 0px 0px;margin:0px 0px 0px 0px; font-size:12px;\" class=\"quickfollow\" class=\"btn btn-mini\"><option value=\"\">无效标记选择<\/option><option value=\"未接\">未接<\/option><option value=\"空号\">空号<\/option><option value=\"态度差\">态度差<\/option><\/select><a class=\"btn btn-mini\" href=\"\/service\/list.html?act=list&op=unique&query_regionId=&query_region=&cname=湖南永雄资产管理有限公司\" target=\"_blank\">查重<\/a> <a class=\"btn btn-mini\" href=\"https:\/\/www.baidu.com\/s?wd=湖南永雄资产管理有限公司\" target=\"_blank\">百度<\/a> <button class=\"btn btn-mini updateAllJob\">刷新职位<\/button> <button class=\"btn btn-mini addTemp\">绑开发库<\/button> <button class=\"btn btn-info btn-mini addPrivate\">绑私有库<\/button> "
+	    }
+	*/
+
+        /**
+         * 子集信息
+         */
+        $.ajax( {
+            url:'/companyinfo/companyinfo.html',
+            type:'get',
+            dataType: "html", //数据类型
+            beforeSend:function () {
+                $('#companyList').html('<div class="error_ex"><p class="data_loading"><img src="http://cdn.597.cs/m/js/layer-2.x/build/skin/default/loading-1.gif" alt=""></p></div>');
+                //return false;
+            },
+            data:function(){
+                return {
+                    "act":$(this).attr('act'),//act=view|licence|jobs|contract|advs|unit|tongji
+                                              // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                                              //采集范围：view|licence|jobs，其它信息有重复或者无用
+                    "source":"iframe",
+                    "c_id":$(this).closest("div").attr("c_id"),//c_id="a1cbc4110010"   aab9f72158551
+                    "type":$(this).closest("div").attr("type")//type="1"
+                }
+            },
+            success: function (data) {
+                // location.hash=$(this).attr('act');
+                // console.log(this);
+                $('#companyList').html(data);
+                $('.daohang button' ).attr('class','btn');
+                $(this).attr('class','btn btn-info');
+                //toastr.clear();
+            }, error: function (e) {
+
+            }
+        })
+
+        /* company_view */
+        /*
+            {
+             cname:'',//公司名
+             companyInfoReply:'',//公司信息被屏蔽原因
+             reply:'',//公司营业执照被屏蔽原因
+             comCityId:'',//所在城市
+             comType:'',//公司性质
+             comWorkers:'',// 公司规模
+             industryName:'',// 所属行业
+             comSite:'',// 公司网址
+             regTime:'',// 注册时间
+             loginTime:'',// 登录时间+有无登录app+最后一次登录ip和地点
+             modTime:'',// 修改时间
+             comAddress:'',// 地址
+             comInfo:'',// 公司简介
+             hrList:'',//hr列表,  $('.table-invoice').eq(2).find('tr')遍历存储，包含信息：HR姓名（用户名）、是否VIP、电话、职称、微信、绑定时间、最近登录时间
+            }
+        */
+    </script>
+    <script>
+        // var dd=new Date();dd.setFullYear(dd.getFullYear()+1);console.log(dd.Format('yyyy-MM-dd'));
+        function getNextYear(dateStr) {
+            let nowDate = new Date(dateStr);
+            nowDate.setFullYear(nowDate.getFullYear()-1);
+            return nowDate.Format('yyyy-MM-dd');
+        }
+    </script>
 </head>
 <body>
 <div id="videoView" class="flex flex-column layui-layer-wrap" style="height: 430px; background: rgb(255, 255, 255); left: 435.5px; ">
@@ -340,3 +445,211 @@
 </div>
 </body>
 </html>
+
+<div class="row-fluid">
+    <div class="span6">
+        <style type="text/css">
+            img {
+                /*height: 40%;*/
+            }
+        </style>
+
+        <table class="" style="table-layout: fixed;" width="100%">
+            <tbody>
+            <tr><td>
+                <div class="swiper-container" style="max-width: 600px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><a href="javascript:window.open('//oa.597.com/pic.htm?pic=pic.597.top/licence/2020/04/28/20042810394399464.jpg')"><img src="//pic.597.top/licence/2020/04/28/20042810394399464.jpg"/></a></div>
+                    </div>
+                    <!-- 如果需要分页器 -->
+                    <div class="swiper-pagination"></div>
+                    <!-- 如果需要导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <!-- 如果需要滚动条 -->
+                    <!--<div class="swiper-scrollbar"></div>-->
+                </div>
+    </div>
+    </td>
+
+    <!--<a href="2020/04/28/20042810394399464.jpg" target="_blank"><img src="2020/04/28/20042810394399464.jpg"></a></td>--></tr>
+    </tbody>
+    </table>
+</div>
+<div class="span6">
+    <style>.changeClid,.changeCname,.changeLicencename{margin-left: 10px;}</style><table class="table table-bordered table-invoice" style="margin-top: 10px;">
+    <tbody>
+    <tr>
+        <td width="37%">招聘联系人：</td>
+        <td>冯女士</td>
+    </tr>
+    <tr>
+        <td>招聘联系电话：</td>
+        <td class="telPhone1"><strong>18120737870</strong></td>
+    </tr>
+    <tr>
+        <td>招聘联系手机：</td>
+        <td class="telPhone1"><strong>18060915387</strong></td>
+    </tr>
+    <tr>
+        <td>注册公司名称：</td>
+        <td><a href="http://www.597.com/com-aab9f72158551/" class="text-success" target="_blank">厦门易创客科技有限公司</a> <a class="changeCname">企业名称修改</a>
+            <a class="text-info" target="_blank" href="https://www.tianyancha.com/search?key=厦门易创客科技有限公司"><strong>天眼查</strong></a></td>
+    </tr>
+    <tr>
+        <td>执照公司名称：</td>
+        <td>厦门易创客科技有限公司                                                            <a class="text-info" target="_blank" href="https://www.tianyancha.com/search?key=厦门易创客科技有限公司"><strong>天眼查</strong></a></td>
+    </tr>
+    <tr>
+        <td>所在地区：</td>
+        <td>福建省-厦门市</td>
+    </tr>
+    <tr>
+        <td>执照编号：</td>
+        <td>91350203303281348Y<a class="changeClid">执照编号修改</a></td>
+    </tr>
+    <tr>
+        <td>执照法人：</td>
+        <td>徐鸿翔<a class="changeLicencename">执照法人修改</a></td>
+    </tr><tr>
+        <td>跟单员：</td>
+        <td>597test</td>
+    </tr>
+    </tbody>
+</table><div class="widget-box" id="com_unique_list">
+    <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+        <h5>重名列表<span class=" text-success"></span></h5>
+    </div>
+    <div class="widget-content nopadding">
+        <div class="comUniquePageData">
+
+        </div>
+    </div>
+    <div class="widget-content nopadding">
+        <div id="pageDiv" class="page comUniquePageNav">
+
+        </div>
+        <div class="comUniquePageInfo">
+
+        </div>
+    </div>
+</div></table>
+</div>
+</div><script type="text/javascript">
+    //修改企业名称
+    $(".changeCname").on('click', function () {
+        bootbox.dialog({
+            romote:{url:'/company/company.html?act=cname&c_id=aab9f72158551&clid=268112',type:'get',data:{}},//使用romote参数后message参数无效
+            title: "企业名称修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size:{pc:{width:500,height:650},ipad:{width:600,height:400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+    //修改执照编号
+    $(".changeClid").on('click', function () {
+        bootbox.dialog({
+            romote:{url:'/company/company.html?act=updateClid&clid=268112',type:'get',data:{}},//使用romote参数后message参数无效
+            title: "执照编号修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size:{pc:{width:500,height:650},ipad:{width:600,height:400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+    //执照编号修改
+    $(".changeLicencename").on('click', function () {
+        bootbox.dialog({
+            romote:{url:'/company/company.html?act=updateLicencename&clid=268112',type:'get',data:{}},//使用romote参数后message参数无效
+            title: "执照编号修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size:{pc:{width:500,height:650},ipad:{width:600,height:400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+    //查询公司重名
+    function checkComUnique(){
+        $.page({
+            url:"/api/web/oa.api?act=check_com_unique&query=厦门易创客科技有限公司&c_id=2158551",
+            pageSize:5,
+            pageDataSelector:'.comUniquePageData',
+            pageNavSelector:'.comUniquePageNav',
+            pageInfoSelector:'.comUniquePageInfo',
+            onChange: function (data) {
+                if(data.data){
+                    var str='<table class="table table-bordered table-invoice"><thead><tr><th>企业名称</th><th>用户名</th><th>地区</th><th>执照审核状态</th><th>备注</th><th>公司删除状态</th></tr></thead>';
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var obj = data.data[i];
+                        str+='<tr><td><a href="http://www.597.top/com-'+obj._cid+'/" target="_blank">'+obj.cname+'<span style="color:red;">'+obj._isbot+'</span></a></td><td>'+obj.username+'</td><td>'+obj.comCityId+'</td><td>'+obj._licenceCheck+'</td><td><span style="color:red;">'+obj.note+'</span></td><td>'+obj._delStatus+'</td></tr>';
+                    }
+                    str+='</table>';
+
+                    return str;
+                }else{
+                    $('#com_unique_list').hide();
+                }
+            }
+        });
+    }
+
+    checkComUnique();
+
+
+
+
+    var mySwiper = new Swiper ('.swiper-container', {
+        // direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        // 如果需要前进后退按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoHeight: true
+        // 如果需要滚动条
+        /* scrollbar: {
+             el: '.swiper-scrollbar',
+         },*/
+    })
+
+    $('.telPhone1').each(function(){
+        searchAttribution(this);
+    })
+
+    function searchAttribution(obj) {
+        //获取号码归属地
+        var regex = /^1[3|4|5|6|7|8|9]\d{9}$/,
+            tel = $(obj).find("strong").html();
+
+        if(!tel||!tel.length) return;
+        if(tel && !regex.test(tel)){
+            $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+        } else {
+            // var url = 'http://api.597.com/_mobile/index.php?m=' + (tel || '');
+            var url = '//api.597.com/_mobile/index.php?m=' + (tel || '');
+
+            $.ajax({
+                async:false,
+                type: "post",
+                url:url,
+                dataType: "jsonp",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                jsonp: "callback",
+                success: function(json){
+                    if(json.city){
+                        $(obj).find("strong").append('<span class="text-success">（'+json.provice+"-"+json.city+'）</span>');
+                    }else{
+                        $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+                    }
+                },
+                error:function (){
+                    $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+                }
+            });
+        }
+    }
+</script>

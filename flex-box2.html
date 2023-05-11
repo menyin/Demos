@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script>
+        /***
+         * ********************** company **********************
+         * company_view  请求99ms
+         * company_licenceinfo  请求49ms
+         * company_jobslist  请求52ms
+         * company_tongji  请求33ms
+         * /api/web/oa.api?act=service_company_list&op=all   请求136ms
+         */
+
+
+        /**
+         * 扩展方法: 时间格式化
+         */
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds()
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+
+        /* window.myTimer=setInterval(function () {
+            // $.get('/setting/mobileCode.php?act=get&mobile=18250262148', function () {console.log('refresh code.');});
+            $.get('/setting/region.html?act=list', function () {console.log('refresh code.');});
+        },2000*1000);*/
+
+        /**
+         * 使得session一直不失效：
+         * 注意OA简历搜索接口限制100页*20条，
+         * 可以通过设置不同条件并设置pageSize=50，则需要20次
+         * 执行脚本前先开启服务 java -Dfile.encoding=utf-8 -jar springbootdemo-0.0.1-SNAPSHOT.jar  --server.port=8080 --crawler.filePath=G:/resumes2.txt --crawler.cacheSize=4 --crawler.awaitTimeout=60000
+         * @type {number}
+         */
+        var mode = 'mysql';
+        var currentPage = 1;
+        var pageSize = 20;
+        // var count=10000000;
+        var count = 2500 * 20;//服务限制5w条数据
+        var awaitTime = 500;
+        var awaitTime4PageItem = 1000;
+        var currentDate = new Date().Format('yyyy-MM-dd');/* regStartDate: 2023-03-16，regEndDate: 2023-03-16*/
+        // var dateSplit=0;//时间跨度，测试发现跨度太大会导致数据库查询速度明显减慢，因为每页页只有20条数据，所以尽量就是一天天采
+
+
+        /**
+         * 入口
+         */
+        // toGetPage(currentPage);
+        getLastPage(function (lastPage,lastDate) {
+            toGetPage(lastPage+1,lastDate);
+        });
+        // toGetPage(1, '2023-04-03');
+
+        /* let interval = setInterval(function () {
+             toGetPage();
+         },3000);
+         clearInterval(interval);*/
+        function toGetPage(page, date) {
+            window.startD=new Date().getTime();
+            // var dataS = getNextDay(date);//获取开始时间，date时间回退一个间隔跨度
+            var dataS = date;//获取开始时间，date时间回退一个间隔跨度
+            var dataE = date;//即当前时间，会有交叉一天，但量小可忽略。
+            var parms = {
+                ordertype: 2,
+                orderValue: 1,//排序要从大到小,才能保障时间最新的先采
+                source: $('#source').val(),
+                companyType: $('#companyType').val(),
+                followType: $('#followType').val(),
+                nextType: $('#nextType').val(),
+                licenceCheck: $('#licenceCheck').val(),
+                txtStartDate: $('#txtStartDate').val(),
+                txtEndDate: $('#txtEndDate').val(),
+                txtStartDate1: dataS,
+                txtEndDate1: dataE,
+                q: $('#q').val(),
+                comIndustryId: $('input[name="callingids1"]').val(),
+                adminType: $('#adminType').val(),
+                address: $('#address').val(),
+                comWorkers: $('#comWorkers').val(),
+                chooseAreaId: $('#chooseAreaId').val(),
+
+
+                pageSize: pageSize,
+                currentPage: page,
+            };
+            $.ajax({
+                url: "/api/web/oa.api?act=service_company_list&op=all",
+                data: parms,
+                success:  function (resp) {
+                    debugger;
+                    if (!resp) {//有些页会出现响应为空问题，resp=''
+                        currentPage = page + 1;
+                        toGetPage(currentPage, date);
+                        return;
+                    }
+                    if (resp.constructor.name = 'String') {
+                        resp = JSON.parse(resp);
+                    }
+                    // processData(resp.data)//注意此处不能单独抽出方法，否则浏览器会报安全错误。
+                    // ;
+                    var data = resp.data;
+                    if (data.length == 0) {//没数据了就递减日期抓数据
+                        console.log('要重置条件：page:' + page + ',date:' + date);
+                        currentPage = 0;
+                        debugger;
+
+                        currentDate = getNextDay(date);
+                        toGetPage(currentPage, currentDate);
+                        return;
+                    }
+                    pageItemProcess(data,0,function () {//递归处理数据,处理完再翻页
+
+                       if(window.startD){
+                           console.log('one page use time:'+(new Date().getTime()-window.startD));
+                       }
+                        setTimeout(function () {
+                            debugger;
+                            currentPage = page + 1;
+                            if (Math.ceil(count / pageSize) >= currentPage) {
+                                toGetPage(currentPage, date);
+                            } else {
+                                console.log(date + ' 数据页已到底>>>');
+                                currentPage = 0;
+                                currentDate = getNextDay(date);
+                                toGetPage(currentPage, currentDate);
+                            }
+                        }, awaitTime);
+
+                    },date);
+
+
+                },
+                error: function (e) {
+                    console.log('采集请求出错，e:' + e);
+                }
+            });
+        }
+
+
+        /**
+         * 递归处理每一页数据
+         * @param data
+         * @param j
+         * @param callback
+         */
+        function pageItemProcess(data,j,callback,date) {
+            data[j].page = currentPage;
+            data[j].pageIndex = j;
+            data[j].operation='';//无用字段，去除减少传输体积
+            // data[j].regDate=date;
+            //防止有些数据没有注册时间，赋值为当前时间
+            var regDate = null;
+            if (data[j]._regTime) {
+                regDate = '20' + data[j]._regTime.split(' ')[0];//"_regTime": "22-09-19 11:25\/<br>22-11-11 15:13"  注意这个json字段属性值包含注册时间+登录时间
+            } else {
+                regDate = date;
+            }
+            var type = data[j]._cname.split('type=')[1].split('&act=')[0];
+            // var uid = data[j]._username.split('uid=')[1].split('#followList')[0];//不能这么解析，_username包含内容不定，可能有多个a
+            data[j].type=type;
+            // data[j].uid=uid;
+            /*var companyViewData = await company_view(data[j]._cid, type);
+            var companyLicenceinfoData = await company_licenceinfo(data[j]._cid, type);
+            var companyJobslistData = await company_jobslist(data[j]._cid, type);
+            var companyTongjiData = await company_tongji(data[j]._cid, type);
+            data[j].companyViewData=companyViewData;
+            data[j].companyLicenceinfoData=companyLicenceinfoData;
+            data[j].companyJobslistData=companyJobslistData;
+            data[j].companyTongjiData=companyTongjiData;*/
+
+            var companyViewPromise =  company_view(data[j]._cid, type);
+            var companyLicenceinfoPromise =  company_licenceinfo(data[j]._cid, type);
+            var companyJobslistPromise =  company_jobslist(data[j]._cid, type);
+            var companyTongjiPromise =  company_tongji(data[j]._cid, type);
+            Promise.all([companyViewPromise,companyLicenceinfoPromise,companyJobslistPromise,companyTongjiPromise]).then(vals=>{
+                debugger;
+                data[j].companyViewData=vals[0];
+                data[j].companyLicenceinfoData=vals[1];
+                data[j].companyJobslistData=vals[2];
+                data[j].companyTongjiData=vals[3];
+                return data[j];
+            }).then(resp=>{
+                debugger;
+                $.ajax({
+                    url: 'http://localhost:8080/company/' + mode + '/jsonp',
+                    data: {
+                        json: JSON.stringify({
+                            regDate: regDate,
+                            pageIndex: j,
+                            page: currentPage,
+                            json: JSON.stringify(data[j])
+                        })
+                    },
+                    dataType: 'jsonp',
+                    success: function (resp) {
+                        debugger;
+                        if (resp.status == 0) {
+                            console.log('write error page= ' + currentPage + ' , index = ' + j);
+                        }
+                    },
+                    error: function (e) {
+                        debugger;
+                        console.log('请求jsonp有出错，e:' + e);
+                    }
+                });//处理数据不担心服务器qps是否能承受
+
+                if(j<data.length-1){
+                    debugger;
+                    setTimeout(function () {
+                        pageItemProcess(data,j+1,callback);
+                    },awaitTime4PageItem);
+                }else{
+                    callback();
+                }
+            });
+
+
+        }
+
+
+        function getLastPage(callback) {
+            $.ajax({
+                url: 'http://localhost:8080/company/' + mode + '/getLastPage',
+                async: false,
+                dataType: 'jsonp', success: function (resp) {
+                    lastPage = resp.page * 1;
+                    lastDate = resp.regDate;
+                    debugger;
+                    callback(lastPage, lastDate);
+                }, error: function () {
+                    callback(1, nowDate.Format('yyyy-MM-dd'));
+                }
+            });
+        }
+
+        function getNextDay(dateStr) {
+            let nowDate = new Date(dateStr);
+            // nowDate.setDate(nowDate.getDate() - dateSplit);//
+            nowDate.setDate(nowDate.getDate() - 1);//
+            return nowDate.Format('yyyy-MM-dd');
+        }
+
+        /*
+        var starD=new Date().getTime();
+        console.log('use times:'+(new Date().getTime()-startD));
+        */
+
+        /**
+         *
+         * @param cid
+         * @param type
+         * @returns {Promise<unknown>}
+         * @description 总用时大概：511ms，ajax请求用时大概507ms，即解析用时4ms
+         */
+        async function company_view(cid, type) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/companyinfo/companyinfo.html',
+                    type: 'get',
+                    dataType: "html", //数据类型
+                    data: {
+                        "act": 'view',//act=view|licence|jobs|contract|advs|unit|tongji
+                        // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                        //采集范围：view|licence|jobs|tongji，其它信息有重复或者无用
+                        "source": "iframe",
+                        "c_id": cid,//c_id="a1cbc4110010"   aab9f72158551
+                        "type": type
+                    },
+                    success: function (data) {
+                        debugger;
+                        // location.hash=$(this).attr('act');
+                        // console.log(this);
+                        var companyViewData = {};
+                        companyViewData.type = type;
+                        var $html = $(data);
+                        var $trs = $html.find('.company_base > tbody > tr');
+
+                        $trs.each(function (index, tr) {
+                            var $tr = $(tr);
+                            var $a = $tr.find('a.text-success');
+                            try {
+                                if (index == 0 && $a.size() > 0) {
+                                    companyViewData.cname = $a.text();
+                                    if ($tr.find('h4').contents().size() > 1) {
+                                        companyViewData.typeStr = $tr.find('h4').contents().eq(1)[0].nodeValue.replace(')', '').replace('(', '');
+                                        try {
+
+                                        } catch (e) {
+                                            console.log('companyViewData.typeStr error.')
+                                        }
+
+                                    }
+                                    return;
+                                }
+                                var $h4 = $tr.find('h4');
+                                if ($h4.size() > 0) {
+                                    var h4Str = $h4.text()
+                                    if (h4Str.indexOf('营业执照屏蔽原因:') > -1) {
+                                        var replyStr = h4Str.split('营业执照屏蔽原因:')[1];
+                                        var replyStrArr = replyStr.split('------');
+                                        companyViewData.reply = replyStrArr[0];
+                                        if (replyStrArr.length == 2) {
+                                            companyViewData.replyTime = replyStrArr[1];
+                                        }
+                                    }
+                                    return;
+                                }
+                                var $td = $tr.find('td');
+                                var tdHtml = $td.html();
+
+                                if (tdHtml.indexOf('所在城市：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('所在城市：')[1];
+                                    var tdHtmlStrArr = tdHtmlStr.split('-');
+                                    companyViewData.comCityId = tdHtmlStrArr[0];
+                                    if (tdHtmlStrArr.length == 2) {
+                                        companyViewData.comAreaId = tdHtmlStrArr[1];
+                                    }
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('公司性质：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('公司性质：')[1];
+                                    companyViewData.comType = tdHtmlStr;
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('公司规模：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('公司规模：')[1];
+                                    companyViewData.comWorkers = tdHtmlStr;
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('所属行业：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('所属行业：')[1];
+                                    companyViewData.industryName = tdHtmlStr;
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('公司网址：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('公司网址：')[1];
+                                    companyViewData.comSite = tdHtmlStr;
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('注册时间：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('注册时间：')[1];
+                                    companyViewData.regTime = tdHtmlStr;
+                                    return;
+                                }
+
+                                if (tdHtml.indexOf('登录时间：') > -1) {
+                                   /* var textNodeValue = $td.contents()[0].nodeValue;
+                                    var tdHtmlStr = textNodeValue.split('登录时间：')[1];*/
+                                    var tdHtmlStr = tdHtml.split('登录时间：')[1];
+                                    companyViewData.loginTime = tdHtmlStr;
+                                    return;
+                                }
+                                if (tdHtml.indexOf('修改时间：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('修改时间：')[1];
+                                    companyViewData.modTime = tdHtmlStr;
+                                    return;
+                                }
+                                if (tdHtml.indexOf('地址：') > -1) {
+                                    var tdHtmlStr = tdHtml.split('地址：')[1];
+                                    companyViewData.comAddress = tdHtmlStr;
+                                    return;
+                                }
+                                if (tdHtml.indexOf('公司简介:') > -1) {
+                                    var tdHtmlStr = $td.find('.shrink_wrap').html();
+                                    companyViewData.comInfo = tdHtmlStr;
+                                    return;
+                                }
+                            } catch (e) {
+                                console.log('解析出错：cid='+cid+',$tr=' + $tr.html());
+                            }
+                        })
+                        $html = null;
+                        $trs = null;
+                        resolve(companyViewData);
+                    }, error: function (e) {
+                        console.log('company_view 请求出错！');
+                        resolve({});
+                        return {};
+                    }
+                });
+            });
+        }
+
+        /**
+         *
+         * @param cid
+         * @param type
+         * @returns {Promise<unknown>}
+         * @description 总用时大概：152ms，ajax请求用时大概141ms，即解析用时11ms
+         */
+        async function company_licenceinfo(cid, type) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/companyinfo/companyinfo.html',
+                    type: 'get',
+                    dataType: "html", //数据类型
+                    data: {
+                        "act": 'licence',//act=view|licence|jobs|contract|advs|unit|tongji
+                        // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                        //采集范围：view|licence|jobs|tongji，其它信息有重复或者无用
+                        "source": "iframe",
+                        "c_id": cid,//c_id="a1cbc4110010"   aab9f72158551
+                        "type": type
+                    },
+                    success: function (data) {
+                        // location.hash=$(this).attr('act');
+                        // console.log(this);
+                        var companyViewData = {};
+                        companyViewData.type = type;
+                        data=data.replaceAll('<img','<imger');
+                        var $html = $(data);
+                        // var $trs1 = $html.find('#companyList > .row-fluid > .span6:nth-of-type(1) > table > tbody > tr');
+                        var $trs1 = $html.eq(0).find('.span6:nth-of-type(1) > table > tbody > tr');
+                        // var $trs2 = $html.find('#companyList > .row-fluid > .span6:nth-of-type(2) > table > tbody > tr');
+                        var $trs2 = $html.eq(0).find('.span6:nth-of-type(2) > table > tbody > tr');
+                        $trs1.each(function (index, tr){
+                            var $tr = $(tr);
+                            var $tds = $tr.find('td');
+                            var $td0 = $tds.eq(0);
+                            var td0html = $td0.html();
+                           try {
+                               if(td0html.indexOf('licen.png')>-1){
+                                   companyViewData.licenceCheck=2;//执照免审
+                               }else if (td0html.indexOf('暂无执照相关信息')>-1) {
+                                   companyViewData.licenceCheck=0;//暂无执照相关信息
+                               }else {
+                                   companyViewData.licenceCheck=-100000;//除了0和2以外的情况
+                                   // var imgs=$td0.find('.swiper-container .swiper-wrapper .swiper-slide a img');
+                                   var imgs=$td0.find('.swiper-container .swiper-wrapper .swiper-slide a imger');
+                                   if(imgs.size()>1){
+                                       var imgsArr=[];
+                                       imgs.each(function (index, img) {
+                                           imgsArr.push($(img).attr('src'));
+                                       });
+                                       companyViewData.licences=imgsArr.join(',');
+                                   }else if(imgs.size()==1){
+                                       companyViewData.licences=imgs.eq(0).attr('src');
+                                   }
+                               }
+                           }catch (e) {
+                               console.log('解析执照图片出错：cid='+cid+',$tr=' + $tr.html());
+                           }
+                        });
+
+                        $trs2.each(function (index, tr) {
+                            var $tr = $(tr);
+                            var $tds = $tr.find('td');
+                            var $td0 = $tds.eq(0);
+                            var td0Text = $td0.text();
+                            var $td1 = $tds.eq(1);
+
+                            try {
+                                if (td0Text.indexOf('执照备注：') > -1) {
+                                    var td1Html=$td1.html();
+                                    var td1HtmlAttr=td1Html.split('[');
+                                    companyViewData.note=td1HtmlAttr[0];
+                                    companyViewData._noteTime = td1HtmlAttr[0].replace(']','');
+                                    return;
+                                }
+                                //isCheck=-2 begin
+                                if (td0Text.indexOf('执照审核不通过：') > -1) {
+                                    companyViewData.isCheck = -2;
+                                    return;
+                                }
+                                if (td0Text.indexOf('不通过原因：') > -1) {
+                                    companyViewData.reply = td0Text.split('不通过原因：')[1];
+                                    return;
+                                }
+                                //isCheck=-2 end
+
+                                // isCheck=除了1和-2以外 begin  设置为-1000000
+                                if (td0Text.indexOf('最近：') > -1) {
+                                    var replyArr = td0Text.split('不通过原因：');
+                                    companyViewData.reply = replyArr[1];
+                                    companyViewData.createTime = replyArr[0].split('最近')[1];
+                                    companyViewData.isCheck = -1000000;
+                                    return;
+                                }
+                                //isCheck=除了1和-2以外 end    设置为-1000000
+
+                                if (td0Text.indexOf('招聘联系人：') > -1) {
+                                    companyViewData.comUser = $td1.html();
+                                    return;
+                                }
+                                if (td0Text.indexOf('招聘联系电话：') > -1) {
+                                    companyViewData.comTel = $td1.text();
+                                    return;
+                                }
+                                if (td0Text.indexOf('招聘联系手机：') > -1) {
+                                    companyViewData.comMobile = $td1.text();
+                                    return;
+                                }
+                                if (td0Text.indexOf('注册公司名称：') > -1) {
+                                    var _cname = $td1.find('.text-success').html();
+                                    companyViewData._cname = _cname;
+                                    return;
+                                }
+                                if (td0Text.indexOf('执照公司名称：') > -1) {
+                                    var cname = $td1.contents()[0].nodeValue;
+                                    companyViewData.cname = cname;
+                                    return;
+                                }
+
+                                if (td0Text.indexOf('所在地区：') > -1) {
+                                    companyViewData.areaStr = $td1.html();
+                                    return;
+                                }
+                                /*if (td0Text.indexOf('执照编号：') > -1) { //此字段无信息 固定输出“执照编号修改”
+                                    var licenceid = $td1.contents()[0].nodeValue;
+                                    companyViewData.licenceid = licenceid;
+                                    return;
+                                }*/
+                                /*if (td0Text.indexOf('执照法人：') > -1) {//此字段无信息 固定输出“执照法人修改”
+                                    var licencename = $td1.contents()[0].nodeValue;
+                                    companyViewData.licencename = licencename;
+                                    return;
+                                }*/
+                                if (td0Text.indexOf('登录IP地址：') > -1) {
+                                    companyViewData.lastLogin = $td1.text();
+                                    return;
+                                }
+                                if (td0Text.indexOf('跟单员：') > -1) {
+                                    companyViewData.adminUsername = $td1.text();
+                                    return;
+                                }
+                            } catch (e) {
+                                console.log('解析执照信息出错：cid='+cid+',$tr=' + $tr.html());
+                            }
+
+                        });
+                        if (!companyViewData.isCheck) {
+                            companyViewData.isCheck = 1;
+                        }
+                        $html = null;
+                        $trs = null;
+                        resolve(companyViewData);
+                    }, error: function (e) {
+                        console.log('company_licenceinfo 请求出错！');
+                        resolve({});
+                        return {};
+                    }
+                });
+            });
+        }
+
+        /**
+         *
+         * @param cid
+         * @param type
+         * @returns {Promise<unknown>}
+         * @description 总用时大概：207ms，ajax请求用时大概203ms，即解析用时4ms
+         */
+        async function company_jobslist(cid, type) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/companyinfo/companyinfo.html',
+                    type: 'get',
+                    dataType: "html", //数据类型
+                    data: {
+                        "act": 'jobs',//act=view|licence|jobs|contract|advs|unit|tongji
+                        // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                        //采集范围：view|licence|jobs|tongji，其它信息有重复或者无用
+                        "source": "iframe",
+                        "c_id": cid,//c_id="a1cbc4110010"   aab9f72158551
+                        "type": type
+                    },
+                    success: function (data) {
+                        // location.hash=$(this).attr('act');
+                        // console.log(this);
+                        var companyViewData = {};
+                        companyViewData.type=type;
+                        companyViewData.jobs=[];
+                        companyViewData.jobCount=0;
+                        var $html = $(data);
+                        if($html.eq(0).hasClass('row-fluid')){
+                            var jobButtons=$html.eq(0).find('.joblist button');
+                            var jobButtonsSsize=jobButtons.size();
+                            if(jobButtonsSsize>0){
+                                jobButtons.each(function (index,btn){
+                                    var $btn=$(btn);
+                                    var job={};
+                                    var rel=$btn.attr('rel');
+                                    var relArr= rel.split('&id=')[1].split('&c_id=')
+                                    job.jid=relArr[0];
+                                    job.c_id=relArr[1];
+                                    var htmlArr=$btn.html().split('(关键词:');
+                                    job.jname=htmlArr[0];
+                                    if(htmlArr.length>1){
+                                        job.jobKeyword=htmlArr[0].replace(')','');
+                                    }
+                                    companyViewData.jobs.push(job);
+                                });
+
+                            }
+                        }else if($html.eq(0).hasClass('error_ex')){
+
+                        }
+                        $html = null;
+                        $trs = null;
+                        resolve(companyViewData);
+                    }, error: function (e) {
+                        console.log('company_jobslist 请求出错！');
+                        resolve([]);
+                        return {};
+                    }
+                });
+            });
+        }
+
+        /**
+         * hr登录行为统计数据
+         * @param cid
+         * @param type
+         * @returns {Promise<unknown>}
+         * @description 总用时大概：84ms，ajax请求用时大概80ms，即解析用时4ms
+         */
+        async function company_tongji(cid, type) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: '/api/web/oa.api',
+                    type: 'get',
+                    dataType: "json", //数据类型
+                    data: {
+                        "act": 'cid_tongji_list',//act=view|licence|jobs|contract|advs|unit|tongji（cid_tongji_list）
+                        // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                        //采集范围：view|licence|jobs|tongji，其它信息有重复或者无用
+                        "cid": cid,//c_id="a1cbc4110010"   aab9f72158551
+                        "type": type
+                    },
+                    success: function (data) {
+                        // location.hash=$(this).attr('act');
+                        // console.log(this);
+                        var companyViewData = {};
+                        companyViewData.type=type;
+                        companyViewData.data=data;
+                        resolve(companyViewData);
+                    }, error: function (e) {
+                        console.log('company_jobslist 请求出错！');
+                        resolve({type:type});
+                        return ;
+                    }
+                });
+            });
+        }
+    </script>
+
+</head>
+<body>
+<div id="videoView" class="flex flex-column layui-layer-wrap"
+     style="height: 430px; background: rgb(255, 255, 255); left: 435.5px; ">
+    <video class="margin-top-15" controls="controls" width="500" height="300" id="videoPlayer"
+           src="//v.917.com/video/news/2023/03/17/090558k2kz33vjdou95gwk.mp4">
+        <source type="video/mp4" src="">
+        Your browser does not support the video tag.
+    </video>
+    <div>
+        <div id="videoAudit" class="mainContent"></div>
+        <div class="mainContent flex margin-top-15 font-14">
+            <span>快进：</span>
+            <a href="javascript:void(0);"
+               class="border-btn margin-left-15 margin-right-5 speedCtrl defaultSpeed margin-bottom-0 cl-f87033"
+               speed="1">x1</a>
+            <a href="javascript:void(0);" class="border-btn margin-left-15 speedCtrl margin-bottom-0"
+               speed="1.5">x1.5</a>
+            <a href="javascript:void(0);" class="border-btn margin-left-15 speedCtrl margin-bottom-0" speed="2">x2</a>
+        </div>
+        <div class="margin-top-15 font-14" id="beizhuBox">备注：<input class="w-px-150 padding-l-r-10 margin-left-15"
+                                                                      value="" id="beizhu" vid="202798"><a
+                href="javascript:void(0);" class="border-btn margin-left-15" onclick="beizhuSave()">保存</a></div>
+    </div>
+    <div id="videoMask"></div>
+</div>
+<div class="box">
+    <div class="btn btn1">投递</div>
+    <div class="btn btn2">电话</div>
+    <div class="btn btn3">马上聊聊</div>
+</div>
+</body>
+
+<!--    act: search
+      qw: 1,2,3,4,5,8,9
+      txtKeyword:
+      expArea:
+      expAreaName:
+      ddlMinWrokYear: 0
+      ddlMaxWrokYear: 0
+      currAreaName:
+      currArea:
+      txtAgeLower:
+      txtAgeUpper:
+      calling:
+      calling2: null
+      chkDegree:
+      nativeAreaName:
+      nativeArea:
+      radMarriage: 0
+      txtMinStature:
+      txtMaxStature:
+      radSex: 0
+      updateStartDate:
+      updateEndDate:
+      regStartDate: 2019-01-22
+      regEndDate: 2019-01-22
+      display: -1
+      pageSize: 20
+      currentPage: 17
+
+      以上条件会产生以下错误：
+       resp=''
+
+      导致：
+           Uncaught SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at Object.success (<anonymous>:104:35)
+          at o (jquery.min.js:2:14733)
+          at Object.fireWith [as resolveWith] (jquery.min.js:2:15502)
+          at w (jquery.min.js:4:12472)
+          at XMLHttpRequest.d (jquery.min.js:4:18318)
+
+         -->
+
+
+<script>
+    /***
+     * ********************** company **********************
+     * 大概12w数据，需要获取不同接口数据（基本信息、统计、）
+     * 公司查重：http://oa.597.top/api/web/oa.api?act=check_com_unique&query=厦门才盛网络科技有限公司(天津第十分公司)&c_id=110010&currentPage=1&pageSize=5"  //查重接口，不采
+     * 合同列表：http://oa.597.top/api/web/oa.api?act=cid_product_list&currentPage=1&pageSize=20&cid=1e1c8c755390   //信息太多，而且合同过期无用，不采
+     * 广告列表：http://oa.597.top/api/web/oa.api?act=cid_adv_list&currentPage=1&pageSize=20&cid=1e1c8c755390     //购买广告的企业少，所以此部分信息大部无数据，不采
+     * 部门列表：http://oa.597.top/api/web/oa.api?act=cid_unit_list&type=3&currentPage=1&pageSize=20&cid=1e1c8c755390      //该信息大部分无数据，不采
+     * 行为统计信息：http://oa.597.top/api/web/oa.api?act=cid_tongji_list&type=3&currentPage=1&pageSize=20&cid=1e1c8c755390     //此接口包含信息在company_view基本资料页面已经有了，不采
+     */
+
+    /**
+     * 父集信息
+     * 限制显示5w：  注册时间划分：2018-2023大概43955，2014-2018大概46755，2014以前大概30554
+     * 限制账号：chenny归属厦门，只能查询厦门公司。 采集时改为全国，则上述条件还是得变更为按注册时间，每4个月一采（一年最高企业数量大概12w）
+     *
+     */
+    //http://oa.597.top/api/web/oa.api?act=service_company_list&op=all&currentPage=2&pageSize=20&ordertype=3&orderValue=1&source=0&companyType=1&followType=&nextType=&licenceCheck=100&txtStartDate=&txtEndDate=&txtStartDate1=&txtEndDate1=&q=&comIndustryId=&comWorkers=&chooseAreaId=
+    /*request:
+        act: service_company_list
+        op: all
+        currentPage: 1
+        pageSize: 20
+        ordertype: 2
+        orderValue: 1
+        source: 0
+        companyType: 1
+        followType:
+        nextType:
+        licenceCheck: 100
+        txtStartDate:
+        txtEndDate:
+        txtStartDate1: 2023-03-28
+        txtEndDate1: 2023-03-30
+        q:
+        comIndustryId:
+        comWorkers:
+        chooseAreaId:
+     */
+
+    /*  response:
+     {
+         "data": [ {
+             "_cid": "db9d296447061",
+             "adminUsername": "无", //招聘联系人
+             "vipStyle": "normalStyle",
+             "_username": "<a href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=db9d296447061&uid=0a61416653429#followList\" class=\"text-link\" target=\"_blank\"><strong>AUTO1865958888944<\/strong><\/a><br><span>测试:18659588889<\/span><br><br\/>",
+             "_cname": "<a href=\"https:\/\/www.597.top\/com-db9d296447061\/\" target=\"_blank\"  class=\"text-link\"><strong>测试八九<\/strong><\/a><br><span><a class=\"btn btn-mini\" target=\"_blank\" href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=db9d296447061\">查看详情<\/a><\/span><br><span>执照状态:<font color=\"green\">已认证<\/font>(?)<\/span><br><span>绑定时间:<\/span>", //子集有该信息，不处理
+             "_nextType": "\/", //回访/跟进类型
+             "comCityId": "福州市",
+             "companyTypeStr": "新客户", //客户类型
+             "_regTime": "22-09-19 11:25\/<br>22-11-11 15:13",
+             "_modTime": "22-09-19 11:25\/<br>",//修改/最后合同
+             "_followTime": "\/<br>",//跟进/回访时间
+             "_expireFollowTime": "",//释放时间
+             "_source": "自注<br><span class=\"adminType\"><\/span>",//来源
+             "operation": "<a class=\"btn btn-mini\" href=\"\/companyinfo\/companyinfo.html?type=3&act=view&c_id=db9d296447061#followList\" target=\"_blank\">跟进<\/a> <select name=\"nextType\" style=\"width:100px;height:23px;padding:0px 0px 0px 0px;margin:0px 0px 0px 0px; font-size:12px;\" class=\"quickfollow\" class=\"btn btn-mini\"><option value=\"\">无效标记选择<\/option><option value=\"未接\">未接<\/option><option value=\"空号\">空号<\/option><option value=\"态度差\">态度差<\/option><\/select><a class=\"btn btn-mini\" href=\"\/service\/list.html?act=list&op=unique&query_regionId=&query_region=&cname=测试八九\" target=\"_blank\">查重<\/a> <a class=\"btn btn-mini\" href=\"https:\/\/www.baidu.com\/s?wd=测试八九\" target=\"_blank\">百度<\/a> <button class=\"btn btn-mini updateAllJob\">刷新职位<\/button> <button class=\"btn btn-mini addTemp\">绑开发库<\/button> <button class=\"btn btn-info btn-mini addPrivate\">绑私有库<\/button> "
+         }],
+         "totalCounts": 50000,
+         "total_found": "983976"
+     }
+ */
+
+    /**
+     * 子集信息
+     */
+    $.ajax({
+        url: '/companyinfo/companyinfo.html',
+        type: 'get',
+        dataType: "html", //数据类型
+        beforeSend: function () {
+            $('#companyList').html('<div class="error_ex"><p class="data_loading"><img src="http://cdn.597.cs/m/js/layer-2.x/build/skin/default/loading-1.gif" alt=""></p></div>');
+            //return false;
+        },
+        data: function () {
+            return {
+                "act": $(this).attr('act'),//act=view|licence|jobs|contract|advs|unit|tongji
+                                           // 注:contract合同、tongji统计、advs广告列表、unit部门列表直接请求接口
+                                           //采集范围：view|licence|jobs|tongji，其它信息有重复或者无用
+                "source": "iframe",
+                "c_id": $(this).closest("div").attr("c_id"),//c_id="a1cbc4110010"   aab9f72158551
+                "type": $(this).closest("div").attr("type")//type="1"
+            }
+        },
+        success: function (data) {
+            // location.hash=$(this).attr('act');
+            // console.log(this);
+            $('#companyList').html(data);
+            $('.daohang button').attr('class', 'btn');
+            $(this).attr('class', 'btn btn-info');
+            //toastr.clear();
+        }, error: function (e) {
+
+        }
+    })
+
+    /* company_view */
+    /*
+        {
+         cname:'',//公司名
+         typeStr：' (名企、VR实景、)',//名企之类的标签
+         companyInfoReply:'',//公司信息被屏蔽原因
+         reply:'',//公司营业执照被屏蔽原因
+         comCityId:'',//所在城市，父集只有城市无地区，采
+         comType:'',//公司性质
+         comWorkers:'',// 公司规模
+         industryName:'',// 所属行业
+         comSite:'',// 公司网址
+         regTime:'',// 注册时间
+         loginTime:'',// 登录时间+有无登录app+最后一次登录ip和地点
+         modTime:'',// 修改/最后合同
+         comAddress:'',// 地址
+         comInfo:'',// 公司简介
+         hrList:'',//hr列表,  $('.table-invoice').eq(2).find('tr')遍历存储，包含信息：HR姓名（用户名）、是否VIP、电话、职称、微信、绑定时间、最近登录时间
+        }
+    */
+
+    /*hr tongji*/
+    /*        {
+                admin: 0
+                app_login_time: ""
+                banTime: "1648451120"
+                chat_time: ""
+                cid: "755390"
+                duties: "猜猜"
+                id: "1039428"
+                isAdmin: "0"
+                isCheck: "1"
+                isShareContract: "0"
+                isVip: 0
+                isVipStr: "否"
+                jobNum: "0"
+                last_join_time: ""
+                name: "测试"
+                phone: "15980898277"
+                photo: "2023/04/04/2304040439521969X.png"   //要加前缀 http://pic.597.top/hrPhoto/
+                uid: "6598283"
+                username: "MO162081636244512"
+                wechat: "否"
+                weixin: ""
+                _banTime: "2022-03-28 15:05:20"
+                _cid: "1e1c8c755390"
+                _loginTime2: "2021-06-22 07:59:09"
+                _photo: "//pic.597.top/hrPhoto/default.png"
+                _status: ""
+                _uid: "9568926598283"
+            }*/
+
+</script>
+<script>
+    // var dd=new Date();dd.setFullYear(dd.getFullYear()+1);console.log(dd.Format('yyyy-MM-dd'));
+    function getNextYear(dateStr) {
+        let nowDate = new Date(dateStr);
+        nowDate.setFullYear(nowDate.getFullYear() - 1);
+        return nowDate.Format('yyyy-MM-dd');
+    }
+</script>
+</html>
+
+<div class="row-fluid">
+    <div class="span6">
+        <style type="text/css">
+            img {
+                /*height: 40%;*/
+            }
+        </style>
+
+        <table class="" style="table-layout: fixed;" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="swiper-container" style="max-width: 600px;">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><a
+                                    href="javascript:window.open('//oa.597.com/pic.htm?pic=pic.597.top/licence/2020/04/28/20042810394399464.jpg')"><img
+                                    src="//pic.597.top/licence/2020/04/28/20042810394399464.jpg"/></a></div>
+                        </div>
+                        <!-- 如果需要分页器 -->
+                        <div class="swiper-pagination"></div>
+                        <!-- 如果需要导航按钮 -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <!-- 如果需要滚动条 -->
+                        <!--<div class="swiper-scrollbar"></div>-->
+                    </div>
+    </div>
+    </td>
+
+    <!--<a href="2020/04/28/20042810394399464.jpg" target="_blank"><img src="2020/04/28/20042810394399464.jpg"></a></td>--></tr>
+    </tbody>
+    </table>
+</div>
+<div class="span6">
+    <style>.changeClid, .changeCname, .changeLicencename {
+        margin-left: 10px;
+    }</style>
+    <table class="table table-bordered table-invoice" style="margin-top: 10px;">
+        <tbody>
+        <tr>
+            <td width="37%">招聘联系人：</td>
+            <td>冯女士</td>
+        </tr>
+        <tr>
+            <td>招聘联系电话：</td>
+            <td class="telPhone1"><strong>18120737870</strong></td>
+        </tr>
+        <tr>
+            <td>招聘联系手机：</td>
+            <td class="telPhone1"><strong>18060915387</strong></td>
+        </tr>
+        <tr>
+            <td>注册公司名称：</td>
+            <td><a href="http://www.597.com/com-aab9f72158551/" class="text-success"
+                   target="_blank">厦门易创客科技有限公司</a> <a class="changeCname">企业名称修改</a>
+                <a class="text-info" target="_blank"
+                   href="https://www.tianyancha.com/search?key=厦门易创客科技有限公司"><strong>天眼查</strong></a></td>
+        </tr>
+        <tr>
+            <td>执照公司名称：</td>
+            <td>厦门易创客科技有限公司 <a class="text-info" target="_blank"
+                                          href="https://www.tianyancha.com/search?key=厦门易创客科技有限公司"><strong>天眼查</strong></a>
+            </td>
+        </tr>
+        <tr>
+            <td>所在地区：</td>
+            <td>福建省-厦门市</td>
+        </tr>
+        <tr>
+            <td>执照编号：</td>
+            <td>91350203303281348Y<a class="changeClid">执照编号修改</a></td>
+        </tr>
+        <tr>
+            <td>执照法人：</td>
+            <td>徐鸿翔<a class="changeLicencename">执照法人修改</a></td>
+        </tr>
+        <tr>
+            <td>跟单员：</td>
+            <td>597test</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="widget-box" id="com_unique_list">
+        <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>重名列表<span class=" text-success"></span></h5>
+        </div>
+        <div class="widget-content nopadding">
+            <div class="comUniquePageData">
+
+            </div>
+        </div>
+        <div class="widget-content nopadding">
+            <div id="pageDiv" class="page comUniquePageNav">
+
+            </div>
+            <div class="comUniquePageInfo">
+
+            </div>
+        </div>
+    </div>
+    </table>
+</div>
+</div>
+<script type="text/javascript">
+    //修改企业名称
+    $(".changeCname").on('click', function () {
+        bootbox.dialog({
+            romote: {url: '/company/company.html?act=cname&c_id=aab9f72158551&clid=268112', type: 'get', data: {}},//使用romote参数后message参数无效
+            title: "企业名称修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size: {pc: {width: 500, height: 650}, ipad: {width: 600, height: 400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+    //修改执照编号
+    $(".changeClid").on('click', function () {
+        bootbox.dialog({
+            romote: {url: '/company/company.html?act=updateClid&clid=268112', type: 'get', data: {}},//使用romote参数后message参数无效
+            title: "执照编号修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size: {pc: {width: 500, height: 650}, ipad: {width: 600, height: 400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+    //执照编号修改
+    $(".changeLicencename").on('click', function () {
+        bootbox.dialog({
+            romote: {url: '/company/company.html?act=updateLicencename&clid=268112', type: 'get', data: {}},//使用romote参数后message参数无效
+            title: "执照编号修改",
+            // size:'large',//需要Bootstrap 3.1.0+
+            size: {pc: {width: 500, height: 650}, ipad: {width: 600, height: 400}},//扩展调整弹框大小,单位px。其中height实际上是指定了max-height
+            className: "modal-darkorange"
+        });
+    });
+
+    //查询公司重名
+    function checkComUnique() {
+        $.page({
+            url: "/api/web/oa.api?act=check_com_unique&query=厦门易创客科技有限公司&c_id=2158551",
+            pageSize: 5,
+            pageDataSelector: '.comUniquePageData',
+            pageNavSelector: '.comUniquePageNav',
+            pageInfoSelector: '.comUniquePageInfo',
+            onChange: function (data) {
+                if (data.data) {
+                    var str = '<table class="table table-bordered table-invoice"><thead><tr><th>企业名称</th><th>用户名</th><th>地区</th><th>执照审核状态</th><th>备注</th><th>公司删除状态</th></tr></thead>';
+
+                    for (var i = 0; i < data.data.length; i++) {
+                        var obj = data.data[i];
+                        str += '<tr><td><a href="http://www.597.top/com-' + obj._cid + '/" target="_blank">' + obj.cname + '<span style="color:red;">' + obj._isbot + '</span></a></td><td>' + obj.username + '</td><td>' + obj.comCityId + '</td><td>' + obj._licenceCheck + '</td><td><span style="color:red;">' + obj.note + '</span></td><td>' + obj._delStatus + '</td></tr>';
+                    }
+                    str += '</table>';
+
+                    return str;
+                } else {
+                    $('#com_unique_list').hide();
+                }
+            }
+        });
+    }
+
+    checkComUnique();
+
+
+    var mySwiper = new Swiper('.swiper-container', {
+        // direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+        // 如果需要前进后退按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoHeight: true
+        // 如果需要滚动条
+        /* scrollbar: {
+             el: '.swiper-scrollbar',
+         },*/
+    })
+
+    $('.telPhone1').each(function () {
+        searchAttribution(this);
+    })
+
+    function searchAttribution(obj) {
+        //获取号码归属地
+        var regex = /^1[3|4|5|6|7|8|9]\d{9}$/,
+            tel = $(obj).find("strong").html();
+
+        if (!tel || !tel.length) return;
+        if (tel && !regex.test(tel)) {
+            $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+        } else {
+            // var url = 'http://api.597.com/_mobile/index.php?m=' + (tel || '');
+            var url = '//api.597.com/_mobile/index.php?m=' + (tel || '');
+
+            $.ajax({
+                async: false,
+                type: "post",
+                url: url,
+                dataType: "jsonp",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                jsonp: "callback",
+                success: function (json) {
+                    if (json.city) {
+                        $(obj).find("strong").append('<span class="text-success">（' + json.provice + "-" + json.city + '）</span>');
+                    } else {
+                        $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+                    }
+                },
+                error: function () {
+                    $(obj).find("strong").append('<span class="text-success">（未知）</span>');
+                }
+            });
+        }
+    }
+</script>
