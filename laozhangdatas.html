@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.597.com/js/jquery-1.9.1.min.js"></script>
+    <script>
+        window.LOG={
+            dev:'debug',
+            log:function (msg) {
+                if(window.LOG.dev=='debug'){
+                    console.log(msg);
+                }
+            }
+        };
+    </script>
+  <script>
+    $(function () {
+      if($('.auxo-select-item-option[title="100 条/页"]').size()<1){
+        console.error('未找到页容量');
+        return;
+      }
+      $('.auxo-select-item-option[title="100 条/页"]').click();
+      isLoaded();
+      function isLoaded() {
+        setTimeout(function () {
+          if(!$('.auxo-spin-nested-loading .auxo-spin-container').hasClass('auxo-spin-blur')){
+            console.log('页容量切换完成');
+            startJob();
+          }else{
+            isLoaded();
+          }
+        },700);
+      }
+    });
+    function startJob() {
+
+
+        //$('.auxo-table-content table .auxo-table-tbody tr.auxo-table-row-level-1:nth-of-type(2) td.auxo-table-cell:nth-of-type(6) > div:nth-of-type(2) > .index_buyerInfo__2Mzfr > .index_locationDetail__2IqFq > .index_receiverInfo__1j05R > .index_infoItem__ESU0o:nth-of-type(1) > span:nth-of-type(2) a span[data-kora="view"]').click()
+
+        function getRandomNo() {
+            var arr = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2];
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+        }
+        var randomNo=getRandomNo();
+
+        window.LOG={
+            dev:'debug',
+            log:function (msg) {
+                if(window.LOG.dev=='debug'){
+                    console.log(msg);
+                }
+            }
+        };
+
+        var $tbody=$('.auxo-table-content table .auxo-table-tbody');
+        var $trTops=$tbody.find('tr.auxo-table-row-level-0');
+        var $trBottoms=$tbody.find('tr.auxo-table-row-level-1');
+
+        $trBottoms.each(function (index,trBottom) {
+            var $td6 = $(trBottom).find('td.auxo-table-cell:nth-of-type(6)');
+            var $viewBtn = $td6.find('> div:nth-of-type(2) > .index_buyerInfo__2Mzfr > .index_locationDetail__2IqFq > .index_receiverInfo__1j05R > .index_infoItem__ESU0o:nth-of-type(1) > span:nth-of-type(2) a span[data-kora="view"]')
+            setTimeout(function () {
+                $viewBtn.click();
+            },index*randomNo*500);
+            /*if(index==1){
+                console.log($td6.html());
+                console.log('+++++');
+                console.log($viewBtn.html());
+            }*/
+            /*LOG.log('---------');
+            LOG.log($td6.html());*/
+        });
+        setTimeout(function () {
+            $trBottoms.each(function (index,trBottom) {
+                var $trBottom=$(trBottom);
+                var $td6 = $trBottom.find('td.auxo-table-cell:nth-of-type(6)');
+                var $viewBtn = $td6.find('> div:nth-of-type(2) > .index_buyerInfo__2Mzfr > .index_locationDetail__2IqFq > .index_receiverInfo__1j05R > .index_infoItem__ESU0o:nth-of-type(1) > span:nth-of-type(2) a span[data-kora="view"]')
+                if($viewBtn.size()==0){
+                    //可提取处理
+                    var orderNo=$trTops.eq(index).find('td.auxo-pair-head-td .auxo-pair-head-wrapper .index_RowHeader__3h8Cz .index_leftWrapper__hS0-Y .index_text__3y09K:nth-of-type(1) .style_content-wrapper__ywBGF .index_content__3R2D9').text();//.replace('订单编号 ','')
+                    var orderTime=$trTops.eq(index).find('td.auxo-pair-head-td .auxo-pair-head-wrapper .index_RowHeader__3h8Cz .index_leftWrapper__hS0-Y .index_text__3y09K:nth-of-type(2)').text();//.replace('下单时间 ','')
+                    LOG.log('+++++++++');
+                    LOG.log('orderNo:'+orderNo);
+                    LOG.log('orderTime:'+orderTime);
+                }
+            });
+        },7000*randomNo);
+
+
+       /* orderNo:订单编号&nbsp;6919486883579565075<i data-kora="订单号复制" class="index_copyIcon__1t5Aa"></i>
+        VM21155:5 orderTime:下单时间&nbsp;2023/06/20 23:01:27*/
+
+    }
+
+
+  </script>
+    <style>
+        div:nth-child(1)
+    </style>
+</head>
+<body>
+<div class="box">
+    <div>1</div>
+    <p>p3</p>
+    <div>2</div>
+    <div>1</div>
+</div>
+</body>
+</html>
