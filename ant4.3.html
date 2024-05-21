@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ant4.x+Vue3+TS示例3</title>
+<!--	<script src="./vue.global.js"></script>-->
+
+<!--	<link rel="stylesheet" href="ant-design-vue/dist/reset.css">-->
+	<script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/customParseFormat.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekday.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/localeData.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekOfYear.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekYear.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/advancedFormat.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/quarterOfYear.js"></script>
+
+<!--	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
+
+	<!--<script type="importmap">
+		{
+			"imports": {
+				"vue": "./vue.esm-browser.js"
+			}
+		}
+	</script>-->
+<!--	注意使用以上引入vue3方式会有问题-->
+	<script src="./vue.global.js"></script>
+
+
+<!--	<script src="./ant-design-vue/dist/antd.js"></script>-->
+<!--	<script src="https://unpkg.com/browse/ant-design-vue@4.2.1/dist/antd.min.js"></script>-->
+	<!--	注意使用以上外链antd.min.js是有问题的-->
+	<script src="./ant-design-vue/dist/antd.min.js"></script>
+
+</head>
+<body id="app">
+<a-space direction="vertical" :size="12">
+	<a-date-picker v-model:value="value1" />
+	<a-date-picker v-model:value="value2" picker="week" />
+	<a-date-picker v-model:value="value3" picker="month" />
+	<a-date-picker v-model:value="value4" picker="quarter" />
+	<a-date-picker v-model:value="value5" picker="year" />
+
+</a-space>
+<a-button type="primary" @click="handleClick">Click me</a-button>
+
+</body>
+
+
+<script type="text/typescript" src="./hello.ts"></script>
+
+<script type="module">
+	// import { createApp ,ref,reactive} from 'vue';
+	// import { createApp ,ref,reactive} from './vue.global.js';
+	const { createApp ,ref,reactive} = Vue;
+	// import { DatePicker } from 'ant-design-vue';
+	// import { DatePicker } from 'ant-design-vue';
+
+
+	// import './ant-design-vue/dist/reset.css';
+	// import { DatePicker } from 'ant-design-vue';
+	// import { DatePicker } from './ant-design-vue/dist/antd.min.js';
+
+
+	// import { DatePicker } from antd;
+	const { DatePicker,Button } = antd;
+	const app = createApp({
+		components: {
+			ADatePicker: DatePicker,
+			AButton: Button,
+		},
+		// template: '<h1>Hello from Vue 3!1</h1>'
+
+		setup() {
+			function handleClick()
+			{
+				new Student('jack', 18).showTecher({name:'tom1111',age:20});
+				// console.log(111)
+			}
+
+			const value1 = ref();
+			const value2 = ref();
+			const value3 = ref();
+			const value4 = ref();
+			const value5 = ref();
+
+			return {
+				handleClick,
+				value1,
+				value2,
+				value3,
+				value4,
+				value5
+			};
+		}
+
+	});
+	//注意用此方式，组件注册要在app.mount()挂载之前
+	// app.component('a-date-picker', antd.DatePicker);
+	// app.component('a-button', antd.Button);
+
+	app.mount('#app');
+
+
+	// app.use(DatePicker);
+	// app.use(antd);
+
+</script>
+<!-- 引入 typescript-compile -->
+<script type="text/javascript" src="typescript.min.js"></script>
+<script type="text/javascript" src="typescript.compile.min.js"></script>
+</html>

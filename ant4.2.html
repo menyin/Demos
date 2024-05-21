@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ant4.x+Vue3+Js示例2</title>
+	<!-- 引入 reset 样式 -->
+	<link rel="stylesheet" href="./ant-design-vue/dist/reset.css">
+	<!-- 由于 ant-design-vue/dist 目录下没有 antd.min.css，因此我们不引入该文件 -->
+</head>
+<body>
+<div id="app">
+	<a-button type="primary" @click="handleClick">Click me</a-button>
+</div>
+
+<!-- 引入 Vue 3 -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.prod.js"></script>-->
+<script src="./vue.global.js"></script>
+
+
+<script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/customParseFormat.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/weekday.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/localeData.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/weekOfYear.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/weekYear.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/advancedFormat.js"></script>
+<script src="https://unpkg.com/dayjs/plugin/quarterOfYear.js"></script>
+
+<!-- 引入 Ant Design Vue -->
+<script src="./ant-design-vue/dist/antd.min.js"></script>
+<script>
+	const { createApp } = Vue;
+	const { message } = antd;
+
+	const App = {
+	/*	template: `
+			<div>
+				<a-button type="primary" @click="handleClick">Click me</a-button>
+			</div>
+		`,*/
+		methods: {
+			handleClick() {
+				message.success('Button clicked!');
+			}
+		}
+	};
+
+	createApp(App).use(antd).mount('#app');
+</script>
+</body>
+</html>

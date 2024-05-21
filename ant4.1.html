@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ant4.x+Vue3+Js示例1</title>
+<!--	<script src="./vue.global.js"></script>-->
+
+<!--	<link rel="stylesheet" href="ant-design-vue/dist/reset.css">-->
+	<script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/customParseFormat.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekday.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/localeData.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekOfYear.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/weekYear.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/advancedFormat.js"></script>
+	<script src="https://unpkg.com/dayjs/plugin/quarterOfYear.js"></script>
+
+<!--	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
+
+	<!--<script type="importmap">
+		{
+			"imports": {
+				"vue": "./vue.esm-browser.js"
+			}
+		}
+	</script>-->
+<!--	注意使用以上引入vue3方式会有问题-->
+	<script src="./vue.global.js"></script>
+
+
+<!--	<script src="./ant-design-vue/dist/antd.js"></script>-->
+<!--	<script src="https://unpkg.com/browse/ant-design-vue@4.2.1/dist/antd.min.js"></script>-->
+	<!--	注意使用以上外链antd.min.js是有问题的-->
+	<script src="./ant-design-vue/dist/antd.min.js"></script>
+
+</head>
+<body id="app">
+<a-space direction="vertical" :size="12">
+	<a-date-picker v-model:value="value1" />
+	<a-date-picker v-model:value="value2" picker="week" />
+	<a-date-picker v-model:value="value3" picker="month" />
+	<a-date-picker v-model:value="value4" picker="quarter" />
+	<a-date-picker v-model:value="value5" picker="year" />
+</a-space>
+</body>
+
+
+
+<script type="module">
+	// import { createApp ,ref,reactive} from 'vue';
+	const { createApp ,ref,reactive} = Vue;
+	// import { DatePicker } from 'ant-design-vue';
+	// import { DatePicker } from 'ant-design-vue';
+
+
+	// import './ant-design-vue/dist/reset.css';
+	// import { DatePicker } from 'ant-design-vue';
+
+	// import { DatePicker } from antd;
+	const { DatePicker } = antd;
+	const app = createApp({
+		components: {
+			ADatePicker: DatePicker,
+		},
+		// template: '<h1>Hello from Vue 3!1</h1>'
+		setup() {
+			const value1 = ref();
+			const value2 = ref();
+			const value3 = ref();
+			const value4 = ref();
+			const value5 = ref();
+		}
+
+	});
+
+	app.mount('#app');
+
+	// app.use(DatePicker);
+
+</script>
+</html>
